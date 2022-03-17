@@ -1,0 +1,24 @@
+spring:
+  config:
+    use-legacy-processing: true
+  profiles:
+    include:
+    - jdbc
+    - oauth
+    - ssl
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.Oracle12cDialect
+        show_sql: true
+        format_sql: true
+        # use_sql_comments: true
+
+server:
+  port: 8443
+  http2:
+    enabled: true
