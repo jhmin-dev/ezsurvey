@@ -4,12 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Hello World</title>
-<link rel="stylesheet" href="/css/main.css">
+<title>Error</title>
 </head>
 <body>
-Spring Starter Project
-
-<a href="/my/project">소셜 로그인 확인</a>
+Login Error
 </body>
 </html>
