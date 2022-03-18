@@ -3,7 +3,7 @@
 * {
 	box-sizing: border-box;
 }
-body {
+body,ul {
 	margin: 0;
 	padding: 0;
 }
@@ -14,55 +14,73 @@ body {
 		"header header header"
 		"left main right"
 		"footer footer footer";
-	place-content: space-between;
 }
 
 /* 상단 바 */
 header {
 	/* Grid 아이템 */
 	grid-area: header;
-	position: sticky; /* fixed의 경우 Grid 아이템 설정이 무시됨 */
-	top: 0;
-	z-index: 10;
 	
+	position: sticky;
+	z-index: 10;
+	top: 0;
+}
+.header-container {
 	/* Grid 컨테이너 */
 	display: grid;
-	grid-template-areas:
-		"logo title main-menu"
-		"none none dropdown-menu";
-	place-content: space-between;
+	grid-template-columns: repeat(3, auto);
+}
+.header-container > div {
+	/* Grid 아이템 */
+	place-self: center;
+}
+nav.main-menu {
+	/* Grid 아이템 */
+	justify-self: end;
 }
 
-header .logo {grid-area: logo;}
-header .title {grid-area: title;}
-header .main-menu {grid-area: main-menu;}
-header .dropdown-menu {
-	/* Grid 아이템 */
-	grid-area: dropdown-menu;
-	position: sticky;
-	top: 50px;
-	right: 30px;
-	z-index: 11;
-}
+/* 모바일 상단 바 */
+
 
 /* 사이드 바 */
-aside {
-	max-width: 200px;
-}
 aside.left {
+	/* Grid 아이템 */
 	grid-area: left;
 }
 aside.right {
+	/* Grid 아이템 */
 	grid-area: right;
 }
 
 /* 본문 */
-section {
+section {	
+	/* Grid 아이템 */
 	grid-area: main;
+	
 	min-height: 600px;
 }
 
 /* 하단 바 */
 footer {
+	/* Grid 아이템 */
 	grid-area: footer;
+	
+	padding: 60px 0;
+}
+
+/* 반응형 */
+@media screen and (min-width:993px) {
+	header .hamburger {
+		display: none;
+	}
+}
+@media screen and (max-width:992px) {
+	nav.main-menu {
+		display: none;
+	}
+}
+@media screen and (max-width:576px) {
+	header .title {
+		display: none;
+	}
 }

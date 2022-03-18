@@ -11,12 +11,14 @@
 	--white: #ffffff;
 	--white-subtle: #f6f8fa;
 
+	--dark-gray: #8c959e;
+	--gray: #afb8c1;
 	--light-gray: #d0d7de;
 	--light-gray-muted: #d8dee4;
 }
 
 /* 공통: 영역별 전경색/배경색 */
-body,header,footer {
+body,.header-container,header.mobile,footer {
 	color: var(--white);
 	background-color: var(--black);
 }
