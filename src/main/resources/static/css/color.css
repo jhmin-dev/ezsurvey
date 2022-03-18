@@ -1,0 +1,26 @@
+@charset "UTF-8";
+/* 공통: 색 변수 */
+:root {
+	--point: #8474e4;
+	--point-muted: #9789e8;
+	
+	--black: #24292f;
+	--black-muted: #57606a;
+	--black-subtle: #6e7781;
+	
+	--white: #ffffff;
+	--white-subtle: #f6f8fa;
+
+	--light-gray: #d0d7de;
+	--light-gray-muted: #d8dee4;
+}
+
+/* 공통: 영역별 전경색/배경색 */
+body,header,footer {
+	color: var(--white);
+	background-color: var(--black);
+}
+.page-container,nav.dropdown-menu ul {
+	color: var(--black);
+	background-color: var(--white);
+}

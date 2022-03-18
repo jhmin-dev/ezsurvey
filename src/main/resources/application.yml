@@ -15,11 +15,17 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.Oracle12cDialect
         show_sql: true
-        format_sql: true
+        # format_sql: true
         # use_sql_comments: true
     hibernate:
       ddl-auto: update
+  messages:
+    basename: messages.validation
+    encoding: UTF-8
 server:
   port: 8443
   http2:
     enabled: true
+logging:
+  level:
+    root: info

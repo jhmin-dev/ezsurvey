@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LoginController {	
 	@RequestMapping("/my/project")
 	public String test() {
-		return "project/my";
+		return "/my/project";
 	}
 	
 	// 작동하지 않음
 	@RequestMapping("/login/error")
 	public String error() {
-		return "error/login";
+		return "/login/error";
 	}
 }

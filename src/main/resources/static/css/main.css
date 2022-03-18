@@ -1,3 +1,74 @@
 @charset "UTF-8";
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
+@import 'color.css';
+@import 'layout.css';
 
-/* 웹 시큐리티 테스트용 */
+* {
+	font-family: 'Pretendard', sans-serif;
+	font-weight: 500;	
+}
+
+html {
+	font-size: 24px;
+}
+
+a,a:hover,a:active,a:visited {
+	text-decoration: inherit;
+	color: inherit;
+}
+
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+img {
+	object-fit: cover;
+	object-position: center;
+	background-color: var(--light-gray);
+}
+img.profile {
+	border-radius: 50%;
+}
+
+/* 상단 바 */
+header {text-align: center;}
+header,header > * {height: 60px;}
+
+/* 메뉴 */
+nav ul li {height: 60px;}
+nav ul li a {
+	padding: 15px 30px;
+	display: block;
+	height: inherit;
+}
+
+/* 메인 메뉴 */
+nav.main-menu ul {
+	display: flex;
+	flex-direction: row;
+}
+nav.main-menu ul img.profile {
+	width: 32px;
+	height: 32px;
+}
+/* 드롭다운 메뉴 */
+nav.dropdown-menu {
+	display: flex;
+	flex-direction: column;
+	
+	height: auto;	
+}
+nav.dropdown-menu ul {
+	display: flex;
+	flex-direction: column;
+}
+
+/* 하단 바 */
+footer .copy {
+	margin: 60px auto;
+	max-width: 1200px;
+	text-align: center;
+}

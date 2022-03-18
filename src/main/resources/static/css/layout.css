@@ -1,0 +1,68 @@
+@charset "UTF-8";
+/* 공통: 레이아웃 (여백, 크기 및 영역 분할) */
+* {
+	box-sizing: border-box;
+}
+body {
+	margin: 0;
+	padding: 0;
+}
+.page-container {
+	/* Grid 컨테이너 */
+	display: grid;
+	grid-template-areas:
+		"header header header"
+		"left main right"
+		"footer footer footer";
+	place-content: space-between;
+}
+
+/* 상단 바 */
+header {
+	/* Grid 아이템 */
+	grid-area: header;
+	position: sticky; /* fixed의 경우 Grid 아이템 설정이 무시됨 */
+	top: 0;
+	z-index: 10;
+	
+	/* Grid 컨테이너 */
+	display: grid;
+	grid-template-areas:
+		"logo title main-menu"
+		"none none dropdown-menu";
+	place-content: space-between;
+}
+
+header .logo {grid-area: logo;}
+header .title {grid-area: title;}
+header .main-menu {grid-area: main-menu;}
+header .dropdown-menu {
+	/* Grid 아이템 */
+	grid-area: dropdown-menu;
+	position: sticky;
+	top: 50px;
+	right: 30px;
+	z-index: 11;
+}
+
+/* 사이드 바 */
+aside {
+	max-width: 200px;
+}
+aside.left {
+	grid-area: left;
+}
+aside.right {
+	grid-area: right;
+}
+
+/* 본문 */
+section {
+	grid-area: main;
+	min-height: 600px;
+}
+
+/* 하단 바 */
+footer {
+	grid-area: footer;
+}
