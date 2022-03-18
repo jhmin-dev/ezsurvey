@@ -4,6 +4,8 @@ import java.util.Collections;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -23,6 +25,9 @@ import io.ezsurvey.repository.UserRepository;
 
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+	@Autowired
+	private static final Logger logger = LoggerFactory.getLogger(CustomOAuth2UserService.class);
+	
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -45,7 +50,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		OAuth2Attributes attributes = OAuth2Attributes.of(provider, userNameAttribute, oAuth2User.getAttributes());
 		
 		// 제공 정보를 확인하기 위해 콘솔에 출력
-		System.out.println(attributes.getAttributes());
+		logger.info(attributes.getAttributes().toString());
 		
 		// 데이터베이스에 사용자 정보가 없으면 회원 가입, 있으면 로그인
 		User user = saveOrUpdate(attributes);
