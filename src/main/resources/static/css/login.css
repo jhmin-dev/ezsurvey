@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+main {
+	grid-auto-rows: auto;
+}
+.login-button {
+	display: grid;
+	grid-template-columns: 60px auto;
+	place-content: stretch;
+	place-items: center;
+	
+	margin: 10px 0;
+	width: 360px;
+	height: 60px;
+	border-radius: 5px;
+	border: 1px solid var(--light-gray-muted);
+	cursor: pointer;
+	font-size: 20px;
+	font-weight: 700;
+}
+.login-button img {
+	width: 48px;
+	height: 48px;
+}
+#google {
+	color: var(--google-black);
+	background-color: var(--google-white);
+}
+#kakao {
+	color: var(--kakao-label);
+	background-color: var(--kakao-container);
+	border-color: var(--kakao-container);
+}
+#naver {
+	color: var(--naver-white);
+	background-color: var(--naver-green);
+	border-color: var(--naver-green);
+}

@@ -29,14 +29,12 @@ header {
 	/* Grid 컨테이너 */
 	display: grid;
 	grid-template-columns: repeat(3, auto);
-}
-.header-container > div {
-	/* Grid 아이템 */
-	place-self: center;
+	place-content: stretch;
+	place-items: center;
 }
 nav.main-menu {
 	/* Grid 아이템 */
-	justify-self: end;
+	justify-self: end; /* overrides justify-items */
 }
 
 /* 모바일 상단 바 */
@@ -53,9 +51,14 @@ aside.right {
 }
 
 /* 본문 */
-section {	
+main {	
 	/* Grid 아이템 */
 	grid-area: main;
+	
+	/* Grid 컨테이너 */
+	display: grid;
+	place-content: start stretch; /* determines the spacing between grid lines */
+	place-items: center; /* determines how the items as a whole are aligned within the container */
 	
 	min-height: 600px;
 }

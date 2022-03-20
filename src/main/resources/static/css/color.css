@@ -15,6 +15,15 @@
 	--gray: #afb8c1;
 	--light-gray: #d0d7de;
 	--light-gray-muted: #d8dee4;
+	
+	--google-blue: #4285F4;
+	--google-black: #0000008A; /* 54% */
+	--google-white: #FFFFFF;
+	--naver-green: #03C75A;
+	--naver-white: #FFFFFF;
+	--kakao-container: #FEE500;
+	--kakao-symbol: #000000E6; /* 90% */
+	--kakao-label: #191919;
 }
 
 /* 공통: 영역별 전경색/배경색 */

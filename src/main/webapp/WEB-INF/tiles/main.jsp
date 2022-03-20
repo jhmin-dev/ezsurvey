@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title><tiles:insertAttribute name="title"/></title>
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
 <div class="page-container">

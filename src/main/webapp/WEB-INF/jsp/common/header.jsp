@@ -39,7 +39,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="my/project">
+				<a href="/my/project">
 					내 설문조사
 				</a>
 			</li>
@@ -68,7 +68,7 @@
 	</div>
 	<ul>
 		<li class="not-link">
-			${user.name}
+			${user.name}님
 		</li>
 		<li class="not-link"><hr></li>
 		<li>

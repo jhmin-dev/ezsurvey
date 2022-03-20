@@ -14,10 +14,9 @@
 	
 	<!-- Tiles 설정명 패턴을 이용하여 jsp 경로명 매핑 -->
 	<definition name="/*" extends="layout-main"> <!-- 식별자가 layout-main인 definition 태그를 상속 -->
-		<put-attribute name="body" value="/WEB-INF/jsp/{1}.jsp"/> <!-- 필요한 부분만 재정의 -->
+		<put-attribute name="body" value="/WEB-INF/jsp/{1}.jsp"/> <!-- Tiles 설정명이 /project이면 /project.jsp로 매핑 -->
 	</definition>
-	
 	<definition name="/*/*" extends="layout-main">
-		<put-attribute name="body" value="/WEB-INF/jsp/{2}/{1}.jsp"/> <!-- Tiles 설정명이 /my/project이면 /project/my.jsp로 매핑 -->
+		<put-attribute name="body" value="/WEB-INF/jsp/{1}/{2}.jsp"/> <!-- Tiles 설정명이 /project/my이면 /project/my.jsp로 매핑 -->
 	</definition>
 </tiles-definitions>

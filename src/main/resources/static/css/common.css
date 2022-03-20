@@ -20,11 +20,11 @@ a,a:hover,a:active,a:visited {
 a:hover {
 	transition: background-color ease 0.5s;
 }
-.page-container section a {
+.page-container main a {
 	color: var(--point);
 	font-weight: 700;
 }
-.page-container section a:hover {
+.page-container main a:hover {
 	color: var(--point-muted);
 	transition: color ease 0.5s;
 }
@@ -35,7 +35,6 @@ ul {
 img {
 	object-fit: cover;
 	object-position: center;
-	background-color: var(--light-gray);
 }
 img.profile {
 	border-radius: 50%;
@@ -200,4 +199,11 @@ footer .copy {
 	max-width: 1200px;
 	font-size: 20px;
 	text-align: center;
+}
+
+/* 본문: 제목 */
+main .title {
+	margin: 60px 0;
+	font-size: 28px;
+	font-weight: 700;
 }

@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import io.ezsurvey.service.CustomOAuth2UserService;
 
@@ -30,12 +31,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest().permitAll()
 			.and()
 				.logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // 로그아웃 요청 URL
+				.logoutSuccessUrl("/") // 로그아웃 성공시 이동할 URL
 				.clearAuthentication(true)
 				.invalidateHttpSession(true)
 				.deleteCookies("JSESSIONID")
-				.logoutSuccessUrl("/")
 			.and()
 				.oauth2Login()
+				.loginPage("/login")
 				.failureUrl("/login/error") // 로그인 실패시 이동할 URL
 				.userInfoEndpoint()
 				.userService(customOAuth2UserService); // OAuth2 로그인 성공시 사용자 정보를 처리할 서비스 지정
