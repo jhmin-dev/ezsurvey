@@ -12,7 +12,6 @@ import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserServ
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -74,7 +73,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 			return userRepository.save(user);
 		}
 		else { // Kakao 계정 대표 이메일로 gmail을 설정한 사용자가 Kakao로 회원 가입 후 Google로 로그인하는 상황을 방지
-			throw new OAuth2AuthenticationException(new OAuth2Error("invalid_request", "다른 소셜 플랫폼으로 이미 가입한 이메일 주소입니다!", "/login/error"));
+			throw new WrongOAuth2ProviderException();
 		}
 	}
 }

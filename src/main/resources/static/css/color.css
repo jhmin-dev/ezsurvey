@@ -16,6 +16,9 @@
 	--light-gray: #d0d7de;
 	--light-gray-muted: #d8dee4;
 	
+	--error: #dc3545;
+	--error-transparent: #dc354599; /* 60% */
+	
 	--google-blue: #4285F4;
 	--google-black: #0000008A; /* 54% */
 	--google-white: #FFFFFF;

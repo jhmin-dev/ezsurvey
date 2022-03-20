@@ -10,12 +10,16 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import io.ezsurvey.service.CustomOAuth2UserService;
+import io.ezsurvey.web.user.CustomAuthenticationFailureHandler;
 
 @Configuration
 @EnableWebSecurity // 현재 클래스(=필터)를 스프링 필터 체인에 등록
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private CustomOAuth2UserService customOAuth2UserService;
+	
+	@Autowired
+	private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception { // WebSecurity 필터가 HttpSecurity 필터보다 빠름
@@ -39,7 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.oauth2Login()
 				.loginPage("/login")
-				.failureUrl("/login/error") // 로그인 실패시 이동할 URL
+				// .failureUrl("/login") // 로그인 실패시 이동할 URL
+				.failureHandler(customAuthenticationFailureHandler)
 				.userInfoEndpoint()
 				.userService(customOAuth2UserService); // OAuth2 로그인 성공시 사용자 정보를 처리할 서비스 지정
 	}
