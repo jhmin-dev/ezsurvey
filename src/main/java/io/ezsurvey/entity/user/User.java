@@ -8,12 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name="member")
 public class User {
 	@Id // PK
@@ -40,7 +41,8 @@ public class User {
 	private Role role;
 	
 	@Builder
-	public User(Provider provider, String email, Boolean emailVerified, String name, String profileURL, Role role) {
+	public User(Provider provider, String email, Boolean emailVerified
+			, String name, String profileURL, Role role) {
 		this.provider = provider;
 		this.email = email;
 		this.emailVerified = emailVerified;

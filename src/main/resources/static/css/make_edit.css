@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+.toggle-container {
+	width: 60px;
+	height: 30px;
+	border-radius: 15px;
+	border: 1px solid var(--gray);
+	background-color: var(--gray);
+	transition: background-color 0.5s ease;
+}
+.toggle-container.active {
+	background-color: var(--point);
+}
+.toggle-switch {
+	position: relative;
+	z-index: 1;
+	left: 0px;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	border: 1px solid var(--gray);	
+	background-color: var(--white);
+	transition: left 0.5s ease;
+}
+.toggle-switch.active {
+	left: 30px;
+}
