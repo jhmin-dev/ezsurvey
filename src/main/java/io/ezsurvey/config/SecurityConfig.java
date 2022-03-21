@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import io.ezsurvey.service.CustomOAuth2UserService;
+import io.ezsurvey.service.user.CustomOAuth2UserService;
 import io.ezsurvey.web.user.CustomAuthenticationFailureHandler;
 
 @Configuration
@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/admin/**").hasRole("ADMIN")
-				.antMatchers("/make/**", "/edit/**", "/my/**", "/bookmark/**").authenticated()
+				.antMatchers("/make/**", "/edit/**", "/my/**", "/bookmark/**", "/settings/**", "/delete/**").authenticated()
 				.anyRequest().permitAll()
 			.and()
 				.logout()
@@ -42,9 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.deleteCookies("JSESSIONID")
 			.and()
 				.oauth2Login()
-				.loginPage("/login")
-				// .failureUrl("/login") // 로그인 실패시 이동할 URL
-				.failureHandler(customAuthenticationFailureHandler)
+				.loginPage("/login") // 인증 요구시 이동할 URL
+				.failureHandler(customAuthenticationFailureHandler) // 로그인 실패를 처리할 핸들러 지정
 				.userInfoEndpoint()
 				.userService(customOAuth2UserService); // OAuth2 로그인 성공시 사용자 정보를 처리할 서비스 지정
 	}

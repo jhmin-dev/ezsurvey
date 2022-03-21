@@ -1,4 +1,4 @@
-package io.ezsurvey.service;
+package io.ezsurvey.service.user;
 
 import java.util.Collections;
 
@@ -73,7 +73,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 			return userRepository.save(user);
 		}
 		else { // Kakao 계정 대표 이메일로 gmail을 설정한 사용자가 Kakao로 회원 가입 후 Google로 로그인하는 상황을 방지
-			throw new WrongOAuth2ProviderException();
+			throw new ProviderMismatchException();
 		}
 	}
 }
