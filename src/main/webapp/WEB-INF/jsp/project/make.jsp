@@ -10,6 +10,7 @@
 <form:form modelAttribute="surveyWebDTO" id="make">
 	<form:errors cssClass="error notice" element="div"/>
 	<form:errors path="visibility" cssClass="error notice" element="div"/>
+	<form:hidden path="visibility"/>
 	<ul>
 		<li>
 			<form:label path="title">제목</form:label>
@@ -26,18 +27,23 @@
 			<div class="toggle-container" id="public">
 				<div class="toggle-switch"></div>
 			</div>
-			<div class="notice"></div>
+			<div class="notice">
+				설문조사를 전체 공개 또는 일부 공개
+			</div>
 		</li>
 		<li class="toggle">
 			<label>링크 생성</label>
 			<div class="toggle-container" id="share">
 				<div class="toggle-switch"></div>
 			</div>
-			<div class="notice"></div>
+			<div class="notice">
+				설문조사를 링크 받은 사람에게만 공개
+			</div>
 		</li>
-		<form:hidden path="visibility"/>
+		<li>
+			<input type="submit" value="생성하기">
+		</li>
 	</ul>
-	<form:button>생성하기</form:button>
 </form:form>
 </article>
 <link rel="stylesheet" href="/css/make_edit.css">

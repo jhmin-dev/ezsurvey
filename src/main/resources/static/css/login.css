@@ -4,7 +4,7 @@ main {
 	grid-auto-rows: auto;
 }
 .login-button,.login-error {
-	display: grid;	
+	display: grid;
 	place-content: stretch;
 	place-items: center;
 	
@@ -19,7 +19,7 @@ main {
 	grid-template-columns: 60px auto;
 
 	cursor: pointer;
-	font-size: 20px;
+	font-size: 1.25rem;
 }
 .login-button img {
 	width: 48px;

@@ -1,11 +1,69 @@
 @charset "UTF-8";
 
+/* 레이아웃 */
+form#make {
+	margin: 0 auto;
+	width: 100%;	
+}
+form ul {
+	margin: 0 auto;
+	min-width: 360px;
+	max-width: 640px;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+}
+form ul li {
+	max-width: 640px;
+	padding: 15px 60px;
+}
+form ul li:not(.toggle) {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+}
+li.toggle {
+	display: grid;
+	grid-template-areas:
+		"label toggle"
+		"notice toggle";
+	place-content: stretch;
+	place-items: center start;
+}
+li.toggle label {
+	grid-area: label;
+}
+li.toggle .notice {
+	grid-area: notice;
+}
+li.toggle .toggle-container {
+	grid-area: toggle;
+	justify-self: end;
+}
+
+/* 스타일 */
+label {
+	max-width: 240px;
+	font-size: 1.25rem;
+	font-weight: 700;
+}
+.notice,.error {
+	font-size: 0.875rem;
+}
+.notice {
+	color: var(--dark-gray);
+}
+.error {
+	color: var(--error);	
+}
+
+/* 토글 버튼 */
 .toggle-container {
 	width: 60px;
 	height: 30px;
 	border-radius: 15px;
-	border: 1px solid var(--gray);
-	background-color: var(--gray);
+	border: 1px solid var(--light-gray);
+	background-color: var(--light-gray);
 	transition: background-color 0.5s ease;
 }
 .toggle-container.active {
@@ -18,7 +76,7 @@
 	width: 30px;
 	height: 30px;
 	border-radius: 50%;
-	border: 1px solid var(--gray);	
+	border: 1px solid var(--light-gray);	
 	background-color: var(--white);
 	transition: left 0.5s ease;
 }

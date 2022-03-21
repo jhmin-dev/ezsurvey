@@ -5,7 +5,7 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
 	<!-- 레이아웃 -->
-	<definition name="layout-main" template="/WEB-INF/tiles/main.jsp"> <!-- 레이아웃의 Tiles 설정명은 후손 Tiles 설정명 패턴과 겹치지 않아야 함 -->
+	<definition name="layout-default" template="/WEB-INF/tiles/default.jsp"> <!-- 레이아웃의 Tiles 설정명은 후손 Tiles 설정명 패턴과 겹치지 않아야 함 -->
 		<put-attribute name="title" value="ezsurvey"/>
 		<put-attribute name="header" value="/WEB-INF/jsp/common/header.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/jsp/main.jsp"/>
@@ -13,10 +13,10 @@
 	</definition>
 	
 	<!-- Tiles 설정명 패턴을 이용하여 jsp 경로명 매핑 -->
-	<definition name="/*" extends="layout-main"> <!-- 식별자가 layout-main인 definition 태그를 상속 -->
+	<definition name="/*" extends="layout-default"> <!-- 식별자가 layout-main인 definition 태그를 상속 -->
 		<put-attribute name="body" value="/WEB-INF/jsp/{1}.jsp"/> <!-- Tiles 설정명이 /project이면 /project.jsp로 매핑 -->
 	</definition>
-	<definition name="/*/*" extends="layout-main">
+	<definition name="/*/*" extends="layout-default">
 		<put-attribute name="body" value="/WEB-INF/jsp/{1}/{2}.jsp"/> <!-- Tiles 설정명이 /project/my이면 /project/my.jsp로 매핑 -->
 	</definition>
 </tiles-definitions>
