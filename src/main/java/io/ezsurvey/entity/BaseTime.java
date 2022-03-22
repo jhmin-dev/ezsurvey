@@ -16,7 +16,7 @@ import lombok.Getter;
 @EntityListeners(AuditingEntityListener.class) // 현재 클래스에 Auditing 기능을 포함
 public abstract class BaseTime {
 	@CreatedDate // INSERT시 값을 자동으로 채움
-	private LocalDateTime registered;
+	private LocalDateTime created;
 	
 	@LastModifiedDate // UPDATE시 값을 자동으로 채움
 	private LocalDateTime modified;

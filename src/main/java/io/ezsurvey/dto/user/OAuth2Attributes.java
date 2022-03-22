@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 public class OAuth2Attributes {
 	private Map<String, Object> attributes;
@@ -85,6 +85,7 @@ public class OAuth2Attributes {
 				.build();
 	}
 	
+	// DTO to Entity
 	public User toEntity() {
 		return User.builder()
 						.provider(provider)

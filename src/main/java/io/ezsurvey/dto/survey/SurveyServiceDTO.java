@@ -18,14 +18,13 @@ public class SurveyServiceDTO {
 	private User user;
 	private String title;
 	private String content;
-	private boolean randomized;
-	private LocalDateTime registered;
+	private LocalDateTime created;
 	private LocalDateTime modified;
 	private LocalDateTime distributed;
 	private LocalDateTime expires;
-	private int status;
-	private boolean deleted;
-	private int visibility;
+	private Byte status;
+	private Boolean deleted;
+	private Byte visibility;
 	private String shared;
 	
 	// Entity to ServiceDTO
@@ -34,13 +33,12 @@ public class SurveyServiceDTO {
 		this.user = survey.getUser();
 		this.title = survey.getTitle();
 		this.content = survey.getContent();
-		this.randomized = survey.isRandomized();
-		this.registered = survey.getRegistered();
+		this.created = survey.getCreated();
 		this.modified = survey.getModified();
 		this.distributed = survey.getDistributed();
 		this.expires = survey.getExpires();
 		this.status = survey.getStatus();
-		this.deleted = survey.isDeleted();
+		this.deleted = survey.getDeleted();
 		this.visibility = survey.getVisibility();
 		this.shared = survey.getShared();
 	}

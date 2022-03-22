@@ -22,15 +22,14 @@ public class SurveyWebDTO {
 	private String title;
 	@NotBlank
 	private String content;
-	private boolean randomized;
-	private LocalDateTime registered;
+	private LocalDateTime created;
 	private LocalDateTime modified;
 	private LocalDateTime distributed;
 	private LocalDateTime expires;
-	private int status;
-	private boolean deleted;
+	private Byte status;
+	private Boolean deleted;
 	@Min(0) @Max(2)
-	private int visibility;
+	private Byte visibility;
 	private String shared;
 	
 	// ServiceDTO to WebDTO
@@ -39,13 +38,12 @@ public class SurveyWebDTO {
 		this.user = serviceDTO.getUser();
 		this.title = serviceDTO.getTitle();
 		this.content = serviceDTO.getContent();
-		this.randomized = serviceDTO.isRandomized();
-		this.registered = serviceDTO.getRegistered();
+		this.created = serviceDTO.getCreated();
 		this.modified = serviceDTO.getModified();
 		this.distributed = serviceDTO.getDistributed();
 		this.expires = serviceDTO.getExpires();
 		this.status = serviceDTO.getStatus();
-		this.deleted = serviceDTO.isDeleted();
+		this.deleted = serviceDTO.getDeleted();
 		this.visibility = serviceDTO.getVisibility();
 		this.shared = serviceDTO.getShared();
 	}

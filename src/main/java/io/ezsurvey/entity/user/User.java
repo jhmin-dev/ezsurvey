@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import io.ezsurvey.entity.BaseTime;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name="member")
-public class User {
+public class User extends BaseTime {
 	@Id // PK
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // GENERATED AS IDENTITY
 	private Long member;
@@ -37,7 +38,7 @@ public class User {
 	private String profileURL;
 
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
+	@Column(length = 32, nullable = false)
 	private Role role;
 	
 	@Builder

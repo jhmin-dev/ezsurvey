@@ -11,6 +11,7 @@ public class SessionUser implements Serializable { // 세션에 인증된 사용
 	private String name;
 	private String profileURL;
 	
+	// Entity to DTO
 	public SessionUser(User user) {
 		this.member = user.getMember();
 		this.name = user.getName();
