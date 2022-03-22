@@ -10,7 +10,7 @@
 <form:form modelAttribute="surveyWebDTO" id="make">
 	<form:errors cssClass="error notice" element="div"/>
 	<form:errors path="visibility" cssClass="error notice" element="div"/>
-	<form:hidden path="visibility"/>
+	<form:hidden path="visibility" value="hidden" />
 	<ul>
 		<li>
 			<form:label path="title">제목</form:label>

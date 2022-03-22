@@ -2,11 +2,10 @@ package io.ezsurvey.dto.survey;
 
 import java.time.LocalDateTime;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import io.ezsurvey.entity.survey.Visibility;
 import io.ezsurvey.entity.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,10 +25,9 @@ public class SurveyWebDTO {
 	private LocalDateTime modified;
 	private LocalDateTime distributed;
 	private LocalDateTime expires;
-	private Byte status;
+	private Byte status = 0;
 	private Boolean deleted;
-	@Min(0) @Max(2)
-	private Byte visibility;
+	private String visibility;
 	private String shared;
 	
 	// ServiceDTO to WebDTO
@@ -44,7 +42,7 @@ public class SurveyWebDTO {
 		this.expires = serviceDTO.getExpires();
 		this.status = serviceDTO.getStatus();
 		this.deleted = serviceDTO.getDeleted();
-		this.visibility = serviceDTO.getVisibility();
+		this.visibility = serviceDTO.getVisibility().getKey();
 		this.shared = serviceDTO.getShared();
 	}
 	
@@ -55,9 +53,8 @@ public class SurveyWebDTO {
 				.title(title)
 				.content(content)
 				.status(status)
-				.visibility(visibility)
+				.visibility(Visibility.findByKey(visibility))
 				.shared(shared)
 				.build();
 	}
-
 }

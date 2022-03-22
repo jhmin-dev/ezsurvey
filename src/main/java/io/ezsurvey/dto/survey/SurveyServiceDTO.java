@@ -3,6 +3,7 @@ package io.ezsurvey.dto.survey;
 import java.time.LocalDateTime;
 
 import io.ezsurvey.entity.survey.Survey;
+import io.ezsurvey.entity.survey.Visibility;
 import io.ezsurvey.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +25,7 @@ public class SurveyServiceDTO {
 	private LocalDateTime expires;
 	private Byte status;
 	private Boolean deleted;
-	private Byte visibility;
+	private Visibility visibility;
 	private String shared;
 	
 	// Entity to ServiceDTO

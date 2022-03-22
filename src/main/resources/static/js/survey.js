@@ -14,9 +14,9 @@ document.querySelector('form#make').addEventListener('submit', function() {
 	let toggle_share = document.querySelector('#share');
 	let visibility = document.querySelector('#visibility');
 	if(toggle_public.classList.contains('active')) {
-		visibility.value = 2;
+		visibility.value = 'public';
 	}
 	if(toggle_share.classList.contains('active')) {
-		visibility.value = 1;
+		visibility.value = 'link_only';
 	}
 })
