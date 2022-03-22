@@ -15,9 +15,11 @@ public class DataLoader implements ApplicationRunner {
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		categoryRepository.save(new Category("서답형"));
-		categoryRepository.save(new Category("선다형"));
-		categoryRepository.save(new Category("척도형"));
+		String[] categories = {"서답형", "선다형", "척도형"};
+		for(String s: categories) {
+			Category c = categoryRepository.findByName(s).orElse(new Category(s));
+			categoryRepository.save(c);
+		}
 	}
 
 }

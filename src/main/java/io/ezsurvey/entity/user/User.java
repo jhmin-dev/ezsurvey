@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name="member")
-public class User extends BaseTime {
+public class User {
 	@Id // PK
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // GENERATED AS IDENTITY
 	private Long member;
