@@ -20,7 +20,7 @@ import io.ezsurvey.dto.user.OAuth2Attributes;
 import io.ezsurvey.dto.user.SessionUser;
 import io.ezsurvey.entity.user.Provider;
 import io.ezsurvey.entity.user.User;
-import io.ezsurvey.repository.UserRepository;
+import io.ezsurvey.repository.user.UserRepository;
 
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {

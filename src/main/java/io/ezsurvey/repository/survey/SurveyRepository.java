@@ -1,4 +1,4 @@
-package io.ezsurvey.repository;
+package io.ezsurvey.repository.survey;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

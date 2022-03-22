@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import io.ezsurvey.dto.survey.SurveyServiceDTO;
 import io.ezsurvey.entity.survey.Survey;
-import io.ezsurvey.repository.SurveyRepository;
+import io.ezsurvey.repository.survey.SurveyRepository;
 
 @Service
 public class SurveyService {

@@ -20,4 +20,8 @@ public class Category {
 	
 	@Column(length = 64, nullable = false)
 	private String name;
+	
+	public Category(String name) {
+		this.name = name;
+	}
 }

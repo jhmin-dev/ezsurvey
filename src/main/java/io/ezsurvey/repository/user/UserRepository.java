@@ -1,4 +1,4 @@
-package io.ezsurvey.repository;
+package io.ezsurvey.repository.user;
 
 import java.util.Optional;
 
