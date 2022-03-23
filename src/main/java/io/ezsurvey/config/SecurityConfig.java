@@ -41,6 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.invalidateHttpSession(true)
 				.deleteCookies("JSESSIONID")
 			.and()
+				.exceptionHandling()
+				.accessDeniedPage("/login") // 권한이 없는 경우 이동할 URL
+			.and()
 				.oauth2Login()
 				.loginPage("/login") // 인증 요구시 이동할 URL
 				.failureHandler(customAuthenticationFailureHandler) // 로그인 실패를 처리할 핸들러 지정

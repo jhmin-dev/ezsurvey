@@ -51,6 +51,7 @@ public class OAuth2Attributes {
 						.userNameAttribute(userNameAttribute)
 						.provider(Provider.GOOGLE)
 						.email((String)attributes.get("email"))
+						.emailVerified((Boolean)attributes.get("email_verified"))
 						.name((String)attributes.get("name"))
 						.profileURL((String)attributes.get("picture"))
 						.build();
