@@ -16,19 +16,14 @@
 		</c:if>
 	</div>
 	</c:if>
-	<div id="google" class="login-button">
-		<img src="/images/logo_google.png">
-		<div>구글로 로그인하기</div>
-	</div>
-	<div id="kakao" class="login-button">
-		<img src="/images/logo_kakao.png">
-		<div>카카오로 로그인하기</div>
-	</div>
-	<div id="naver" class="login-button">
-		<img src="/images/logo_naver.png">
-		<div>네이버로 로그인하기</div>
-	</div>
+	<c:forEach items="${provider}" var="p">
+	<div id="${p.key}" class="login-button">
+		<img src="/images/logo_${p.key}.png">
+		<div><span class="word">${p.name}</span><span class="post"></span> 로그인하기</div>
+	</div>	
+	</c:forEach>
 </article>
 <link rel="stylesheet" href="/css/login.css">
+<script type="text/javascript" src="/js/StringUtil.js"></script>
 <script type="text/javascript" src="/js/login.js"></script>
 </main>

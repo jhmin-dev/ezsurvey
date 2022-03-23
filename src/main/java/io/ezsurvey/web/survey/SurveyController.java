@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import io.ezsurvey.dto.survey.SurveyServiceDTO;
 import io.ezsurvey.dto.survey.SurveyWebDTO;
 import io.ezsurvey.dto.user.SessionUser;
+import io.ezsurvey.entity.EnumBase;
 import io.ezsurvey.entity.SearchField;
 import io.ezsurvey.repository.user.UserRepository;
 import io.ezsurvey.service.survey.SurveyService;
@@ -57,6 +58,12 @@ public class SurveyController {
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
 		surveyWebDTO.setUser(userRepository.getById(sessionUser.getMember()));
 		
+		// 필수 필드에 값 저장
+		surveyWebDTO.setStatus("before"); // 설문조사 생성 시에는 항상 status가 배포 전으로 설정되어야 함
+		if(surveyWebDTO.getVisibility()==null || surveyWebDTO.getVisibility().isBlank()) { // 사용자가 공개 여부를 별도로 설정하지 않은 경우
+			surveyWebDTO.setVisibility("hidden"); // visibility를 비공개로 설정
+		}
+		
 		surveyService.insertSurvey(surveyWebDTO.toServiceDTO());
 		
 		return "redirect:/";
@@ -65,17 +72,49 @@ public class SurveyController {
 	@RequestMapping("/project")
 	public String list(@PageableDefault(page = 0, sort = "survey", direction = Direction.DESC) Pageable pageable
 			, String field, String word, Model model) {
-		Page<SurveyServiceDTO> list = null;
+		Page<SurveyServiceDTO> page = Page.empty();
 		
-		if(word==null || word.isBlank()) {
-			list = surveyService.find(pageable, null, null);
+		if(word==null || word.isBlank()) { // 검색어를 입력하지 않은 경우
+			page = surveyService.find(pageable, null, null);
 		}
-		else {
-			list = surveyService.find(pageable, SearchField.findByKey(field), word);
+		else { // 검색어를 입력한 경우
+			page = surveyService.find(pageable, EnumBase.findByKey(SearchField.class, field), word);
 		}
 		
-		model.addAttribute("list", list.map(SurveyWebDTO::new));
+		model.addAttribute("page", page.map(SurveyWebDTO::new));
+		model.addAttribute("count", page.getTotalElements());
+		model.addAttribute("title", "둘러보기");
+		model.addAttribute("type", "survey");
+		model.addAttribute("link", "list");
 		
-		return "/project/list"; // Tiles 설정명 반환
+		return "/list"; // Tiles 설정명 반환
+	}
+	
+	@RequestMapping("/my/project")
+	public String my(@PageableDefault(page = 0, sort = "survey", direction = Direction.DESC) Pageable pageable
+			, String field, String word, Model model) {
+		Page<SurveyServiceDTO> page = Page.empty();
+		
+		model.addAttribute("page", page.map(SurveyWebDTO::new));
+		model.addAttribute("count", page.getTotalElements());
+		model.addAttribute("title", "내 설문조사");
+		model.addAttribute("type", "survey");
+		model.addAttribute("link", "my");
+		
+		return "/list"; // Tiles 설정명 반환
+	}
+	
+	@RequestMapping("/bookmark/project")
+	public String bookmark(@PageableDefault(page = 0, sort = "survey", direction = Direction.DESC) Pageable pageable
+			, String field, String word, Model model) {
+		Page<SurveyServiceDTO> page = Page.empty();
+		
+		model.addAttribute("page", page.map(SurveyWebDTO::new));
+		model.addAttribute("count", page.getTotalElements());
+		model.addAttribute("title", "즐겨찾기: 설문조사");
+		model.addAttribute("type", "survey");
+		model.addAttribute("link", "bookmark");
+		
+		return "/list"; // Tiles 설정명 반환
 	}
 }
