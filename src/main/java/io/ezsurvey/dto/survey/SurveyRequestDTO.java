@@ -16,7 +16,7 @@ import lombok.ToString;
 
 @Getter @Setter @ToString(exclude = {"user"})
 @NoArgsConstructor
-public class SurveyWebDTO {
+public class SurveyRequestDTO {
 	private Long survey;
 	private User user;
 	@NotBlank @Size(max = 128)
@@ -31,8 +31,8 @@ public class SurveyWebDTO {
 	private String visibility;
 	private String shared;
 	
-	// ServiceDTO to WebDTO
-	public SurveyWebDTO(SurveyServiceDTO serviceDTO) {
+	// ServiceDTO to RequestDTO
+	public SurveyRequestDTO(SurveyServiceDTO serviceDTO) {
 		this.survey = serviceDTO.getSurvey();
 		this.user = serviceDTO.getUser();
 		this.title = serviceDTO.getTitle();
@@ -46,7 +46,7 @@ public class SurveyWebDTO {
 		this.shared = serviceDTO.getShared();
 	}
 	
-	// WebDTO to ServiceDTO
+	// RequestDTO to ServiceDTO
 	public SurveyServiceDTO toServiceDTO() {
 		return SurveyServiceDTO.builder()
 				.user(user)

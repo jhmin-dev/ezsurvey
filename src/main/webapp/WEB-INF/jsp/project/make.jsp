@@ -7,7 +7,7 @@
 	설문조사 생성
 </div>
 <article>
-<form:form modelAttribute="surveyWebDTO" id="make">
+<form:form modelAttribute="requestDTO" id="make">
 	<form:errors cssClass="error notice" element="div"/>
 	<form:errors path="visibility" cssClass="error notice" element="div"/>
 	<form:hidden path="visibility"/>

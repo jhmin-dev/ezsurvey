@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.ezsurvey.dto.survey.SurveyServiceDTO;
-import io.ezsurvey.dto.survey.SurveyWebDTO;
+import io.ezsurvey.dto.survey.SurveyResponseDTO;
+import io.ezsurvey.dto.survey.SurveyRequestDTO;
 import io.ezsurvey.dto.user.SessionUser;
 import io.ezsurvey.entity.EnumBase;
 import io.ezsurvey.entity.SearchField;
-import io.ezsurvey.repository.user.UserRepository;
 import io.ezsurvey.service.survey.SurveyService;
 
 @Controller
@@ -32,39 +32,30 @@ public class SurveyController {
 	
 	@Autowired
 	private SurveyService surveyService;
-	
-	@Autowired
-	private UserRepository userRepository;
-	
-	@ModelAttribute
-	public SurveyWebDTO initCommand() {
-		return new SurveyWebDTO();
+
+	@ModelAttribute("requestDTO")
+	public SurveyRequestDTO initCommand() {
+		return new SurveyRequestDTO();
 	}
 	
 	@GetMapping("/make/project")
-	public String form_make() {
+	public String make() {
 		return "/project/make"; // Tiles 설정명 반환
 	}
 	
 	@PostMapping("/make/project")
-	public String submit_make(@Valid SurveyWebDTO surveyWebDTO, BindingResult result, HttpSession session) { // BindingResult가 마지막 인자인 경우 White Label로 이동
-		logger.info(surveyWebDTO.toString());
-		
-		if(result.hasErrors()) { // 오류가 있으면 폼 호출
-			return form_make();
+	public String make(@Valid @ModelAttribute("requestDTO") SurveyRequestDTO requestDTO, BindingResult result
+			, HttpSession session) { // BindingResult가 마지막 인자인 경우 White Label로 이동
+		logger.info(requestDTO.toString());
+
+		if(result.hasErrors()) { // 폼에 오류가 있으면 다시 폼 호출
+			return make();
 		}
 		
-		// 세션에 저장된 회원 번호를 이용하여 WebDTO에 User 객체 저장
+		// 세션에 저장된 회원 정보 구하기
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
-		surveyWebDTO.setUser(userRepository.getById(sessionUser.getMember()));
 		
-		// 필수 필드에 값 저장
-		surveyWebDTO.setStatus("before"); // 설문조사 생성 시에는 항상 status가 배포 전으로 설정되어야 함
-		if(surveyWebDTO.getVisibility()==null || surveyWebDTO.getVisibility().isBlank()) { // 사용자가 공개 여부를 별도로 설정하지 않은 경우
-			surveyWebDTO.setVisibility("hidden"); // visibility를 비공개로 설정
-		}
-		
-		surveyService.insertSurvey(surveyWebDTO.toServiceDTO());
+		surveyService.insertSurvey(requestDTO.toServiceDTO(), sessionUser.getMember());
 		
 		return "redirect:/";
 	}
@@ -75,13 +66,13 @@ public class SurveyController {
 		Page<SurveyServiceDTO> page = Page.empty();
 		
 		if(word==null || word.isBlank()) { // 검색어를 입력하지 않은 경우
-			page = surveyService.find(pageable, null, null);
+			page = surveyService.getSurveyByVisibility(null, null, pageable);
 		}
 		else { // 검색어를 입력한 경우
-			page = surveyService.find(pageable, EnumBase.findByKey(SearchField.class, field), word);
+			page = surveyService.getSurveyByVisibility(EnumBase.findByKey(SearchField.class, field), word, pageable);
 		}
 		
-		model.addAttribute("page", page.map(SurveyWebDTO::new));
+		model.addAttribute("page", page.map(SurveyResponseDTO::new));
 		model.addAttribute("count", page.getTotalElements());
 		model.addAttribute("title", "둘러보기");
 		model.addAttribute("type", "survey");
@@ -95,7 +86,7 @@ public class SurveyController {
 			, String field, String word, Model model) {
 		Page<SurveyServiceDTO> page = Page.empty();
 		
-		model.addAttribute("page", page.map(SurveyWebDTO::new));
+		model.addAttribute("page", page.map(SurveyResponseDTO::new));
 		model.addAttribute("count", page.getTotalElements());
 		model.addAttribute("title", "내 설문조사");
 		model.addAttribute("type", "survey");
@@ -109,7 +100,7 @@ public class SurveyController {
 			, String field, String word, Model model) {
 		Page<SurveyServiceDTO> page = Page.empty();
 		
-		model.addAttribute("page", page.map(SurveyWebDTO::new));
+		model.addAttribute("page", page.map(SurveyResponseDTO::new));
 		model.addAttribute("count", page.getTotalElements());
 		model.addAttribute("title", "즐겨찾기: 설문조사");
 		model.addAttribute("type", "survey");

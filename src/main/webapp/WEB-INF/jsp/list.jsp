@@ -19,9 +19,15 @@
 	<li>${element.question}</li>
 	</c:if>
 	<li>${element.title}</li>
-	<li>${element.created}</li>
+	<li>${element.userName}</li>
+	<li>${element.userProfileURL}</li>
+	<li id="testtime">${element.created}</li>
 	</c:forEach>
 </ul>
 </c:if>
+<script type="text/javascript">
+	let time = document.querySelector('#testtime').textContent
+	console.log(new Date(time))
+</script>
 </article>
 </main>
