@@ -2,6 +2,7 @@ package io.ezsurvey.dto.survey;
 
 import java.time.LocalDateTime;
 
+import io.ezsurvey.entity.survey.Status;
 import io.ezsurvey.entity.survey.Survey;
 import io.ezsurvey.entity.survey.Visibility;
 import io.ezsurvey.entity.user.User;
@@ -23,8 +24,7 @@ public class SurveyServiceDTO {
 	private LocalDateTime modified;
 	private LocalDateTime distributed;
 	private LocalDateTime expires;
-	private Byte status;
-	private Boolean deleted;
+	private Status status;
 	private Visibility visibility;
 	private String shared;
 	
@@ -39,7 +39,6 @@ public class SurveyServiceDTO {
 		this.distributed = survey.getDistributed();
 		this.expires = survey.getExpires();
 		this.status = survey.getStatus();
-		this.deleted = survey.getDeleted();
 		this.visibility = survey.getVisibility();
 		this.shared = survey.getShared();
 	}

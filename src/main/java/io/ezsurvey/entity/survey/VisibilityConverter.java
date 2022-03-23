@@ -2,14 +2,16 @@ package io.ezsurvey.entity.survey;
 
 import javax.persistence.AttributeConverter;
 
-public class VisibilityConverter implements AttributeConverter<Visibility, Byte> {
+import io.ezsurvey.entity.EnumBaseValue;
+
+public class VisibilityConverter implements AttributeConverter<Visibility, Byte> { // Entity 필드와 DB 값 사이의 변환
 	@Override
 	public Byte convertToDatabaseColumn(Visibility attribute) {
-		return attribute==null ? null : attribute.getValue();
+		return attribute.getValue();
 	}
 
 	@Override
 	public Visibility convertToEntityAttribute(Byte dbData) {
-		return Visibility.findByValue(dbData);
+		return EnumBaseValue.findByValue(Visibility.class, dbData);
 	}
 }

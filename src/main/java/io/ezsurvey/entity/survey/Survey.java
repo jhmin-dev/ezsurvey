@@ -44,22 +44,19 @@ public class Survey extends BaseTime {
 	private LocalDateTime expires; // 배포 종료일
 
 	@Column(nullable = false)
-	private Byte status = 0; // 0=배포 전, 1=배포 중, 2=배포 후
+	@Convert(converter = StatusConverter.class)
+	private Status status = Status.BEFORE;
 	
 	@Column(nullable = false)
-	private Boolean deleted = false; // 0=삭제되지 않음, 1=삭제됨
-	
-	@Column(nullable = false)
-	// private Byte visibility = 0; 
 	@Convert(converter = VisibilityConverter.class)
-	private Visibility visibility = Visibility.HIDDEN; // 0=비공개, 1=링크 공개, 2=전체 공개
+	private Visibility visibility = Visibility.HIDDEN; // 0=비공개, 1=링크 공개, 2=전체 공개; -1=삭제됨
 
 	@Column(length = 36, unique = true)
 	private String shared; // 설문조사 UUID값
 	
 	@Builder // 자동 생성되는 PK 값이나 등록일, 수정일을 builder()에서 제외해야 하기 때문에 클래스 수준 @Builder는 부적절
 	public Survey(User user, String title, String content
-			, Byte status, Visibility visibility, String shared) {
+			, Status status, Visibility visibility, String shared) {
 		this.user = user;
 		this.title = title;
 		this.content = content;
@@ -69,7 +66,7 @@ public class Survey extends BaseTime {
 	}
 	
 	public Survey update(String title, String content
-			, Byte status, Boolean deleted, Visibility visibility, String shared) {
+			, Status status, Boolean deleted, Visibility visibility, String shared) {
 		this.title = title;
 		this.content = content;
 		this.status = status;
@@ -86,8 +83,8 @@ public class Survey extends BaseTime {
 		return this;
 	}
 	
-	public Survey updateDelete(Boolean deleted) {
-		this.deleted = deleted;
+	public Survey setVisibilityToDeleted() {
+		this.visibility = Visibility.DELETED;
 
 		return this;
 	}

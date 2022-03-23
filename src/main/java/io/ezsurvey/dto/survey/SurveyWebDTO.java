@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import io.ezsurvey.entity.EnumBase;
+import io.ezsurvey.entity.survey.Status;
 import io.ezsurvey.entity.survey.Visibility;
 import io.ezsurvey.entity.user.User;
 import lombok.Getter;
@@ -25,8 +27,7 @@ public class SurveyWebDTO {
 	private LocalDateTime modified;
 	private LocalDateTime distributed;
 	private LocalDateTime expires;
-	private Byte status = 0;
-	private Boolean deleted;
+	private String status;
 	private String visibility;
 	private String shared;
 	
@@ -40,8 +41,7 @@ public class SurveyWebDTO {
 		this.modified = serviceDTO.getModified();
 		this.distributed = serviceDTO.getDistributed();
 		this.expires = serviceDTO.getExpires();
-		this.status = serviceDTO.getStatus();
-		this.deleted = serviceDTO.getDeleted();
+		this.status = serviceDTO.getStatus().getKey();
 		this.visibility = serviceDTO.getVisibility().getKey();
 		this.shared = serviceDTO.getShared();
 	}
@@ -52,8 +52,8 @@ public class SurveyWebDTO {
 				.user(user)
 				.title(title)
 				.content(content)
-				.status(status)
-				.visibility(Visibility.findByKey(visibility))
+				.status(EnumBase.findByKey(Status.class, status))
+				.visibility(EnumBase.findByKey(Visibility.class, visibility))
 				.shared(shared)
 				.build();
 	}

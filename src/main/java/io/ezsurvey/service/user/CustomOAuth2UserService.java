@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import io.ezsurvey.dto.user.OAuth2Attributes;
 import io.ezsurvey.dto.user.SessionUser;
+import io.ezsurvey.entity.EnumBase;
 import io.ezsurvey.entity.user.Provider;
 import io.ezsurvey.entity.user.User;
 import io.ezsurvey.repository.user.UserRepository;
@@ -38,8 +39,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		OAuth2User oAuth2User = new DefaultOAuth2UserService().loadUser(userRequest);
 		
 		// OAuth2 인증을 제공하는 서비스명; google, kakao, naver
-		Provider provider = Provider.valueOf(userRequest.getClientRegistration()
-				.getRegistrationId().toUpperCase());
+		Provider provider = EnumBase.findByKey(Provider.class, userRequest.getClientRegistration()
+				.getRegistrationId());
 		
 		// OAuth2 인증시 key 값; {google="sub", kakao="id", naver="response"}
 		String userNameAttribute = userRequest.getClientRegistration()

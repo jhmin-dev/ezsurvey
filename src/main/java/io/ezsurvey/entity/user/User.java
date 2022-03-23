@@ -7,8 +7,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-import io.ezsurvey.entity.BaseTime;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +16,8 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity(name="member")
+@Table(name="member")
+@Entity
 public class User {
 	@Id // PK
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // GENERATED AS IDENTITY
