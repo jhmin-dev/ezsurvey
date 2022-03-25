@@ -38,3 +38,43 @@ body,.header-container,header.mobile,footer {
 	color: var(--black);
 	background-color: var(--white);
 }
+
+/* 공통: 자주 사용되는 문구 색상 */
+.notice {
+	color: var(--dark-gray);
+}
+.error {
+	color: var(--error);	
+}
+
+/* 공통: 자주 사용되는 버튼 색상 */
+[type="submit"] { /* 전경색이 밝은 계열이면 hover시 진한 배경 */
+	color: var(--white);
+	background-color: var(--point-muted);
+	border: 2px solid var(--point-muted);
+}
+[type="submit"]:hover {
+	background-color: var(--point);
+	border-color: var(--point);
+}
+[type="button"] { /* 전경색이 어두운 계열이면 hover시 연한 배경 */
+	color: var(--black);
+	background-color: var(--light-gray);
+	border: 2px solid var(--light-gray);	
+}
+[type="button"]:not(:disabled):hover {
+	background-color: var(--light-gray-muted);
+	border-color: var(--light-gray-muted);
+}
+[type="button"]:disabled {
+	color: var(--gray);
+}
+[type="button"].point-button { /* 전경색이 밝은 계열이면 hover시 진한 배경 */
+	color: var(--white);
+	background-color: var(--point-muted);
+	border-color: var(--point-muted);
+}
+[type="button"]:not(disabled).point-button:hover {
+	background-color: var(--point);
+	border-color: var(--point);
+}

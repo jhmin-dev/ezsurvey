@@ -23,7 +23,8 @@ spring:
   data:
     web:
       pageable:
-        default-page-size: 10
+        default-page-size: 10 # 한 페이지에 보여지는 레코드 수
+        one-indexed-parameters: true # 요청 파라미터 page의 값이 1부터 시작
   messages:
     basename: messages.validation
     encoding: UTF-8

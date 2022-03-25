@@ -1,11 +1,14 @@
 package io.ezsurvey.web.survey;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -20,11 +23,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.ezsurvey.dto.survey.SurveyServiceDTO;
 import io.ezsurvey.dto.survey.SurveyResponseDTO;
+import io.ezsurvey.dto.EnumDTO;
 import io.ezsurvey.dto.survey.SurveyRequestDTO;
 import io.ezsurvey.dto.user.SessionUser;
 import io.ezsurvey.entity.EnumBase;
 import io.ezsurvey.entity.SearchField;
 import io.ezsurvey.service.survey.SurveyService;
+import io.ezsurvey.web.PagingUtil;
 
 @Controller
 public class SurveyController {
@@ -32,7 +37,10 @@ public class SurveyController {
 	
 	@Autowired
 	private SurveyService surveyService;
-
+	
+	@Autowired @Qualifier("searchFieldSurvey")
+	private List<EnumDTO> searchFieldSurvey;
+	
 	@ModelAttribute("requestDTO")
 	public SurveyRequestDTO initCommand() {
 		return new SurveyRequestDTO();
@@ -72,10 +80,11 @@ public class SurveyController {
 			page = surveyService.getSurveyByVisibility(EnumBase.findByKey(SearchField.class, field), word, pageable);
 		}
 		
-		model.addAttribute("page", page.map(SurveyResponseDTO::new));
-		model.addAttribute("count", page.getTotalElements());
+		// 설문조사 목록 관련 정보 저장
+		setSurveyAttributes(model, page);
+		
+		// 현재 요청 URL 관련 정보 저장
 		model.addAttribute("title", "둘러보기");
-		model.addAttribute("type", "survey");
 		model.addAttribute("link", "list");
 		
 		return "/list"; // Tiles 설정명 반환
@@ -86,10 +95,11 @@ public class SurveyController {
 			, String field, String word, Model model) {
 		Page<SurveyServiceDTO> page = Page.empty();
 		
-		model.addAttribute("page", page.map(SurveyResponseDTO::new));
-		model.addAttribute("count", page.getTotalElements());
+		// 설문조사 목록 관련 정보 저장
+		setSurveyAttributes(model, page);
+		
+		// 현재 요청 URL 관련 정보 저장
 		model.addAttribute("title", "내 설문조사");
-		model.addAttribute("type", "survey");
 		model.addAttribute("link", "my");
 		
 		return "/list"; // Tiles 설정명 반환
@@ -100,12 +110,20 @@ public class SurveyController {
 			, String field, String word, Model model) {
 		Page<SurveyServiceDTO> page = Page.empty();
 		
-		model.addAttribute("page", page.map(SurveyResponseDTO::new));
-		model.addAttribute("count", page.getTotalElements());
+		// 설문조사 목록 관련 정보 저장
+		setSurveyAttributes(model, page);
+		
+		// 현재 요청 URL 관련 정보 저장
 		model.addAttribute("title", "즐겨찾기: 설문조사");
-		model.addAttribute("type", "survey");
 		model.addAttribute("link", "bookmark");
 		
 		return "/list"; // Tiles 설정명 반환
+	}
+	
+	public void setSurveyAttributes(Model model, Page<SurveyServiceDTO> page) {
+		model.addAttribute("page", page.map(SurveyResponseDTO::new));
+		PagingUtil.setPageAttributes(model, page, 5);
+		model.addAttribute("searchField", searchFieldSurvey);
+		model.addAttribute("type", "survey");
 	}
 }

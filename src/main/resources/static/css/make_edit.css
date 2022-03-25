@@ -47,15 +47,6 @@ label {
 	font-size: 1.25rem;
 	font-weight: 700;
 }
-.notice,.error {
-	font-size: 0.875rem;
-}
-.notice {
-	color: var(--dark-gray);
-}
-.error {
-	color: var(--error);	
-}
 
 /* 토글 버튼 */
 .toggle-container {

@@ -1,1 +1,91 @@
 @charset "UTF-8";
+
+/* 레이아웃 */
+.list-top,.list-main,.pagination {
+	margin: 0 auto;
+	padding: 15px 60px;
+	max-width: 1200px;
+	width: inherit;
+	height: inherit;
+}
+.list-none {
+	margin: 60px auto;
+	font-style: italic;
+}
+
+/* 검색 바와 버튼 */
+.list-top {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+.list-top ul,.pagination ul {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+.list-top ul li {
+	padding: 0 10px;
+}
+form#search label input[type="submit"] {
+	display: none;
+}
+
+/* 목록 */
+.page-label ul,.page ul {
+	display: flex;
+	flex-direction: row;
+}
+.page-label ul li,.page ul li {
+	margin: 0 10px;
+	padding: 10px 0;
+	width: 120px;
+	text-align: center;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.page-label ul li.sm,.page ul li.sm {
+	width: 60px;
+}
+.page-label ul li.lg,.page ul li.lg {
+	width: 180px;
+	flex-grow: 1;
+}
+.page-label ul {
+	background-color: var(--light-gray);
+}
+.page-label ul li {
+	font-size: 1.25rem;
+	font-weight: 700;
+}
+.page ul:nth-child(even) {
+	background-color: var(--white-subtle);
+}
+.list-total {
+	justify-self: start;
+	padding: 0 60px;
+	width: inherit;
+}
+
+/* 페이지 버튼 */
+.pagination ul li {
+	margin: 0 5px;
+}
+.pagination ul li a {
+	display: block;
+	padding: 5px 10px;
+	background-color: var(--white-subtle);
+	transition: color ease 0.5s;
+	border-radius: 5px;
+}
+.pagination ul li.disabled a {
+	color: var(--gray);
+	pointer-events: none;
+}
+.pagination ul li.disabled.active a {
+	color: var(--white-subtle);
+	background-color: var(--point);
+}

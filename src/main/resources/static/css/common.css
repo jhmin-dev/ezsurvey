@@ -14,6 +14,9 @@ html {
 	font-size: 16px;
 	font-weight: 500;	
 }
+.notice,.error {
+	font-size: 0.875rem;
+}
 
 /* 공통: 링크 스타일 (재)정의 */
 a,a:hover,a:active,a:visited {
@@ -24,11 +27,11 @@ a:hover {
 	transition: background-color ease 0.5s;
 }
 .page-container main a {
-	color: var(--point);
+	color: var(--point-muted);
 	font-weight: 700;
 }
 .page-container main a:hover {
-	color: var(--point-muted);
+	color: var(--point);
 	transition: color ease 0.5s;
 }
 /* 공통: 기본 태그 스타일 (재)정의 */
@@ -55,7 +58,7 @@ input,textarea,select,option {
 }
 
 /* 공통: 텍스트 버튼 */
-input[type="submit"],input[type="button"],button {
+[type="submit"],[type="button"] {
 	font-size: 1.125rem;
 	font-weight: 700;
 	margin: 0 10px;
@@ -64,27 +67,24 @@ input[type="submit"],input[type="button"],button {
 	transition: all 0.5s ease;
 	cursor: pointer;
 }
-input[type="submit"] { /* 전경색이 밝은 계열이면 hover시 진한 배경 */
-	color: var(--white);
-	border: 2px solid var(--point-muted);
-	background-color: var(--point-muted);
-}
-input[type="submit"]:hover {
-	border: 2px solid var(--point);
-	background-color: var(--point);
-}
-input[type="button"],button { /* 전경색이 어두운 계열이면 hover시 연한 배경 */
-	color: var(--black);
-	border: 2px solid var(--light-gray);
-	background-color: var(--light-gray);	
-}
-input[type="button"]:not(:disabled):hover,button:not(:disabled):hover {
-	border: 2px solid var(--light-gray-muted);
-	background-color: var(--light-gray-muted);
-}
-input[type="button"]:disabled,button:disabled {
-	color: var(--gray);
+[type="button"]:disabled {
 	cursor: default;
+}
+
+/* 공통: 부트스트랩 아이콘 */
+main i.bi {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+main i.bi.button {
+	font-size: 2rem;
+	color: var(--point);
+	transition: all 0.5s ease;
+	cursor: pointer;
+}
+main i.bi.button:hover {
+	color: var(--point-muted);
 }
 
 /* 상단 바 */
