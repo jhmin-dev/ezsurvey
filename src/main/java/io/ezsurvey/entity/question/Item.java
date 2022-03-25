@@ -19,10 +19,11 @@ import lombok.NoArgsConstructor;
 public class Item {
 	@Id // PK
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // GENERATED AS IDENTITY
-	private Long item;
+	@Column(name = "item_id")
+	private Long id;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "question", foreignKey = @ForeignKey(name = "item_fk"))
+	@JoinColumn(name = "question_id", foreignKey = @ForeignKey(name = "item_fk"))
 	private Question question;
 	
 	@Column(nullable = false)

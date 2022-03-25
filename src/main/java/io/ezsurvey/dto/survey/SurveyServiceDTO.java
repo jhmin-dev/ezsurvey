@@ -35,7 +35,7 @@ public class SurveyServiceDTO {
 	
 	// Entity to ServiceDTO
 	public SurveyServiceDTO(Survey survey) {
-		this.survey = survey.getSurvey();
+		this.survey = survey.getId();
 		this.user = survey.getUser();
 		this.title = survey.getTitle();
 		this.content = survey.getContent();

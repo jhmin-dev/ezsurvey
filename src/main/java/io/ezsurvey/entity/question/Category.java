@@ -16,7 +16,8 @@ import lombok.NoArgsConstructor;
 public class Category {
 	@Id // PK
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // GENERATED AS IDENTITY
-	private Long category;
+	@Column(name = "category_id")
+	private Long id;
 	
 	@Column(length = 64, unique = true, updatable = false, nullable = false)
 	private String name;

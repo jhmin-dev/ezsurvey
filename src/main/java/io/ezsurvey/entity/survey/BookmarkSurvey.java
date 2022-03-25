@@ -1,5 +1,6 @@
 package io.ezsurvey.entity.survey;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -13,19 +14,20 @@ import javax.persistence.UniqueConstraint;
 import io.ezsurvey.entity.user.User;
 import lombok.Builder;
 
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"member", "survey"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"member_id", "survey_id"}))
 @Entity
 public class BookmarkSurvey {
 	@Id // PK
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // GENERATED AS IDENTITY
-	private Long bookmark_survey;
+	@Column(name = "bookmark_survey_id")
+	private Long id;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "member", foreignKey = @ForeignKey(name = "bookmark_survey_fk_member"))
+	@JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "bookmark_survey_fk_member"))
 	private User user;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "survey", foreignKey = @ForeignKey(name = "bookmark_survey_fk_survey"))
+	@JoinColumn(name = "survey_id", foreignKey = @ForeignKey(name = "bookmark_survey_fk_survey"))
 	private Survey survey;
 	
 	@Builder

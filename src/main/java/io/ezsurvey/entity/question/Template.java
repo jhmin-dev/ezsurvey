@@ -1,5 +1,6 @@
 package io.ezsurvey.entity.question;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -15,13 +16,14 @@ import io.ezsurvey.entity.survey.Survey;
 public class Template {
 	@Id // PK
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // GENERATED AS IDENTITY
-	private Long template;
+	@Column(name = "template_id")
+	private Long id;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "survey", foreignKey = @ForeignKey(name = "template_fk_survey"))
+	@JoinColumn(name = "survey_id", foreignKey = @ForeignKey(name = "template_fk_survey"))
 	private Survey survey;
 	
 	@OneToOne(optional = false)
-	@JoinColumn(name = "question", unique = true, foreignKey = @ForeignKey(name = "template_fk_question"))
+	@JoinColumn(name = "question_id", unique = true, foreignKey = @ForeignKey(name = "template_fk_question"))
 	private Question question;
 }

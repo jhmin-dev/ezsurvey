@@ -23,24 +23,25 @@ import lombok.NoArgsConstructor;
 public class Question {
 	@Id // PK
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // GENERATED AS IDENTITY
-	private Long question;
+	@Column(name = "question_id")
+	private Long id;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "survey", foreignKey = @ForeignKey(name = "question_fk_survey"))
+	@JoinColumn(name = "survey_id", foreignKey = @ForeignKey(name = "question_fk_survey"))
 	private Survey survey;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "member", foreignKey = @ForeignKey(name = "question_fk_member"))
+	@JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "question_fk_member"))
 	private User user;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "category", foreignKey = @ForeignKey(name = "question_fk_category"))
+	@JoinColumn(name = "category_id", foreignKey = @ForeignKey(name = "question_fk_category"))
 	private Category category;
 	
 	private Boolean startpositive; // 응답 범주 시작값; 선다형=1, 감정온도계형=0, 척도형 선택 가능
 
 	@ManyToOne(optional = true)
-	@JoinColumn(name = "parent", foreignKey = @ForeignKey(name = "question_fk_parent"))
+	@JoinColumn(name = "parent_id", foreignKey = @ForeignKey(name = "question_fk_parent"))
 	Question parent;
 	
 	private Boolean branched; // 하위 문항의 분기 여부; 0=분기 없음, 1=분기 있음

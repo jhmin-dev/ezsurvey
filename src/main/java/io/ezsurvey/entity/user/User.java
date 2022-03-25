@@ -21,7 +21,8 @@ import lombok.NoArgsConstructor;
 public class User {
 	@Id // PK
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // GENERATED AS IDENTITY
-	private Long member;
+	@Column(name = "member_id")
+	private Long id;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(length = 32, nullable = false)

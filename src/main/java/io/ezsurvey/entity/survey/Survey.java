@@ -26,10 +26,11 @@ import lombok.NoArgsConstructor;
 public class Survey extends BaseTime {
 	@Id // PK
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // GENERATED AS IDENTITY
-	private Long survey;
+	@Column(name = "survey_id")
+	private Long id;
 	
 	@ManyToOne(optional = false) // 여러 설문조사가 한 회원과 매핑될 수 있지만, 한 설문조사가 여러 회원과 매핑될 수 없음
-	@JoinColumn(name = "member", foreignKey = @ForeignKey(name = "survey_fk")) // FK 컬럼명과 제약 조건 지정
+	@JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "survey_fk")) // FK 컬럼명과 제약 조건 지정
 	private User user;
 	
 	@Column(length = 128, nullable = false)
