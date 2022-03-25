@@ -44,3 +44,6 @@ docs/
 wallet/
 user.sql
 application-*.yml
+
+### Querydsl ###
+src/main/generated/
