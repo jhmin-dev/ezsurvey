@@ -64,6 +64,9 @@ form#search label input[type="submit"] {
 .page ul:nth-child(even) {
 	background-color: var(--white-subtle);
 }
+.page ul i.bi.visibility {
+	color: var(--black-subtle);
+}
 .list-total {
 	justify-self: start;
 	padding: 0 60px;

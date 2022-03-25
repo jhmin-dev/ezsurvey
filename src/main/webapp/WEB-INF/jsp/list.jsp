@@ -135,7 +135,7 @@
 			</c:if>
 			<c:if test="${link eq 'my'}">
 			<li>
-				${element.visibility}
+				<i class="visibility bi" data-visibility="${element.visibility}"></i>
 			</li>
 			</c:if>
 			<c:if test="${link eq 'index'}">
