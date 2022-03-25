@@ -119,7 +119,7 @@
 				</c:if>
 			</li>
 			<li>
-				<c:if test="${type eq 'survey'}">즐겨찾기 수</c:if>
+				<c:if test="${type eq 'survey'}">${element.bookmarks}</c:if>
 				<c:if test="${type eq 'question'}">응답 범주 수</c:if>
 			</li>
 			<li>

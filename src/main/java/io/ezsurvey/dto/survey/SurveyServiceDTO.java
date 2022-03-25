@@ -11,8 +11,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-@Getter @Setter
+@Getter @Setter @ToString(exclude = {"user"})
 @Builder @AllArgsConstructor // @Builder는 인자가 있는 생성자를 요구
 @NoArgsConstructor
 public class SurveyServiceDTO {
@@ -27,6 +28,10 @@ public class SurveyServiceDTO {
 	private Status status;
 	private Visibility visibility;
 	private String shared;
+	
+	// Entity에 없는 필드
+	private long questions;
+	private long bookmarks;
 	
 	// Entity to ServiceDTO
 	public SurveyServiceDTO(Survey survey) {
@@ -53,5 +58,10 @@ public class SurveyServiceDTO {
 				.visibility(visibility)
 				.shared(shared)
 				.build();
+	}
+	
+	public SurveyServiceDTO updateBookmarks(long bookmarks) {
+		this.bookmarks = bookmarks;
+		return this;
 	}
 }

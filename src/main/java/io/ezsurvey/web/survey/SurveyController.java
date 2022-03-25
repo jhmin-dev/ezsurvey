@@ -77,7 +77,8 @@ public class SurveyController {
 			page = surveyService.getSurveyByVisibility(null, null, pageable);
 		}
 		else { // 검색어를 입력한 경우
-			page = surveyService.getSurveyByVisibility(EnumBase.findByKey(SearchField.class, field), word, pageable);
+			page = surveyService.getSurveyByVisibility(EnumBase.findByKey(SearchField.class, field)
+					, word, pageable);
 		}
 		
 		// 설문조사 목록 관련 정보 저장
@@ -92,8 +93,19 @@ public class SurveyController {
 	
 	@RequestMapping("/my/project")
 	public String my(@PageableDefault(page = 0, sort = "survey", direction = Direction.DESC) Pageable pageable
-			, String field, String word, Model model) {
+			, String field, String word, Model model, HttpSession session) {
 		Page<SurveyServiceDTO> page = Page.empty();
+		
+		// 세션에 저장된 회원 정보 구하기
+		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
+		
+		if(word==null || word.isBlank()) { // 검색어를 입력하지 않은 경우
+			page = surveyService.getSurveyByUser(sessionUser.getMember(), null, null, pageable);
+		}
+		else { // 검색어를 입력한 경우
+			page = surveyService.getSurveyByUser(sessionUser.getMember()
+					, EnumBase.findByKey(SearchField.class, field), word, pageable);
+		}
 		
 		// 설문조사 목록 관련 정보 저장
 		setSurveyAttributes(model, page);
@@ -107,8 +119,19 @@ public class SurveyController {
 	
 	@RequestMapping("/bookmark/project")
 	public String bookmark(@PageableDefault(page = 0, sort = "survey", direction = Direction.DESC) Pageable pageable
-			, String field, String word, Model model) {
+			, String field, String word, Model model, HttpSession session) {
 		Page<SurveyServiceDTO> page = Page.empty();
+		
+		// 세션에 저장된 회원 정보 구하기
+		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
+		
+		if(word==null || word.isBlank()) { // 검색어를 입력하지 않은 경우
+			page = surveyService.getBookmarkSurveyByUser(sessionUser.getMember(), null, null, pageable);
+		}
+		else { // 검색어를 입력한 경우
+			page = surveyService.getBookmarkSurveyByUser(sessionUser.getMember()
+					, EnumBase.findByKey(SearchField.class, field), word, pageable);
+		}
 		
 		// 설문조사 목록 관련 정보 저장
 		setSurveyAttributes(model, page);
