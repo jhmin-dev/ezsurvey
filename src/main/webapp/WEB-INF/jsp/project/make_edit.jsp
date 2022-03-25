@@ -4,10 +4,10 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <main>
 <div class="title">
-	설문조사 생성
+	${title}
 </div>
 <article>
-<form:form modelAttribute="requestDTO" id="make">
+<form:form modelAttribute="requestDTO" id="${link}">
 	<form:errors cssClass="error notice" element="div"/>
 	<form:errors path="visibility" cssClass="error notice" element="div"/>
 	<form:hidden path="visibility"/>
@@ -41,7 +41,14 @@
 			</div>
 		</li>
 		<li>
+			<c:if test="${link eq 'make'}">
 			<input type="submit" value="생성하기">
+			</c:if>
+			<c:if test="${link eq 'edit'}">
+			<input type="submit" value="수정하기">
+			<input type="button" value="삭제하기">
+			</c:if>
+			<input type="button" value="이전으로" onclick = "history.go(-1);">
 		</li>
 	</ul>
 </form:form>

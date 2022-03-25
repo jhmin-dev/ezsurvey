@@ -62,6 +62,7 @@ public class SurveyServiceDTO {
 	
 	public SurveyServiceDTO updateBookmarks(long bookmarks) {
 		this.bookmarks = bookmarks;
+		
 		return this;
 	}
 }

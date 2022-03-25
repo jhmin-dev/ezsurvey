@@ -92,6 +92,11 @@
 				<i class="bi bi-door-open-fill"></i>
 			</li>
 			</c:if>
+			<c:if test="${link eq 'list'}">
+			<li>
+				생성자
+			</li>
+			</c:if>
 			<c:if test="${link eq 'index'}">
 			<li>
 				<i class="bi bi-arrow-down-up"></i>
@@ -136,6 +141,11 @@
 			<c:if test="${link eq 'my'}">
 			<li>
 				<i class="visibility bi" data-visibility="${element.visibility}"></i>
+			</li>
+			</c:if>
+			<c:if test="${link eq 'list'}">
+			<li>
+				${element.userName}
 			</li>
 			</c:if>
 			<c:if test="${link eq 'index'}">
