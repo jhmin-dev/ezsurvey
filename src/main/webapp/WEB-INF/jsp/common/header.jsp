@@ -64,7 +64,7 @@
 <nav class="dropdown-menu display-none">
 	<c:if test="${!empty user}">
 	<div class="tail">
-		<i class="bi bi-triangle-fill"></i>
+		<i class="bi bi-caret-up-fill"></i>
 	</div>
 	<ul>
 		<li class="not-link">

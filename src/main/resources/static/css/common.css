@@ -184,7 +184,7 @@ nav.dropdown-menu {
 	flex-direction: column;
 	position: fixed;
 	z-index: 11;
-	top: 50px;
+	top: 45px;
 	right: 30px;
 	width: auto;
 	height: auto;
@@ -197,7 +197,7 @@ nav.dropdown-menu.display-none {
 nav.dropdown-menu .tail {
 	position: relative;
 	z-index: 12;
-	margin-bottom: -5px;
+	margin-bottom: -10px;
 	padding: 0 30px;
 	width: inherit;
 	color: var(--white-subtle);
