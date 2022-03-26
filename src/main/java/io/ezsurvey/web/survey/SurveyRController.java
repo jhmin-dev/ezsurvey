@@ -16,10 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import io.ezsurvey.dto.survey.SurveyServiceDTO;
 import io.ezsurvey.dto.survey.SurveyResponseDTO;
-import io.ezsurvey.dto.EnumDTO;
 import io.ezsurvey.dto.user.SessionUser;
+import io.ezsurvey.dto.EnumDTO;
 import io.ezsurvey.entity.EnumBase;
 import io.ezsurvey.entity.SearchField;
 import io.ezsurvey.service.survey.SurveyRService;
@@ -36,18 +35,13 @@ public class SurveyRController {
 	private List<EnumDTO> searchField;
 	
 	@RequestMapping("/project")
-	public String list(@PageableDefault(page = 0, sort = "survey", direction = Direction.DESC) Pageable pageable
+	public String list(@PageableDefault(page = 0, sort = "id", direction = Direction.DESC) Pageable pageable
 			, String field, String word, Model model) {
-		Page<SurveyServiceDTO> page = Page.empty();
-		
-		if(word==null || word.isBlank()) { // 검색어를 입력하지 않은 경우
-			page = surveyService.getSurveyByVisibility(null, null, pageable);
-		}
-		else { // 검색어를 입력한 경우
-			page = surveyService.getSurveyByVisibility(EnumBase.findByKey(SearchField.class, field)
+		// 전체 공개인 설문조사 목록 가져오기
+		Page<SurveyResponseDTO> page = Page.empty();
+		page = surveyService.getSurveyByVisibility(EnumBase.findByKey(SearchField.class, field)
 					, word, pageable);
-		}
-		
+
 		// 설문조사 목록 관련 정보 저장
 		setSurveyAttributes(model, page);
 		
@@ -57,22 +51,17 @@ public class SurveyRController {
 		
 		return "/list"; // Tiles 설정명 반환
 	}
-	
+
 	@RequestMapping("/my/project")
-	public String my(@PageableDefault(page = 0, sort = "survey", direction = Direction.DESC) Pageable pageable
+	public String my(@PageableDefault(page = 0, sort = "id", direction = Direction.DESC) Pageable pageable
 			, String field, String word, Model model, HttpSession session) {
-		Page<SurveyServiceDTO> page = Page.empty();
-		
 		// 세션에 저장된 회원 정보 구하기
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
 		
-		if(word==null || word.isBlank()) { // 검색어를 입력하지 않은 경우
-			page = surveyService.getSurveyByUser(sessionUser.getMember(), null, null, pageable);
-		}
-		else { // 검색어를 입력한 경우
-			page = surveyService.getSurveyByUser(sessionUser.getMember()
-					, EnumBase.findByKey(SearchField.class, field), word, pageable);
-		}
+		// 로그인한 사용자가 생성한 설문조사 목록 가져오기
+		Page<SurveyResponseDTO> page = Page.empty();
+		page = surveyService.getSurveyByUser(sessionUser.getMember()
+				, EnumBase.findByKey(SearchField.class, field), word, pageable);
 		
 		// 설문조사 목록 관련 정보 저장
 		setSurveyAttributes(model, page);
@@ -84,21 +73,17 @@ public class SurveyRController {
 		return "/list"; // Tiles 설정명 반환
 	}
 	
+	// BookmarkSurvey에서 검색하기 때문에 sort 기준 프로퍼티명은 survey. 또는 user.으로 접근해야 함
 	@RequestMapping("/bookmark/project")
-	public String bookmark(@PageableDefault(page = 0, sort = "survey", direction = Direction.DESC) Pageable pageable
+	public String bookmark(@PageableDefault(page = 0, sort = "survey.id", direction = Direction.DESC) Pageable pageable
 			, String field, String word, Model model, HttpSession session) {
-		Page<SurveyServiceDTO> page = Page.empty();
-		
 		// 세션에 저장된 회원 정보 구하기
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
 		
-		if(word==null || word.isBlank()) { // 검색어를 입력하지 않은 경우
-			page = surveyService.getBookmarkSurveyByUser(sessionUser.getMember(), null, null, pageable);
-		}
-		else { // 검색어를 입력한 경우
-			page = surveyService.getBookmarkSurveyByUser(sessionUser.getMember()
-					, EnumBase.findByKey(SearchField.class, field), word, pageable);
-		}
+		// 로그인한 사용자가 즐겨찾기한 설문조사 중 전체 공개인 설문조사 목록 가져오기
+		Page<SurveyResponseDTO> page = Page.empty();
+		page = surveyService.getByVisibilityAndUser(sessionUser.getMember()
+				, EnumBase.findByKey(SearchField.class, field), word, pageable);
 		
 		// 설문조사 목록 관련 정보 저장
 		setSurveyAttributes(model, page);
@@ -109,9 +94,9 @@ public class SurveyRController {
 		
 		return "/list"; // Tiles 설정명 반환
 	}
-	
-	public void setSurveyAttributes(Model model, Page<SurveyServiceDTO> page) {
-		model.addAttribute("page", page.map(SurveyResponseDTO::new));
+
+	public void setSurveyAttributes(Model model, Page<SurveyResponseDTO> page) {
+		model.addAttribute("page", page);
 		PagingUtil.setPageAttributes(model, page, 5);
 		model.addAttribute("searchField", searchField);
 		model.addAttribute("type", "survey");

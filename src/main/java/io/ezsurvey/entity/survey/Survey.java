@@ -2,9 +2,11 @@ package io.ezsurvey.entity.survey;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.Formula;
 
 import io.ezsurvey.entity.BaseTime;
 import io.ezsurvey.entity.user.User;
@@ -54,6 +58,16 @@ public class Survey extends BaseTime {
 
 	@Column(length = 36, unique = true)
 	private String shared; // 설문조사 UUID값
+	
+	
+	@Basic(fetch = FetchType.LAZY) // 가상 컬럼이 필요한 경우에만 동적으로 서브쿼리 실행
+	@Formula("(select count(*) from bookmark_survey bs where bs.survey_id = survey_id)") // JPQL이 아니라 SQL문 사용하며, 서브쿼리이므로 () 필수
+	private Long bookmarks;
+	
+	// 테이블에 없는 가상 컬럼
+	@Basic(fetch = FetchType.LAZY)
+	@Formula("(select count(*) from question q where q.survey_id = survey_id)")
+	private Long questions;
 	
 	@Builder // 자동 생성되는 PK 값이나 등록일, 수정일을 builder()에서 제외해야 하기 때문에 클래스 수준 @Builder는 부적절
 	public Survey(User user, String title, String content
