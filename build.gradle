@@ -54,6 +54,9 @@ dependencies {
 	implementation 'com.querydsl:querydsl-core'
 	implementation 'com.querydsl:querydsl-jpa'
 	
+	// SQL 쿼리의 바인딩 파라미터를 보기 편하게 로깅
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0'
+	
 	// StringUtils
 	implementation 'org.apache.commons:commons-lang3'
 	

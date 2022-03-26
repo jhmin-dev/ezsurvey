@@ -15,8 +15,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.Oracle12cDialect
-        show_sql: true
-        format_sql: true
+        # show_sql: true
+        # format_sql: true
         # use_sql_comments: true
     hibernate:
       ddl-auto: update
@@ -35,3 +35,7 @@ server:
 logging:
   level:
     root: info
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true # 개발 환경에서만 사용
