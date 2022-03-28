@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.ezsurvey.dto.survey.SurveyRequestDTO;
 import io.ezsurvey.dto.user.SessionUser;
@@ -52,9 +53,8 @@ public class SurveyCUDController {
 		// 세션에 저장된 회원 정보 구하기
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
 		
-		surveyService.insert(requestDTO.toServiceDTO(), sessionUser.getMember());
-		
-		return "redirect:/";
+		// 설문조사를 생성하고 상세로 리다이렉트
+		return "redirect:/project/" + surveyService.insert(requestDTO.toServiceDTO(), sessionUser.getMember());
 	}
 	
 	@GetMapping("/edit/project/{survey}")

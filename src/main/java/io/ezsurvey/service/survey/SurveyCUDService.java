@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class SurveyCUDService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public Survey insert(SurveyServiceDTO serviceDTO, Long member) {
+	public Long insert(SurveyServiceDTO serviceDTO, Long member) {
 		serviceDTO.setUser(userRepository.getById(member));
 		
 		// 필수 필드에 값 저장
@@ -40,7 +41,7 @@ public class SurveyCUDService {
 			serviceDTO.setShared(UUID.randomUUID().toString()); // 설문조사 UUID 값을 생성하여 저장
 		}
 		
-		return surveyRepository.save(serviceDTO.toEntity());
+		return surveyRepository.save(serviceDTO.toEntity()).getId();
 	}
 	
 	public SurveyRequestDTO getRequestDTOById(Long survey) {
@@ -50,8 +51,17 @@ public class SurveyCUDService {
 	}
 	
 	public void update(SurveyServiceDTO serviceDTO) {
+		if(serviceDTO.getVisibility()==Visibility.LINK_ONLY 
+				&& StringUtils.isBlank(serviceDTO.getShared())) { // 일부 공개로 설정되었고 현재 UUID 값이 없는 경우
+			serviceDTO.setShared(UUID.randomUUID().toString()); // 설문조사 UUID 값을 생성하여 저장
+		}
+		
 		surveyRepository.getById(serviceDTO.getSurvey())
 				.update(serviceDTO.getTitle(), serviceDTO.getContent()
 						, serviceDTO.getVisibility(), serviceDTO.getShared());
+	}
+	
+	public void delete(Long survey) {
+		surveyRepository.getById(survey).setVisibilityToDeleted();
 	}
 }

@@ -43,6 +43,7 @@ public class SurveyRService {
 				.userName(s.getUser().getName())
 				.title(s.getTitle())
 				.created(s.getCreated().toString())
+				.questions(s.getQuestions())
 				.bookmarks(s.getBookmarks())
 				.build());
 	}
@@ -59,6 +60,7 @@ public class SurveyRService {
 				.title(s.getTitle())
 				.created(s.getCreated().toString())
 				.visibility(s.getVisibility().getKey())
+				.questions(s.getQuestions())
 				.bookmarks(s.getBookmarks())
 				.build());
 	}
@@ -75,6 +77,7 @@ public class SurveyRService {
 				.userName(s.getUser().getName())
 				.title(s.getTitle())
 				.created(s.getCreated().toString())
+				.questions(s.getQuestions())
 				.bookmarks(s.getBookmarks())
 				.build());
 	}

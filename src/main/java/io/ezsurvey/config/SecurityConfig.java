@@ -25,6 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception { // WebSecurity 필터가 HttpSecurity 필터보다 빠름
 		web.ignoring()
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()); // 정적 리소스들에 대해서 Security 적용 무시
+		web.ignoring().mvcMatchers("/ajax/**"); // Ajax에서 POST로 보내는 요청에 대해 Security 적용 무시
 	}
 	
 	@Override
