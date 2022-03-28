@@ -2,6 +2,7 @@ package io.ezsurvey.entity.question;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,11 +20,11 @@ public class Template {
 	@Column(name = "template_id")
 	private Long id;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "survey_id", foreignKey = @ForeignKey(name = "template_fk_survey"))
 	private Survey survey;
 	
-	@OneToOne(optional = false)
+	@OneToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "question_id", unique = true, foreignKey = @ForeignKey(name = "template_fk_question"))
 	private Question question;
 }

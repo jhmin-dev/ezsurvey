@@ -2,6 +2,7 @@ package io.ezsurvey.entity.question;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,7 @@ public class Item {
 	@Column(name = "item_id")
 	private Long id;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "question_id", foreignKey = @ForeignKey(name = "item_fk"))
 	private Question question;
 	

@@ -2,6 +2,7 @@ package io.ezsurvey.entity.question;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,11 +22,11 @@ public class BookmarkQuestion {
 	@Column(name = "bookmark_question_id")
 	private Long id;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "myquestion_fk_member"))
 	private User user;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "question_id", foreignKey = @ForeignKey(name = "myquestion_fk_question"))
 	private Question question;
 }

@@ -2,6 +2,7 @@ package io.ezsurvey.repository.survey;
 
 import static io.ezsurvey.entity.survey.QBookmarkSurvey.bookmarkSurvey;
 import static io.ezsurvey.entity.survey.QSurvey.survey;
+import static io.ezsurvey.entity.user.QUser.user;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,12 +25,13 @@ public class CustomBookmarkSurveyRepositoryImpl implements CustomBookmarkSurveyR
 	}
 	
 	@Override
-	public Page<Survey> findByVisibilityAndUser(User user, SearchField field, String word, Pageable pageable) {
+	public Page<Survey> findByVisibilityAndUser(User member, SearchField field, String word, Pageable pageable) {
 		JPAQuery<Survey> content = jpaQueryFactory
 				.select(survey).from(bookmarkSurvey)
 				.innerJoin(bookmarkSurvey.survey, survey) // where절에서 survey의 필드로 검색하고 있기 때문에 innerJoin 명시하지 않으면 크로스 조인 발생
+				.innerJoin(survey.user, user).fetchJoin() // N+1 방지; select(survey)이므로 survey.user에 대해 fetchJoin해야 함
 				.where(survey.visibility.eq(Visibility.PUBLIC)
-						, bookmarkSurvey.user.eq(user)
+						, bookmarkSurvey.user.eq(member)
 						, SurveySearchCondition.contains(field, word));
 		
 		// 페이징과 정렬 처리
@@ -38,7 +40,7 @@ public class CustomBookmarkSurveyRepositoryImpl implements CustomBookmarkSurveyR
 		JPAQuery<Long> count = jpaQueryFactory.select(bookmarkSurvey.count()).from(bookmarkSurvey)
 				.innerJoin(bookmarkSurvey.survey, survey) // where절에서 survey의 필드로 검색하고 있기 때문에 innerJoin 명시하지 않으면 크로스 조인 발생
 				.where(survey.visibility.eq(Visibility.PUBLIC)
-						, bookmarkSurvey.user.eq(user)
+						, bookmarkSurvey.user.eq(member)
 						, SurveySearchCondition.contains(field, word));
 		
 		// 총 레코드 수가 페이지 크기보다 작거나, 마지막 페이지인 경우 마지막 인자의 함수(쿼리)를 실행하지 않음

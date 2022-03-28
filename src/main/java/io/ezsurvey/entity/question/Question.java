@@ -2,6 +2,7 @@ package io.ezsurvey.entity.question;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,21 +27,21 @@ public class Question {
 	@Column(name = "question_id")
 	private Long id;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "survey_id", foreignKey = @ForeignKey(name = "question_fk_survey"))
 	private Survey survey;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "question_fk_member"))
 	private User user;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id", foreignKey = @ForeignKey(name = "question_fk_category"))
 	private Category category;
 	
 	private Boolean startpositive; // 응답 범주 시작값; 선다형=1, 감정온도계형=0, 척도형 선택 가능
 
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = true, fetch = FetchType.LAZY)
 	@JoinColumn(name = "parent_id", foreignKey = @ForeignKey(name = "question_fk_parent"))
 	Question parent;
 	
