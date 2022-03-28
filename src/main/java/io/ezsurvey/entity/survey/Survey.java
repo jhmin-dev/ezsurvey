@@ -61,9 +61,9 @@ public class Survey extends BaseTime {
 	@Column(length = 36, unique = true)
 	private String shared; // 설문조사 UUID값
 	
-	
-	@Basic(fetch = FetchType.LAZY) // 가상 컬럼이 필요한 경우에만 동적으로 서브쿼리 실행
-	@Formula("(select count(*) from bookmark_survey bs where bs.survey_id = survey_id)") // JPQL이 아니라 SQL문 사용하며, 서브쿼리이므로 () 필수
+	// 테이블에 없는 가상 컬럼
+	@Basic(fetch = FetchType.LAZY) // 가상 컬럼이 필요한 경우에만 동적으로 서브쿼리 실행; 제대로 적용되는 것 같지 않음?
+	@Formula("(select count(*) from bookmark_survey bs where bs.survey_id = survey_id)") // JPQL이 아니라 SQL; 서브쿼리이므로 () 필수
 	private Long bookmarks;
 	
 	// 테이블에 없는 가상 컬럼
