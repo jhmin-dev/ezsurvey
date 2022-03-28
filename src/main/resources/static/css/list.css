@@ -67,6 +67,13 @@ form#search label input[type="submit"] {
 .page ul i.bi.visibility {
 	color: var(--black-subtle);
 }
+.page ul .lg a {
+	font-weight: 500;
+	color: var(--black);
+}
+.page ul .lg a:hover {
+	color: var(--black-subtle);
+}
 .list-total {
 	justify-self: start;
 	padding: 0 60px;

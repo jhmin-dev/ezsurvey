@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 /* 레이아웃 */
-form#make {
+form#make,form#edit {
 	margin: 0 auto;
 	width: 100%;	
 }
@@ -73,4 +73,46 @@ label {
 }
 .toggle-switch.active {
 	left: 30px;
+}
+
+/* 링크 복사 버튼 */
+form#edit .copy-link {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+form#edit .copy-link input {
+	flex-grow: 1;
+}
+form#edit .copy-link div {
+	padding: 10px;
+}
+form#edit .copy-link i.bi {
+	color: var(--light-gray);
+	font-size: 1.5rem;
+}
+form#edit .copy-link i.bi:hover {
+	color: var(--point);
+}
+
+/* 폼 버튼 */
+form ul li.form-menu {
+	display: flex;
+	flex-direction: row;
+}
+form ul li.form-menu input {
+	flex-grow: 1;
+}
+
+/* 수정 폼 버튼 */
+form ul li.edit-menu hr {
+	margin: 10px;
+	padding: 0;
+	width: auto;
+	border-style: solid;
+	color: var(--light-gray-muted);
+	background-color: var(--light-gray-muted); /* 설정하지 않으면 크롬에서는 테두리가 있는 선이 생김 */
+}
+form ul li.edit-menu button i.bi {
+	padding: 10px;
 }

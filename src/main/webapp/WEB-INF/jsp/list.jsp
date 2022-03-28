@@ -72,7 +72,7 @@
 				
 				<c:if test="${type eq 'question'}">유형</c:if>
 			</li>
-			<li>
+			<li title="즐겨찾기 수">
 				<c:if test="${type eq 'survey'}">
 				<i class="bi bi-bookmarks-fill"></i>
 				</c:if>
@@ -88,7 +88,7 @@
 			</li>
 			</c:if>
 			<c:if test="${link eq 'my'}">
-			<li>
+			<li title="공개 범위">
 				<i class="bi bi-door-open-fill"></i>
 			</li>
 			</c:if>
@@ -114,11 +114,20 @@
 				<c:if test="${type eq 'question'}">${element.question}</c:if>
 			</li>
 			<li class="lg">
-				<c:if test="${type eq 'survey'}">${element.title}</c:if>
+				<c:if test="${type eq 'survey'}">
+				<c:if test="${link eq 'my'}">
+				<a href="/edit/project/${element.survey}">
+				</c:if>
+				<c:if test="${link ne 'my'}">
+				<a href="/project/${element.survey}">
+				</c:if>
+					${element.title}
+				</a>
+				</c:if>
 				<c:if test="${type eq 'question'}">${element.content}</c:if>
 			</li>
 			<li>
-				<c:if test="${type eq 'survey'}">문항 수</c:if>
+				<c:if test="${type eq 'survey'}">${element.questions}</c:if>
 				<c:if test="${type eq 'question'}">
 				${element.category}
 				</c:if>

@@ -51,7 +51,7 @@ body,.header-container,header.mobile,footer {
 [type="submit"] { /* 전경색이 밝은 계열이면 hover시 진한 배경 */
 	color: var(--white);
 	background-color: var(--point-muted);
-	border: 2px solid var(--point-muted);
+	border: 4px solid var(--point-muted);
 }
 [type="submit"]:hover {
 	background-color: var(--point);
@@ -60,7 +60,7 @@ body,.header-container,header.mobile,footer {
 [type="button"] { /* 전경색이 어두운 계열이면 hover시 연한 배경 */
 	color: var(--black);
 	background-color: var(--light-gray);
-	border: 2px solid var(--light-gray);	
+	border: 4px solid var(--light-gray);	
 }
 [type="button"]:not(:disabled):hover {
 	background-color: var(--light-gray-muted);
@@ -76,5 +76,15 @@ body,.header-container,header.mobile,footer {
 }
 [type="button"]:not(disabled).point-button:hover {
 	background-color: var(--point);
+	border-color: var(--point);
+}
+[type="button"].reverse-button {
+	color: var(--point-muted);
+	background-color: transparent;
+	border-color: var(--point-muted);
+}
+[type="button"]:not(disabled).reverse-button:hover {
+	color: var(--point);
+	background-color: transparent;
 	border-color: var(--point);
 }
