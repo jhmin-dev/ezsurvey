@@ -3,6 +3,7 @@ package io.ezsurvey.repository.survey;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import io.ezsurvey.dto.survey.SurveyServiceDTO;
 import io.ezsurvey.entity.SearchField;
 import io.ezsurvey.entity.survey.Survey;
 import io.ezsurvey.entity.user.User;
@@ -13,4 +14,7 @@ public interface CustomSurveyRepository {
 	
 	// 내 설문조사
 	Page<Survey> findByUser(User user, SearchField field, String word, Pageable pageable);
+	
+	// 1건을 DTO로 조회
+	SurveyServiceDTO getServiceDTOById(Long survey);
 }

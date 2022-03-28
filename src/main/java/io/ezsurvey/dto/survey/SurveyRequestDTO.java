@@ -45,10 +45,11 @@ public class SurveyRequestDTO {
 		this.visibility = serviceDTO.getVisibility().getKey();
 		this.shared = serviceDTO.getShared();
 	}
-	
+
 	// RequestDTO to ServiceDTO
 	public SurveyServiceDTO toServiceDTO() {
 		return SurveyServiceDTO.builder()
+				.survey(survey)
 				.user(user)
 				.title(title)
 				.content(content)

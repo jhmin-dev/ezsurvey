@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Formula;
 
 import io.ezsurvey.entity.BaseTime;
@@ -27,6 +28,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // JPA에서 Entity 관리시 필요
 @Entity
+@DynamicUpdate // 변경한 필드만 대응
 public class Survey extends BaseTime {
 	@Id // PK
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // GENERATED AS IDENTITY
@@ -80,11 +82,9 @@ public class Survey extends BaseTime {
 		this.shared = shared;
 	}
 	
-	public Survey update(String title, String content
-			, Status status, Boolean deleted, Visibility visibility, String shared) {
+	public Survey update(String title, String content, Visibility visibility, String shared) {
 		this.title = title;
 		this.content = content;
-		this.status = status;
 		this.visibility = visibility;
 		this.shared = shared;
 		

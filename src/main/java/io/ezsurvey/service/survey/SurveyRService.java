@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import io.ezsurvey.dto.survey.SurveyResponseDTO;
+import io.ezsurvey.dto.survey.SurveyServiceDTO;
 import io.ezsurvey.entity.SearchField;
 import io.ezsurvey.entity.survey.Survey;
 import io.ezsurvey.entity.user.User;
@@ -76,5 +77,11 @@ public class SurveyRService {
 				.created(s.getCreated().toString())
 				.bookmarks(s.getBookmarks())
 				.build());
+	}
+
+	public SurveyResponseDTO getResponseDTOById(Long survey) {
+		SurveyServiceDTO serviceDTO = surveyRepository.getServiceDTOById(survey);
+		
+		return serviceDTO==null ? null : new SurveyResponseDTO(serviceDTO);
 	}
 }

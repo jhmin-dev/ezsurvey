@@ -4,12 +4,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import static io.ezsurvey.entity.survey.QSurvey.survey;
 import static io.ezsurvey.entity.user.QUser.user;
 
+import io.ezsurvey.dto.survey.SurveyServiceDTO;
 import io.ezsurvey.entity.SearchField;
 import io.ezsurvey.entity.survey.Survey;
 import io.ezsurvey.entity.survey.Visibility;
@@ -64,5 +66,20 @@ public class CustomSurveyRepositoryImpl implements CustomSurveyRepository {
 		// 총 레코드 수가 페이지 크기보다 작거나, 마지막 페이지인 경우 마지막 인자의 함수(쿼리)를 실행하지 않음
 		return PageableExecutionUtils.getPage(content.fetch(), pageable
 				, () -> count.fetch().get(0));
+	}
+
+	@Override
+	public SurveyServiceDTO getServiceDTOById(Long survey_id) {
+		JPAQuery<SurveyServiceDTO> content = jpaQueryFactory
+				.select(Projections.fields(SurveyServiceDTO.class
+						, survey.id.as("survey"), survey.user
+						, survey.title, survey.content
+						, survey.created, survey.modified
+						, survey.distributed, survey.expires, survey.status
+						, survey.visibility, survey.shared))
+				.from(survey)
+				.where(survey.id.eq(survey_id));
+		
+		return content.fetchOne();
 	}
 }

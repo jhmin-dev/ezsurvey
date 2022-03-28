@@ -4,9 +4,12 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.ezsurvey.dto.survey.SurveyRequestDTO;
 import io.ezsurvey.dto.survey.SurveyServiceDTO;
 import io.ezsurvey.entity.survey.Status;
 import io.ezsurvey.entity.survey.Survey;
@@ -17,13 +20,15 @@ import io.ezsurvey.repository.user.UserRepository;
 @Transactional
 @Service
 public class SurveyCUDService {
+	private static final Logger logger = LoggerFactory.getLogger(SurveyCUDService.class);
+	
 	@Autowired
 	private SurveyRepository surveyRepository;
 	
 	@Autowired
 	private UserRepository userRepository;
 	
-	public Survey insertSurvey(SurveyServiceDTO serviceDTO, Long member) {
+	public Survey insert(SurveyServiceDTO serviceDTO, Long member) {
 		serviceDTO.setUser(userRepository.getById(member));
 		
 		// 필수 필드에 값 저장
@@ -36,5 +41,17 @@ public class SurveyCUDService {
 		}
 		
 		return surveyRepository.save(serviceDTO.toEntity());
+	}
+	
+	public SurveyRequestDTO getRequestDTOById(Long survey) {
+		SurveyServiceDTO serviceDTO = surveyRepository.getServiceDTOById(survey);
+		
+		return serviceDTO==null ? null : new SurveyRequestDTO(serviceDTO);
+	}
+	
+	public void update(SurveyServiceDTO serviceDTO) {
+		surveyRepository.getById(serviceDTO.getSurvey())
+				.update(serviceDTO.getTitle(), serviceDTO.getContent()
+						, serviceDTO.getVisibility(), serviceDTO.getShared());
 	}
 }

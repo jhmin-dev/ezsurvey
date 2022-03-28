@@ -28,26 +28,7 @@ public class SurveyServiceDTO {
 	private Status status;
 	private Visibility visibility;
 	private String shared;
-	
-	// Entity에 없는 필드
-	private long questions;
-	private long bookmarks;
-	
-	// Entity to ServiceDTO
-	public SurveyServiceDTO(Survey survey) {
-		this.survey = survey.getId();
-		this.user = survey.getUser();
-		this.title = survey.getTitle();
-		this.content = survey.getContent();
-		this.created = survey.getCreated();
-		this.modified = survey.getModified();
-		this.distributed = survey.getDistributed();
-		this.expires = survey.getExpires();
-		this.status = survey.getStatus();
-		this.visibility = survey.getVisibility();
-		this.shared = survey.getShared();
-	}
-	
+
 	// ServiceDTO to Entity
 	public Survey toEntity() {
 		return Survey.builder()
@@ -58,11 +39,5 @@ public class SurveyServiceDTO {
 				.visibility(visibility)
 				.shared(shared)
 				.build();
-	}
-	
-	public SurveyServiceDTO updateBookmarks(long bookmarks) {
-		this.bookmarks = bookmarks;
-		
-		return this;
 	}
 }

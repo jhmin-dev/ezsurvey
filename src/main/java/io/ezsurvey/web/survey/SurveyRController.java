@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.ezsurvey.dto.survey.SurveyResponseDTO;
@@ -21,6 +22,7 @@ import io.ezsurvey.dto.user.SessionUser;
 import io.ezsurvey.dto.EnumDTO;
 import io.ezsurvey.entity.EnumBase;
 import io.ezsurvey.entity.SearchField;
+import io.ezsurvey.entity.survey.Visibility;
 import io.ezsurvey.service.survey.SurveyRService;
 import io.ezsurvey.web.PagingUtil;
 
@@ -33,6 +35,26 @@ public class SurveyRController {
 	
 	@Autowired @Qualifier("searchFieldSurvey")
 	private List<EnumDTO> searchField;
+	
+	@RequestMapping("/project/{survey}")
+	public String detail(@PathVariable(name = "survey") Long survey, Model model, HttpSession session) {
+		SurveyResponseDTO responseDTO = surveyService.getResponseDTOById(survey);
+		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
+		
+		boolean hasAccess = responseDTO.getVisibility().equals(Visibility.PUBLIC.getKey()); // 설문조사가 전체 공개인 경우		
+		if(sessionUser!=null) { // 사용자가 로그인되어 있는 경우
+			hasAccess |= (!responseDTO.getVisibility().equals(Visibility.DELETED.getKey()) // 설문조사가 삭제되지 않았고 
+					&& responseDTO.getUserId()==sessionUser.getMember()); // 로그인한 사용자가 설문조사 생성자인 경우
+		}
+		
+		if(responseDTO==null || !hasAccess) { // 잘못된 설문조사 번호로 접속했거나 권한이 없는 경우
+			return "redirect:/";
+		}
+		
+		model.addAttribute("responseDTO", responseDTO);
+		
+		return "/project/detail";
+	}
 	
 	@RequestMapping("/project")
 	public String list(@PageableDefault(page = 0, sort = "id", direction = Direction.DESC) Pageable pageable
