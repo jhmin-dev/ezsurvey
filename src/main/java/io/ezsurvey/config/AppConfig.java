@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 import io.ezsurvey.dto.EnumDTO;
 import io.ezsurvey.entity.SearchField;
+import io.ezsurvey.entity.question.Category;
 import io.ezsurvey.entity.survey.Status;
 import io.ezsurvey.entity.survey.Visibility;
 import io.ezsurvey.entity.user.Provider;
@@ -24,6 +25,7 @@ public class AppConfig {
 		enumMapper.put("Provider", Provider.class);
 		enumMapper.put("Visibility", Visibility.class);
 		enumMapper.put("Status", Status.class);
+		enumMapper.put("Category", Category.class);
 		
 		return enumMapper;
 	}

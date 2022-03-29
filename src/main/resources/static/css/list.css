@@ -34,9 +34,6 @@
 .list-top ul li {
 	padding: 0 10px;
 }
-form#search label input[type="submit"] {
-	display: none;
-}
 
 /* 목록의 제목 */
 .page-label ul,.page ul {

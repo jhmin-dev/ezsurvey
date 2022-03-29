@@ -1,28 +1,17 @@
 package io.ezsurvey.entity.question;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import lombok.AccessLevel;
+import io.ezsurvey.entity.EnumBaseValue;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED) // JPA에서 Entity 관리시 필요
-@Entity
-public class Category {
-	@Id // PK
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // GENERATED AS IDENTITY
-	@Column(name = "category_id")
-	private Long id;
+@RequiredArgsConstructor
+public enum Category implements EnumBaseValue {
+	MULTIPLE_CHOICE("multiple_choice", "선다형", (byte)1),
+	LIKERT_SCALE("likert_scale", "척도형", (byte)2),
+	SHORT_ANSWER("short_answer", "단답형", (byte)3);
 	
-	@Column(length = 64, unique = true, updatable = false, nullable = false)
-	private String name;
-	
-	public Category(String name) {
-		this.name = name;
-	}
+	public final String key;
+	public final String name;
+	public final Byte value;
 }

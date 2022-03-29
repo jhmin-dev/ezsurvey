@@ -18,11 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.ezsurvey.dto.EnumDTO;
 import io.ezsurvey.dto.user.SessionUser;
+import io.ezsurvey.repository.EnumMapper;
 import io.ezsurvey.web.PagingUtil;
 
 @Controller
 public class QuestionReadController {
 	private static final Logger logger = LoggerFactory.getLogger(QuestionReadController.class);
+	
+	@Autowired
+	private EnumMapper enumMapper; // AppConfig에 등록
 	
 	@Autowired @Qualifier("searchFieldQuestion")
 	private List<EnumDTO> searchField;
@@ -53,5 +57,6 @@ public class QuestionReadController {
 		PagingUtil.setPageAttributes(model, page, 5);
 		model.addAttribute("searchField", searchField);
 		model.addAttribute("type", "question");
+		model.addAttribute("category", enumMapper.get("Category")); // 문항 목록 화면 구성에 필요한 정보 저장
 	}
 }

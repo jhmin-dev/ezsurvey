@@ -19,11 +19,21 @@
 						</c:forEach>
 					</select>
 				</li>
+				<c:if test="${type eq 'question'}">
+				<li>
+					<select name="category">
+						<option value="" <c:if test="${empty param.category}">selected</c:if>>전체</option>
+						<c:forEach items="${category}" var="cat">
+						<option value="${cat.key}" <c:if test="${cat.key==param.category}">selected</c:if>>${cat.name}</option>
+						</c:forEach>
+					</select>
+				</li>
+				</c:if>		
 				<li>
 					<input type="text" name="word">
 				</li>
 				<li>
-					<label>
+					<label class="label-button">
 						<i class="bi bi-search button"></i>
 						<input type="submit">
 					</label>

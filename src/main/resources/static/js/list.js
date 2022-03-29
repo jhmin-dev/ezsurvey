@@ -32,6 +32,21 @@ if(link=='my') {
 	}
 }
 
+// 필드 선택시 새로고침
+const search = document.getElementById('search');
+const field = document.querySelector('select[name="field"]');
+const word = document.querySelector('input[name="word"]');
+field.addEventListener('change', function() {
+	if(!word.value) return;
+	search.submit();
+});
+if(type=='question') {
+	const category = document.querySelector('select[name="category"]');
+	category.onchange = function() {
+		search.submit();
+	}
+}
+
 // 즐겨찾기 선택 삭제
 function deleteBookmarks() {
 	let bookmarks = getChecked();
