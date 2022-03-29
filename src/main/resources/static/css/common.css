@@ -254,3 +254,15 @@ main > .title {
 	font-weight: 700;
 	text-align: center;
 }
+
+/* 본문 */
+.label-button input {
+	display: none;
+}
+.label-button i.bi {
+	transition: color 0.5s ease;
+	cursor: pointer;
+}
+.label-button:hover i.bi {
+	color: var(--black-muted);
+}

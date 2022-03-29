@@ -62,9 +62,9 @@ public class CustomBookmarkSurveyRepositoryImpl implements CustomBookmarkSurveyR
 	}
 
 	@Override
-	public Long deleteBySurveyAndUser(Long survey_id, Long member_id) {
+	public Long deleteById(Long bookmark_id, Long member_id) {
 		return jpaQueryFactory.delete(bookmarkSurvey)
-				.where(bookmarkSurvey.survey.id.eq(survey_id), bookmarkSurvey.user.id.eq(member_id)).execute();
+				.where(bookmarkSurvey.id.eq(bookmark_id), bookmarkSurvey.user.id.eq(member_id)).execute();
 	}
 
 	@Override

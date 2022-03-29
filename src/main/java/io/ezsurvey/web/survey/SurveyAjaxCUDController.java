@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,8 +49,8 @@ public class SurveyAjaxCUDController {
 		return map;
 	}
 	
-	@PostMapping("/ajax/toggle/bookmark/project")
-	public Map<String, String> toggleBookmark(Long survey, HttpSession session) {
+	@PostMapping("/ajax/toggle/bookmark/project/{survey}")
+	public Map<String, String> toggleBookmark(@PathVariable(name = "survey") Long survey, HttpSession session) {
 		Map<String, String> map = new HashMap<String, String>();
 		
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
@@ -58,13 +59,13 @@ public class SurveyAjaxCUDController {
 		}
 		else {
 			Long member = sessionUser.getMember();
-	
-			if(bookmarkSurveyService.getBookmark(survey, member)==null) { // 기존에 즐겨찾기되어 있지 않으면 추가
+			Long bookmark = bookmarkSurveyService.getBookmark(survey, member);
+			if(bookmark==null) { // 기존에 즐겨찾기되어 있지 않으면 추가
 				bookmarkSurveyService.insertBookmark(survey, member);
 				map.put("result", "inserted");
 			}
 			else { // 기존에 즐겨찾기되어 있으면 삭제
-				bookmarkSurveyService.deleteBookmark(survey, member);
+				bookmarkSurveyService.deleteBookmark(bookmark, member);
 				map.put("result", "deleted");
 			}
 		}
