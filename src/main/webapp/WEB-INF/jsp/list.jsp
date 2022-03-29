@@ -6,7 +6,7 @@
 <div class="title">
 	${title}
 </div>
-<article>
+<article data-type="${type}" data-link="${link}">
 <ul class="list-top">
 	<li>
 		<!-- 검색 시작 -->
@@ -41,7 +41,7 @@
 			</c:if>
 			<c:if test="${link eq 'bookmark'}">
 			<li>
-				<input type="button" value="선택 항목 삭제하기">
+				<input type="button" value="선택 항목 삭제하기" onclick="deleteBookmarks();">
 			</li>
 			</c:if>
 		</ul>
@@ -84,7 +84,10 @@
 			</li>
 			<c:if test="${link eq 'bookmark'}">
 			<li>
-				<i class="bi bi-trash3-fill"></i>
+				<label class="label-button">
+					<input type="button" onclick="deleteBookmarks();">
+					<i class="bi bi-trash3-fill"></i>
+				</label>
 			</li>
 			</c:if>
 			<c:if test="${link eq 'my'}">
@@ -143,8 +146,10 @@
 				<c:if test="${type eq 'question'}">하위 문항 수</c:if>
 			</li>
 			<c:if test="${link eq 'bookmark'}">
-			<li>
-				<input type="checkbox">
+			<li class="label-block">
+				<label>
+					<input type="checkbox" class="bookmark" data-bookmark="${element.bookmarkId}">
+				</label>
 			</li>
 			</c:if>
 			<c:if test="${link eq 'my'}">
@@ -192,6 +197,7 @@
 </ul>
 </c:if>
 <link rel="stylesheet" href="/css/list.css">
+<script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="/js/StringUtil.js"></script>
 <script type="text/javascript" src="/js/list.js"></script>
 </article>

@@ -12,6 +12,11 @@
 	margin: 60px auto;
 	font-style: italic;
 }
+.list-total {
+	justify-self: start;
+	padding: 0 60px;
+	width: inherit;
+}
 
 /* 검색 바와 버튼 */
 .list-top {
@@ -33,7 +38,7 @@ form#search label input[type="submit"] {
 	display: none;
 }
 
-/* 목록 */
+/* 목록의 제목 */
 .page-label ul,.page ul {
 	display: flex;
 	flex-direction: row;
@@ -61,6 +66,18 @@ form#search label input[type="submit"] {
 	font-size: 1.25rem;
 	font-weight: 700;
 }
+.page-label ul .label-button input {
+	display: none;
+}
+.page-label ul .label-button i.bi {
+	transition: color 0.5s ease;
+	cursor: pointer;
+}
+.page-label ul .label-button:hover i.bi {
+	color: var(--black-muted);
+}
+
+/* 목록의 본문 */
 .page ul:nth-child(even) {
 	background-color: var(--white-subtle);
 }
@@ -74,10 +91,12 @@ form#search label input[type="submit"] {
 .page ul .lg a:hover {
 	color: var(--black-subtle);
 }
-.list-total {
-	justify-self: start;
-	padding: 0 60px;
-	width: inherit;
+.page ul li.label-block {
+	padding: 0;
+}
+.page ul li.label-block label {
+	display: block;
+	padding: 10px 0;
 }
 
 /* 페이지 버튼 */

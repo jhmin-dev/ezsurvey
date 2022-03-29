@@ -23,12 +23,16 @@ import io.ezsurvey.dto.EnumDTO;
 import io.ezsurvey.entity.EnumBase;
 import io.ezsurvey.entity.SearchField;
 import io.ezsurvey.entity.survey.Visibility;
+import io.ezsurvey.service.survey.BookmarkSurveyRService;
 import io.ezsurvey.service.survey.SurveyRService;
 import io.ezsurvey.web.PagingUtil;
 
 @Controller
 public class SurveyRController {
 	private static final Logger logger = LoggerFactory.getLogger(SurveyRController.class);
+	
+	@Autowired
+	private BookmarkSurveyRService bookmarkSurveyService;
 	
 	@Autowired
 	private SurveyRService surveyService;
@@ -104,7 +108,7 @@ public class SurveyRController {
 		
 		// 로그인한 사용자가 즐겨찾기한 설문조사 중 전체 공개인 설문조사 목록 가져오기
 		Page<SurveyResponseDTO> page = Page.empty();
-		page = surveyService.getByVisibilityAndUser(sessionUser.getMember()
+		page = bookmarkSurveyService.getByVisibilityAndUser(sessionUser.getMember()
 				, EnumBase.findByKey(SearchField.class, field), word, pageable);
 		
 		// 설문조사 목록 관련 정보 저장

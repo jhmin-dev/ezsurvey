@@ -13,6 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class SurveyResponseDTO { // 민감한 회원 정보 및 share 링크 값을 제외한 조회 전용 DTO
 	private Long survey;
+	private Long bookmarkId;
 	private Long userId;
 	private String userName;
 	private String userProfileURL;
