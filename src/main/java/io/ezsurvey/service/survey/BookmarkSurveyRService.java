@@ -39,4 +39,8 @@ public class BookmarkSurveyRService {
 				.bookmarks(bs.getSurvey().getBookmarks())
 				.build());
 	}
+	
+	public boolean existsBookmark(Long survey, Long member) {
+		return bookmarkSurveyRepository.getBySurveyAndUser(survey, member)!=null;
+	}
 }

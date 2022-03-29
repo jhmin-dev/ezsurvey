@@ -55,6 +55,9 @@ public class SurveyRController {
 			return "redirect:/";
 		}
 		
+		if(sessionUser!=null) { // 로그인한 사용자가 현재 설문조사를 즐겨찾기했는지 확인
+			responseDTO.setHasBookmarked(bookmarkSurveyService.existsBookmark(survey, sessionUser.getMember()));
+		}
 		model.addAttribute("responseDTO", responseDTO);
 		
 		return "/project/detail";

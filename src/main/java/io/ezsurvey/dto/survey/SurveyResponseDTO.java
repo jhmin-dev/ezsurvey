@@ -29,6 +29,7 @@ public class SurveyResponseDTO { // 민감한 회원 정보 및 share 링크 값
 	// 테이블에 없는 가상 컬럼
 	private Long questions;
 	private Long bookmarks;
+	private Boolean hasBookmarked;
 	
 	// ServiceDTO to ResponseDTO
 	public SurveyResponseDTO(SurveyServiceDTO serviceDTO) {
@@ -44,5 +45,9 @@ public class SurveyResponseDTO { // 민감한 회원 정보 및 share 링크 값
 		this.expires = Objects.toString(serviceDTO.getExpires());
 		this.status = serviceDTO.getStatus().getKey();
 		this.visibility = serviceDTO.getVisibility().getKey();
+	}
+
+	public void setHasBookmarked(Boolean hasBookmarked) {
+		this.hasBookmarked = hasBookmarked;
 	}
 }
