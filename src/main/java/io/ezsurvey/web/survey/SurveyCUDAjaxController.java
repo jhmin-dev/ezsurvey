@@ -9,11 +9,9 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.ezsurvey.dto.user.SessionUser;
@@ -21,8 +19,8 @@ import io.ezsurvey.service.survey.BookmarkSurveyCUDService;
 import io.ezsurvey.service.survey.SurveyCUDService;
 
 @RestController
-public class SurveyAjaxCUDController {
-	private static final Logger logger = LoggerFactory.getLogger(SurveyAjaxCUDController.class);
+public class SurveyCUDAjaxController {
+	private static final Logger logger = LoggerFactory.getLogger(SurveyCUDAjaxController.class);
 	
 	@Autowired
 	BookmarkSurveyCUDService bookmarkSurveyService;
