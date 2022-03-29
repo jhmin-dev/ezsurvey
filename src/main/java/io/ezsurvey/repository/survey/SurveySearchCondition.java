@@ -10,17 +10,19 @@ import io.ezsurvey.entity.SearchField;
 
 public class SurveySearchCondition {
 	public static BooleanExpression contains(SearchField field, String word) {
-		if(field==SearchField.TITLE) return containsTitle(word);
-		else if(field==SearchField.CONTENT) return containsContent(word);
-		else if(field==SearchField.TITLE_OR_CONTENT) return containsTitle(word).or(containsContent(word));
+		if(StringUtils.isNotBlank(word)) {
+			if(field==SearchField.TITLE) return containsTitle(word);
+			else if(field==SearchField.CONTENT) return containsContent(word);
+			else if(field==SearchField.TITLE_OR_CONTENT) return containsTitle(word).or(containsContent(word));
+		}
 		return null;
 	}
 	
 	private static BooleanExpression containsTitle(String word) {
-		return StringUtils.isNotBlank(word) ? survey.title.contains(word) : null;
+		return survey.title.contains(word);
 	}
 	
 	private static BooleanExpression containsContent(String word) {
-		return StringUtils.isNotBlank(word) ? survey.content.contains(word) : null;
+		return survey.content.contains(word);
 	}
 }
