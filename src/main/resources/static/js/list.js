@@ -54,12 +54,8 @@ function deleteBookmarks() {
 	
 	$.ajax({
 		url:'/ajax/delete' + type_link,
-		type:'post',
 		contentType:'application/json;charset=UTF-8', // Ajax로 리스트를 넘기기 위한 옵션
 		data:JSON.stringify(bookmarks),
-		dataType:'json',
-		cache:false,
-		timeout:10000,
 		success:function(param) {
 			if(param.result=='logout') {
 				alert('로그인 후 삭제할 수 있습니다!');

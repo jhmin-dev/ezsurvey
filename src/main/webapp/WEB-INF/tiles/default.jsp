@@ -5,8 +5,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title><tiles:insertAttribute name="title"/></title>
 <link rel="stylesheet" href="/css/common.css">
+<script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+const token = document.querySelector('meta[name="_csrf"]').content;
+const header = document.querySelector('meta[name="_csrf_header"]').content;
+$.ajaxSetup({
+	beforeSend:function(xhr) {
+		xhr.setRequestHeader(header, token);
+	},
+	type:'POST',
+	dataType:'JSON',
+	timeout:10000
+}); // ajax 공통 옵션
+</script>
 </head>
 <body>
 <div class="page-container">

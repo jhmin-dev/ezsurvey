@@ -90,13 +90,9 @@ if(button_delete) {
 	button_delete.onclick = function() {
 		$.ajax({
 			url:'/ajax/delete/project',
-			type:'post',
 			data:{
 				survey:button_delete.dataset.survey,
 			},
-			dataType:'json',
-			cache:false,
-			timeout:10000,
 			success:function(param) {
 				if(param.result=='logout') {
 					alert('로그인 후 삭제할 수 있습니다!');

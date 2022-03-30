@@ -5,10 +5,6 @@ const bookmark_button = document.querySelector('i.bi.bookmark');
 function toggleBookmark() {
 	$.ajax({
 		url:'/ajax/toggle/bookmark' + type_link,
-		type:'post',
-		dataType:'json',
-		cache:false,
-		timeout:10000,
 		success:function(param) {
 			if(param.result=='logout') {
 				alert('로그인 후 즐겨찾기할 수 있습니다!');
