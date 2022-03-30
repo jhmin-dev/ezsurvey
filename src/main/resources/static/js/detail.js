@@ -18,9 +18,6 @@ function toggleBookmark() {
 			else {
 				alert('즐겨찾기시 오류가 발생했습니다!');
 			}
-		}, // end of success
-		error:function() {
-			alert('네트워크 오류가 발생했습니다!');
-		}		
+		}, // end of success	
 	}); // end of ajax
 }
