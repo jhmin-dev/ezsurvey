@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import io.ezsurvey.service.user.CustomOAuth2UserService;
-import io.ezsurvey.web.user.CustomAccessDeniedHandler;
 import io.ezsurvey.web.user.CustomAuthenticationFailureHandler;
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private final CustomOAuth2UserService customOAuth2UserService;
 	private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
-	private final CustomAccessDeniedHandler customAccessDeniedHandler;
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception { // WebSecurity 필터가 HttpSecurity 필터보다 빠름
@@ -29,23 +27,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
+		http.csrf()
+				.ignoringAntMatchers("/ajax/**") // Ajax 요청에 대해 CSRF 적용하지 않음
+				.and()
+			.authorizeRequests()
 				.antMatchers("/admin/**").hasRole("ADMIN")
 				.antMatchers("/make/**", "/edit/**", "/my/**", "/bookmark/**", "/settings/**", "/delete/**").authenticated()
 				.anyRequest().permitAll()
-			.and()
-				.logout()
+				.and()
+			.logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // 로그아웃 요청 URL
 				.logoutSuccessUrl("/") // 로그아웃 성공시 이동할 URL
 				.clearAuthentication(true)
 				.invalidateHttpSession(true)
 				.deleteCookies("JSESSIONID")
-			.and()
-				.exceptionHandling()
-				.accessDeniedHandler(customAccessDeniedHandler)
-//				.accessDeniedPage("/login") // 권한이 없는 경우 이동할 URL
-			.and()
-				.oauth2Login()
+				.and()
+			.exceptionHandling()
+				.accessDeniedPage("/login") // 권한이 없는 경우 이동할 URL
+				.and()
+			.oauth2Login()
 				.loginPage("/login") // 인증 요구시 이동할 URL
 				.failureHandler(customAuthenticationFailureHandler) // 로그인 실패를 처리할 핸들러 지정
 				.userInfoEndpoint()

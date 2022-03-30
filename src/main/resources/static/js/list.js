@@ -71,10 +71,7 @@ function deleteBookmarks() {
 			else {
 				alert('선택한 항목 삭제시 오류가 발생했습니다!');
 			}
-		}, // end of success
-		error:function() {
-			alert('네트워크 오류가 발생했습니다!');
-		}		
+		} // end of success
 	}); // end of ajax
 }
 

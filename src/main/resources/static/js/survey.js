@@ -22,7 +22,7 @@ if(input_link) {
 	}
 }
 
-// 토글 버튼 애니메이션
+// 토글 버튼 UI
 document.addEventListener('click', function(e) {
 	let toggle_container = e.target.closest('.toggle-container');
 	if(toggle_container && toggle_container.contains(e.target)) {
@@ -107,10 +107,7 @@ if(button_delete) {
 				else {
 					alert('설문조사 삭제시 오류가 발생했습니다!');
 				}
-			}, // end of success
-			error:function() {
-				alert('네트워크 오류가 발생했습니다!');
-			}
+			} // end of success
 		}); // end of ajax
 	}
 }
