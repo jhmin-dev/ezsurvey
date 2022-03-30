@@ -23,19 +23,19 @@ import io.ezsurvey.dto.EnumDTO;
 import io.ezsurvey.entity.EnumBase;
 import io.ezsurvey.entity.SearchField;
 import io.ezsurvey.entity.survey.Visibility;
-import io.ezsurvey.service.survey.BookmarkSurveyRService;
-import io.ezsurvey.service.survey.SurveyRService;
+import io.ezsurvey.service.survey.BookmarkSurveyReadService;
+import io.ezsurvey.service.survey.SurveyReadService;
 import io.ezsurvey.web.PagingUtil;
 
 @Controller
-public class SurveyRController {
-	private static final Logger logger = LoggerFactory.getLogger(SurveyRController.class);
+public class SurveyReadController {
+	private static final Logger logger = LoggerFactory.getLogger(SurveyReadController.class);
 	
 	@Autowired
-	private BookmarkSurveyRService bookmarkSurveyService;
+	private BookmarkSurveyReadService bookmarkSurveyService;
 	
 	@Autowired
-	private SurveyRService surveyService;
+	private SurveyReadService surveyService;
 	
 	@Autowired @Qualifier("searchFieldSurvey")
 	private List<EnumDTO> searchField;

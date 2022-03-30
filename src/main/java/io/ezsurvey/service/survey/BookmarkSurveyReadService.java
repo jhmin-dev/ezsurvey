@@ -15,7 +15,7 @@ import io.ezsurvey.repository.user.UserRepository;
 
 @Transactional
 @Service
-public class BookmarkSurveyRService {
+public class BookmarkSurveyReadService {
 	@Autowired
 	private BookmarkSurveyRepository bookmarkSurveyRepository;
 

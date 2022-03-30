@@ -16,7 +16,7 @@ import io.ezsurvey.repository.user.UserRepository;
 
 @Transactional
 @Service
-public class SurveyRService {
+public class SurveyReadService {
 	@Autowired
 	private SurveyRepository surveyRepository;
 	
