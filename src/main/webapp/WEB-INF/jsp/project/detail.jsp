@@ -29,5 +29,5 @@
 		</li>
 	</ul>
 </article>
-<script type="text/javascript" src="/js/detail.js"></script>
+<script type="text/javascript" src="/js/ajax/bookmark.js"></script>
 </main>

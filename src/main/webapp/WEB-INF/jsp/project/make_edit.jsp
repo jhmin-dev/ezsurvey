@@ -74,7 +74,7 @@
 				<span>배포 날짜 설정</span>
 			</button>
 			<hr>
-			<button type="button" class="reverse-button">
+			<button type="button" class="reverse-button" onclick="location.href = '/edit/project/${requestDTO.survey}/index';">
 				<i class="bi bi-pencil-square"></i>
 				<span>문항 관리</span>
 			</button>
@@ -95,5 +95,6 @@
 </form:form>
 </article>
 <link rel="stylesheet" href="/css/make_edit.css">
-<script type="text/javascript" src="/js/survey.js"></script>
+<script type="text/javascript" src="/js/ui/survey.js"></script>
+<script type="text/javascript" src="/js/ajax/survey.js"></script>
 </main>

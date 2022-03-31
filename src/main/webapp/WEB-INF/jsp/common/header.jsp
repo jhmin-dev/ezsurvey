@@ -91,5 +91,5 @@
 	</ul>
 	</c:if>
 </nav>
-<script type="text/javascript" src="/js/menu.js"></script>
+<script type="text/javascript" src="/js/ui/menu.js"></script>
 </header>

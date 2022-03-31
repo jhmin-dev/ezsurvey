@@ -25,5 +25,5 @@
 </article>
 <link rel="stylesheet" href="/css/login.css">
 <script type="text/javascript" src="/js/StringUtil.js"></script>
-<script type="text/javascript" src="/js/login.js"></script>
+<script type="text/javascript" src="/js/ui/login.js"></script>
 </main>

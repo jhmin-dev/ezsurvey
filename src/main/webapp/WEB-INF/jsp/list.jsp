@@ -79,10 +79,9 @@
 			</li>
 			<li>
 				<c:if test="${type eq 'survey'}">문항 수</c:if>
-				
 				<c:if test="${type eq 'question'}">유형</c:if>
 			</li>
-			<li title="즐겨찾기 수">
+			<li <c:if test="${type eq 'survey'}">title="즐겨찾기 수"</c:if>>
 				<c:if test="${type eq 'survey'}">
 				<i class="bi bi-bookmarks-fill"></i>
 				</c:if>
@@ -108,11 +107,6 @@
 			<c:if test="${link eq 'list'}">
 			<li>
 				생성자
-			</li>
-			</c:if>
-			<c:if test="${link eq 'index'}">
-			<li>
-				<i class="bi bi-arrow-down-up"></i>
 			</li>
 			</c:if>
 		</ul>
@@ -172,11 +166,6 @@
 				${element.userName}
 			</li>
 			</c:if>
-			<c:if test="${link eq 'index'}">
-			<li>
-				드래그
-			</li>
-			</c:if>
 		</ul>
 		</c:forEach>
 	</li>
@@ -208,6 +197,7 @@
 </c:if>
 <link rel="stylesheet" href="/css/list.css">
 <script type="text/javascript" src="/js/StringUtil.js"></script>
-<script type="text/javascript" src="/js/list.js"></script>
+<script type="text/javascript" src="/js/ui/list.js"></script>
+<script type="text/javascript" src="/js/ajax/bookmark.js"></script>
 </article>
 </main>
