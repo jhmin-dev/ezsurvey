@@ -41,4 +41,10 @@ public class QuestionServiceDTO {
 				.picture(picture)
 				.build();
 	}
+	
+	public QuestionServiceDTO updateParent(Question parent) {
+		this.parent = parent;
+		
+		return this;
+	}
 }
