@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,39 +22,54 @@ import io.ezsurvey.dto.EnumDTO;
 import io.ezsurvey.entity.EnumBase;
 import io.ezsurvey.entity.SearchField;
 import io.ezsurvey.entity.survey.Visibility;
+import io.ezsurvey.exception.DeletedSurveyException;
+import io.ezsurvey.exception.EntityNotFoundException;
+import io.ezsurvey.exception.InvalidSurveyVisibilityException;
 import io.ezsurvey.service.survey.BookmarkSurveyReadService;
 import io.ezsurvey.service.survey.SurveyReadService;
 import io.ezsurvey.web.PagingUtil;
 
 @Controller
-public class SurveyReadController {
+public class SurveyReadController { 
 	private static final Logger logger = LoggerFactory.getLogger(SurveyReadController.class);
+	private final BookmarkSurveyReadService bookmarkSurveyService;
+	private final SurveyReadService surveyService;
+	private final List<EnumDTO> searchField;
 	
-	@Autowired
-	private BookmarkSurveyReadService bookmarkSurveyService;
+	// 생성자 방식 의존성 주입
+	public SurveyReadController(BookmarkSurveyReadService bookmarkSurveyService
+			, SurveyReadService surveyService, @Qualifier("searchFieldSurvey") List<EnumDTO> searchField) {
+		this.bookmarkSurveyService = bookmarkSurveyService;
+		this.surveyService = surveyService;
+		this.searchField = searchField;
+	}
 	
-	@Autowired
-	private SurveyReadService surveyService;
-	
-	@Autowired @Qualifier("searchFieldSurvey")
-	private List<EnumDTO> searchField;
-	
+	// 전체 공개 경로이므로 sessionUser의 null 검사 필수
 	@RequestMapping("/project/{survey}")
 	public String detail(@PathVariable(name = "survey") Long survey, Model model, HttpSession session) {
+		// 잘못된 설문조사 번호로 접속한 경우
 		SurveyResponseDTO responseDTO = surveyService.getResponseDTOById(survey);
+		if(responseDTO==null) {
+			throw new EntityNotFoundException();
+		}
+		
+		// 설문조사가 삭제된 경우
+		if(responseDTO.getVisibility().equals(Visibility.DELETED.getKey())) {
+			throw new DeletedSurveyException();
+		}
+		
+		// 설문조사가 전체 공개가 아니고, 로그인한 사용자가 설문조사 생성자와 불일치하는 경우
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
-		
-		boolean hasAccess = responseDTO.getVisibility().equals(Visibility.PUBLIC.getKey()); // 설문조사가 전체 공개인 경우		
-		if(sessionUser!=null) { // 사용자가 로그인되어 있는 경우
-			hasAccess |= (!responseDTO.getVisibility().equals(Visibility.DELETED.getKey()) // 설문조사가 삭제되지 않았고 
-					&& responseDTO.getUserId()==sessionUser.getMember()); // 로그인한 사용자가 설문조사 생성자인 경우
+		boolean hasAccess = responseDTO.getVisibility().equals(Visibility.PUBLIC.getKey()); // 전체 공개인 경우
+		if(sessionUser!=null) { // 로그인되어 있고
+			hasAccess |= responseDTO.getUserId()==sessionUser.getMember(); // 로그인한 사용자가 설문조사 생성자와 일치하는 경우
+		}
+		if(!hasAccess) {
+			throw new InvalidSurveyVisibilityException();
 		}
 		
-		if(responseDTO==null || !hasAccess) { // 잘못된 설문조사 번호로 접속했거나 권한이 없는 경우
-			return "redirect:/";
-		}
-		
-		if(sessionUser!=null) { // 로그인한 사용자가 현재 설문조사를 즐겨찾기했는지 확인
+		// 로그인한 사용자가 현재 설문조사를 즐겨찾기했는지 확인
+		if(sessionUser!=null) {
 			responseDTO.setHasBookmarked(bookmarkSurveyService.existsBookmark(survey, sessionUser.getMember()));
 		}
 		model.addAttribute("responseDTO", responseDTO);
@@ -81,6 +95,7 @@ public class SurveyReadController {
 		return "/list"; // Tiles 설정명 반환
 	}
 
+	// Spring Security에서 인증을 요구하므로 sessionUser의 null 검사 불필요
 	@RequestMapping("/my/project")
 	public String my(@PageableDefault(page = 0, sort = "id", direction = Direction.DESC) Pageable pageable
 			, String field, String word, Model model, HttpSession session) {
@@ -102,6 +117,7 @@ public class SurveyReadController {
 		return "/list"; // Tiles 설정명 반환
 	}
 	
+	// Spring Security에서 인증을 요구하므로 sessionUser의 null 검사 불필요
 	// BookmarkSurvey에서 검색하기 때문에 sort 기준 프로퍼티명은 survey. 또는 user.으로 접근해야 함
 	@RequestMapping("/bookmark/project")
 	public String bookmark(@PageableDefault(page = 0, sort = "survey.id", direction = Direction.DESC) Pageable pageable

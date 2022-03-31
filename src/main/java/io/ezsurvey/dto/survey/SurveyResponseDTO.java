@@ -40,9 +40,9 @@ public class SurveyResponseDTO { // 민감한 회원 정보 및 share 링크 값
 		this.title = serviceDTO.getTitle();
 		this.content = serviceDTO.getContent();
 		this.created = serviceDTO.getCreated().toString();
-		this.modified = Objects.toString(serviceDTO.getModified());
-		this.distributed = Objects.toString(serviceDTO.getDistributed());
-		this.expires = Objects.toString(serviceDTO.getExpires());
+		this.modified = Objects.toString(serviceDTO.getModified(), null);
+		this.distributed = Objects.toString(serviceDTO.getDistributed(), null);
+		this.expires = Objects.toString(serviceDTO.getExpires(), null);
 		this.status = serviceDTO.getStatus().getKey();
 		this.visibility = serviceDTO.getVisibility().getKey();
 	}
