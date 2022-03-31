@@ -19,23 +19,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.ezsurvey.dto.question.RequestDTOWrapper;
 import io.ezsurvey.repository.EnumMapper;
+import io.ezsurvey.service.question.QuestionCUDService;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor // 생성자 방식 의존성 주입
 @RestController
 public class QuestionCUDAjaxController {
 	private static final Logger logger = LoggerFactory.getLogger(QuestionCUDAjaxController.class);
 	private static final ResourceBundle resource = ResourceBundle.getBundle("messages.validation");
 	private final EnumMapper enumMapper; // AppConfig에 등록
-	
-	// 생성자 방식 의존성 주입
-	public QuestionCUDAjaxController(EnumMapper enumMapper) {
-		this.enumMapper = enumMapper;
-	}
+	private final QuestionCUDService questionService;
 	
 	@PostMapping("/ajax/make/question")
 	public Map<String, Object> make(@Valid @RequestBody RequestDTOWrapper wrapper, BindingResult result, Model model, HttpSession session) {
 		Map<String, Object> map = new HashMap<>();
 		
-		if(result.getAllErrors()!=null) { // 유효성 검증 결과 오류가 있으면
+		if(result.getAllErrors().size()>0) { // 유효성 검증 결과 오류가 있으면
 			Map<String, String> errors = new HashMap<>();
 			
 			for(ObjectError oe : result.getAllErrors()) {
@@ -53,16 +52,20 @@ public class QuestionCUDAjaxController {
 					catch(MissingResourceException mre2) {
 						errorMessage = oe.getDefaultMessage();
 					}
-				}
+				} // end of try~catch
 				
 				errors.put(codes[0], errorMessage);
-			}
+			} // end of for
 			
 			map.put("errors", errors); // 프론트에서 필드별 오류 메시지를 처리하기 위해 저장
 			map.put("result", "hasErrors");
 		}
 		else {
+			// 문항 추가
+			Long question = questionService.insert(wrapper.getQuestion().toServiceDTO(), wrapper.getSurvey());
+			
 			map.put("result", "success");
+			map.put("inserted", question);
 		}
 		
 		return map;

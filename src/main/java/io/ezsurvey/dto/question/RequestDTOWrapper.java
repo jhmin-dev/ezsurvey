@@ -15,5 +15,6 @@ public class RequestDTOWrapper {
 	@Valid
 	private QuestionRequestDTO question;
 	@Valid
-	private List<ItemRequestDTO> itemList; 
+	private List<ItemRequestDTO> itemList;
+	private Long survey;
 }

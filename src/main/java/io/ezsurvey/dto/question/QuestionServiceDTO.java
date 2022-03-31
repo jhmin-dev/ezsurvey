@@ -1,36 +1,38 @@
 package io.ezsurvey.dto.question;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
-import io.ezsurvey.entity.EnumBase;
 import io.ezsurvey.entity.question.Category;
+import io.ezsurvey.entity.question.Question;
+import io.ezsurvey.entity.survey.Survey;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter @Setter @ToString
+@Getter @Setter @ToString(exclude = {"survey", "parent"})
+@Builder @AllArgsConstructor // @Builder는 인자가 있는 생성자를 요구
 @NoArgsConstructor
-public class QuestionRequestDTO {
+public class QuestionServiceDTO {
 	private Long question;
-	private String category;
+	private Survey survey;
+	private Category category;
 	private Boolean startFromOne;
-	private Long parent;
+	private Question parent;
 	private Boolean branched;
 	private Boolean randomized;
-	@Size(max = 256)
 	private String varlabel;
-	@NotBlank
 	private String content;
 	private String article;
-	@Size(max = 256)
 	private String picture;
 	
-	public QuestionServiceDTO toServiceDTO() {
-		return QuestionServiceDTO.builder()
-				.category(EnumBase.findByKey(Category.class, category))
+	// ServiceDTO to Entity
+	public Question toEntity() {
+		return Question.builder()
+				.survey(survey)
+				.category(category)
 				.startFromOne(startFromOne)
+				.parent(parent)
 				.branched(branched)
 				.randomized(randomized)
 				.varlabel(varlabel)

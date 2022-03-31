@@ -17,7 +17,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Formula;
 
 import io.ezsurvey.entity.survey.Survey;
-import io.ezsurvey.entity.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,15 +36,11 @@ public class Question {
 	@JoinColumn(name = "survey_id", foreignKey = @ForeignKey(name = "question_fk_survey"))
 	private Survey survey;
 	
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "question_fk_member"))
-	private User user;
-	
 	@Column(nullable = false)
 	@Convert(converter = CategoryConverter.class)
 	private Category category; // 1=선다형, 2=척도형, 3=단답형
 	
-	private Boolean startpositive; // 응답 범주 시작값; 선다형=1, 감정온도계형=0, 척도형 선택 가능
+	private Boolean startFromOne; // 응답 범주 시작값; 선다형=1, 감정온도계형=0, 척도형 선택 가능
 
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)
 	@JoinColumn(name = "parent_id", foreignKey = @ForeignKey(name = "question_fk_parent"))
@@ -88,13 +83,12 @@ public class Question {
 	private Long subquestions;
 	
 	@Builder
-	public Question(Survey survey, User user, Category category, Boolean startpositive
+	public Question(Survey survey, Category category, Boolean startFromOne
 			, Question parent, Boolean branched, Boolean randomized
 			, String varlabel, String content, String article, String picture) {
 		this.survey = survey;
-		this.user = user;
 		this.category = category;
-		this.startpositive = startpositive;
+		this.startFromOne = startFromOne;
 		this.parent = parent;
 		this.branched = branched;
 		this.randomized = randomized;
@@ -104,14 +98,17 @@ public class Question {
 		this.picture = picture;	
 	}
 	
-	public Question update(Category category, Boolean startpositive
-			, String varlabel, String content, String article, String picture) {
-		this.category = category;
-		this.startpositive = startpositive;
+	public Question update(String varlabel, String content, String article, String picture) {
 		this.varlabel = varlabel;
 		this.content = content;
 		this.article = article;
 		this.picture = picture;
+		
+		return this;
+	}
+	
+	public Question setStartFromOne(Boolean startFromOne) {
+		this.startFromOne = startFromOne;
 		
 		return this;
 	}

@@ -48,7 +48,7 @@
 		</form>
 		<form name="item">
 			<label for="value">번호</label>
-			<input type="number" name="value" readonly>
+			<input type="number" name="value" value="4" readonly>
 			<label for="vallabel">보기</label>
 			<input type="text" name="vallabel">
 		</form>
