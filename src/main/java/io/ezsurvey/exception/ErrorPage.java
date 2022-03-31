@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorPage {
-	DEFAULT_VIEW("/error");
+	DEFAULT_VIEW("/exception");
 	
 	public final String name;
 }
