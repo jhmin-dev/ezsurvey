@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.ezsurvey.dto.question.ItemRequestDTO;
 import io.ezsurvey.dto.question.RequestDTOWrapper;
 import io.ezsurvey.repository.EnumMapper;
 import io.ezsurvey.service.question.QuestionCUDService;
@@ -31,13 +33,13 @@ public class QuestionCUDAjaxController {
 	private final QuestionCUDService questionService;
 	
 	@PostMapping("/ajax/make/question")
-	public Map<String, Object> make(@Valid @RequestBody RequestDTOWrapper wrapper, BindingResult result, Model model, HttpSession session) {
+	public Map<String, Object> make(@Valid @RequestBody RequestDTOWrapper wrapper, BindingResult bindingResult) {
 		Map<String, Object> map = new HashMap<>();
 		
-		if(result.getAllErrors().size()>0) { // 유효성 검증 결과 오류가 있으면
+		if(bindingResult.getAllErrors().size()>0) { // 유효성 검증 결과 오류가 있으면
 			Map<String, String> errors = new HashMap<>();
 			
-			for(ObjectError oe : result.getAllErrors()) {
+			for(ObjectError oe : bindingResult.getAllErrors()) {
 				String[] codes = oe.getCodes(); // 현재 에러에 대응하는 오류 코드들
 				String errorMessage = null;
 				
@@ -62,10 +64,13 @@ public class QuestionCUDAjaxController {
 		}
 		else {
 			// 문항 추가
-			Long question = questionService.insert(wrapper.getQuestion().toServiceDTO(), wrapper.getSurvey());
+			Map<String, Object> inserted = questionService.insert(wrapper.getQuestion().toServiceDTO()
+					, wrapper.getItemList().stream().map(ItemRequestDTO::toServiceDTO).collect(Collectors.toList())
+					, wrapper.getSurvey());
 			
 			map.put("result", "success");
-			map.put("inserted", question);
+			map.put("insertedQuestion", inserted.get("question"));
+			map.put("insertedItems", inserted.get("items"));
 		}
 		
 		return map;

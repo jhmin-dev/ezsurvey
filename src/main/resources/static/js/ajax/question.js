@@ -25,7 +25,8 @@ function makeQuestion() {
 				}
 			}
 			else if(param.result=='success') {
-				console.log('추가된 문항의 PK:' + param.inserted);
+				console.log('추가된 문항의 PK:' + param.insertedQuestion);
+				console.log('추가된 응답 범주 수:' + param.insertedItems);
 			}
 		} // end of success
 	}); // end of Ajax
