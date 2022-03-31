@@ -12,11 +12,11 @@
 $.ajaxSetup({
 	type:'POST',
 	dataType:'JSON',
-	timeout:10000,
-	error:function() {
-		alert('서버 오류가 발생했습니다!');
-	}
+	timeout:10000
 }); // ajax 공통 옵션
+$(document).ajaxError(function() {
+	alert('서버 오류가 발생했습니다!');
+}); // ajax global event handler
 </script>
 </head>
 <body>
