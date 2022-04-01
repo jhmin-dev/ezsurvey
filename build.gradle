@@ -6,7 +6,7 @@ buildscript {
 }
 
 plugins {
-	id 'org.springframework.boot' version '2.6.4'
+	id 'org.springframework.boot' version '2.6.6' // fix for CVE-2022-22965
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 	id 'war'

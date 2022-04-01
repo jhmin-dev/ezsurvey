@@ -5,9 +5,9 @@
 
 ## 개발 환경
 
-- Spring Boot 2.6.4.RELEASE
+- Spring Boot 2.6.6.RELEASE
 - Java 11
-- JPA
-- Oracle Cloud Autonomous Database(19c)
+- Spring Data JPA & Querydsl
+- Oracle Cloud Autonomous Database (Oracle Database 19c)
 - Lombok
 - Gradle
