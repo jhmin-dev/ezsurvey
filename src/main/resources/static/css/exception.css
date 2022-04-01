@@ -1,0 +1,34 @@
+@charset "UTF-8";
+
+ul.exception li {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin: 10px 0;
+}
+ul.exception li > * {
+	flex-grow: 1;
+}
+ul.exception li div {
+	margin: 0 10px;
+	padding: 10px;
+	width: 360px;
+}
+ul.exception li.alert div {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	height: 60px;
+	font-weight: 700;
+	color: var(--white);
+	background-color: var(--error-transparent);
+	border: 1px solid var(--error);
+	border-radius: 5px;
+}
+ul.exception li.alert div i.bi {
+	margin-right: 10px;
+}
+ul.exception li.message {
+	margin-bottom: 60px;
+}
