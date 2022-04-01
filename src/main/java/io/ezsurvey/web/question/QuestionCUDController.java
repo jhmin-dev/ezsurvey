@@ -18,6 +18,7 @@ import io.ezsurvey.exception.DeletedSurveyException;
 import io.ezsurvey.exception.EntityNotFoundException;
 import io.ezsurvey.exception.InvalidSurveyOwnerException;
 import io.ezsurvey.exception.InvalidSurveyStatusException;
+import io.ezsurvey.repository.EnumMapper;
 import io.ezsurvey.service.survey.SurveyReadService;
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class QuestionCUDController {
 	private static final Logger logger = LoggerFactory.getLogger(QuestionCUDController.class);
-	
+	private final EnumMapper enumMapper; // AppConfig에 등록
 	private final SurveyReadService surveyService;
 	
 	@GetMapping("edit/project/{survey}/make/question")
@@ -57,6 +58,7 @@ public class QuestionCUDController {
 		model.addAttribute("survey", responseDTO);
 		model.addAttribute("title", "문항 추가");
 		model.addAttribute("link", "make");
+		model.addAttribute("category", enumMapper.get("Category"));
 		
 		return "/question/make_edit"; // Tiles 설정명 반환
 	}

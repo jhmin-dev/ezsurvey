@@ -5,53 +5,30 @@
 <div class="title">
 	${title}
 </div>
-<article data-survey="${survey}" data-link="${link}">
+<article data-survey="${survey.survey}" data-link="${link}">
 <div class="survey-title">
-	설문조사 제목
+	${survey.title}
 </div>
 <ul class="question-type">
-	<li class="category">
+	<li>
+		<label>문항 유형</label>
+		<select name="category">
+			<c:forEach items="${category}" var="cat">
+			<option value="${cat.key}">${cat.name}</option>
+			</c:forEach>
+		</select>
 	</li>
-	<li class="items">
-		<input type="number" min="0" max="11" value="4">
+	<li>
+		<label>응답 범주 수</label>
+		<input type="number" name="items" min="1" max="11">
 	</li>
 </ul>
 <ul>
 	<li class="content">
-		<form name="question">
-			<input type="hidden" name="survey_id" value="${survey}">
-			<input type="hidden" name="category" value="multiple_choice">
-			<input type="hidden" name="startFromOne" value="true">
-			<label for="content">문항</label>
-			<input type="text" name="varlabel"/>
-			<input type="text" name="content"/>
-		</form>
+
 	</li>
 	<li class="item-container">
-		<form name="item">
-			<label for="value">번호</label>
-			<input type="number" name="value" value="1" readonly>
-			<label for="vallabel">보기</label>
-			<input type="text" name="vallabel">
-		</form>
-		<form name="item">
-			<label for="value">번호</label>
-			<input type="number" name="value" value="2"  readonly>
-			<label for="vallabel">보기</label>
-			<input type="text" name="vallabel">
-		</form>
-		<form name="item">
-			<label for="value">번호</label>
-			<input type="number" name="value" value="3" readonly>
-			<label for="vallabel">보기</label>
-			<input type="text" name="vallabel">
-		</form>
-		<form name="item">
-			<label for="value">번호</label>
-			<input type="number" name="value" value="4" readonly>
-			<label for="vallabel">보기</label>
-			<input type="text" name="vallabel">
-		</form>
+
 	</li>
 </ul>
 <ul class="question-menu">
@@ -61,5 +38,6 @@
 </ul>
 </article>
 <link rel="stylesheet" href="/css/preview.css">
+<script type="text/javascript" src="/js/ui/question.js"></script>
 <script type="text/javascript" src="/js/ajax/question.js"></script>
 </main>
