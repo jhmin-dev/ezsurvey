@@ -1,4 +1,4 @@
-# debug: true
+debug: true
 spring:
   config:
     use-legacy-processing: true
@@ -34,7 +34,11 @@ server:
     enabled: true
 logging:
   level:
-    root: info
+    root: INFO
+    org:
+      springframework:
+        web:
+          filter: DEBUG
 decorator:
   datasource:
     p6spy:
