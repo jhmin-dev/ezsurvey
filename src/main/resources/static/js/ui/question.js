@@ -13,8 +13,18 @@ function initialize(link) {
 	if(link=='make') initializeMake();
 }
 
+// 인자로 전달된 노드의 모든 자식 태그를 삭제하는 함수
+function clearChildNodes(parents) {
+	for(parent of parents) {
+		while(parent.hasChildNodes()) {
+			parent.removeChild(parent.lastChild);
+		}
+	}
+}
+
 // 문항 추가하는 경우의 초기화 함수
-function initializeMake() {
+function initializeMake(hasChildNodes) {
+	if(hasChildNodes) clearChildNodes([content, itemContainer]);
 	content.append(createFormQuestion());
 	setInputCategory();
 }

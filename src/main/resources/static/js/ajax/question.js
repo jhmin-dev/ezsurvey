@@ -25,6 +25,7 @@ function makeQuestion() {
 				}
 			}
 			else if(param.result=='success') {
+				initializeMake(true);
 				console.log('추가된 문항의 PK:' + param.insertedQuestion);
 				console.log('추가된 응답 범주 수:' + param.insertedItems);
 			}
