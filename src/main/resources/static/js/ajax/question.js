@@ -3,7 +3,13 @@ document.addEventListener('submit', function(e) {
 	e.preventDefault();
 })
 
-// 문항 추가
+// 결과 메시지 관련 태그들
+const postResult = document.querySelector('li.post-result');
+const postResultDiv = postResult.querySelector('li.post-result div');
+const postResultIcon = postResult.querySelector('i.bi');
+const postResultText = postResult.querySelector('span');
+
+// 문항을 추가하는 함수
 const survey = document.querySelector('article').dataset.survey;
 function makeQuestion() {
 	formData = getFormData();
@@ -17,19 +23,45 @@ function makeQuestion() {
 			survey:survey
 		}), // @RequestBody로 받을 때 Unrecognized token으로 인한 JsonParseException을 피하려면 {} 형태로 보내는 data 전체에 JSON.stringify() 적용
 		success:function(param) {
-			if(param.result=='hasErrors') {
-				const errorsKeys = Object.keys(param.errors); 
-				console.log(errorsKeys.length)
+			postResultText.textContent = ''; // 기존 메시지 제거
+			
+			if(param.result=='hasErrors') { // 문항 추가에 실패한 경우
+				postResultDiv.className = 'failure'; // 배경색 변경
+				
+				postResultIcon.classList.remove('bi-check-circle-fill');
+				postResultIcon.classList.add('bi-exclamation-triangle-fill');
+				
+				const errorsKeys = Object.keys(param.errors);
+				let i=0, messages = '';
 				for(key of errorsKeys) {
-					console.log(key + ':' + param.errors[key]);
+					if(i!=0) messages += '\n'; // 오류 메시지 2건 이상인 경우 줄바꿈 처리
+					messages += param.errors[key];
+					i++;
 				}
+				postResultText.textContent = messages;			
 			}
-			else if(param.result=='success') {
-				initializeMake(true);
-				console.log('추가된 문항의 PK:' + param.insertedQuestion);
-				console.log('추가된 응답 범주 수:' + param.insertedItems);
+			else if(param.result=='success') { // 문항 추가에 성공한 경우
+				initializeMake(true); // <form> 태그들 초기화
+				
+				postResultDiv.className = 'success'; // 배경색 변경
+				
+				postResultIcon.classList.remove('bi-exclamation-triangle-fill');
+				postResultIcon.classList.add('bi-check-circle-fill');
+				
+				postResultText.textContent = '성공적으로 문항을 추가했습니다.'
 			}
-		} // end of success
+			
+			if(param.result=='hasErrors' || param.result=='success') { // 정상적 응답인 경우
+				postResult.classList.remove('display-none'); // 결과 메시지 노출
+			}
+			else { // 비정상적 응답인 경우
+				postResult.classList.add('display-none'); // 결과 메시지 숨김
+				alert('문항 추가시 오류가 발생했습니다!');
+			}
+		}, // end of success
+		error:function() { // Global Handler 이전에 수행됨
+			postResult.classList.add('display-none'); // 결과 메시지 숨김
+		}
 	}); // end of Ajax
 }
 

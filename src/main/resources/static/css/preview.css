@@ -1,0 +1,143 @@
+@charset "UTF-8";
+/* 공통 */
+ul.question-info,ul.question-type,ul.question-main,ul.question-menu {
+	margin: 0 auto;
+	padding: 15px 60px;
+	max-width: 1200px;
+	width: inherit;
+	height: inherit;
+}
+label {
+	display: block;
+	padding: 10px;
+	font-size: 1.25rem;
+	font-weight: 700;
+}
+
+/* 설문조사 제목 */
+ul.question-info li.survey-title {
+	
+}
+
+/* 서버 전송 결과 알림 */
+ul.question-info li.post-result div {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	height: 60px;
+	font-weight: 700;
+	color: var(--white);
+	border: 1px solid transparent;	
+	border-radius: 5px;
+}
+ul.question-info li.post-result div.success {
+	background-color: var(--point-transparent);
+	border-color: var(--point);		
+}
+ul.question-info li.post-result div.failure {
+	background-color: var(--error-transparent);
+	border-color: var(--error);	
+}
+ul.question-info li.post-result i.bi {
+	margin-right: 10px;
+}
+ul.question-info li.post-result span {
+	white-space: pre;
+}
+
+/* 문항 유형과 응답 범주 수 */
+ul.question-type {
+	display: flex;
+	flex-direction: row;
+}
+ul.question-type li {
+	display: flex;
+	flex-direction: row;
+	flex-grow: 1;
+}
+ul.question-type li:first-child {
+	justify-content: end;
+}
+
+/* 메뉴 */
+ul.question-menu li {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+ul.question-menu li button {
+	max-width: 180px;
+	flex-grow: 1;
+}
+
+/* 문항 */
+.content form[name="question"] {
+	display: flex;
+	flex-direction: column;
+}
+.content form[name="question"] div {
+	display: flex;
+	flex-direction: column;
+}
+.content form[name="question"] div input {
+	
+}
+
+/* 응답 범주: 공통 */
+.item-container {
+	display: flex;
+	flex-direction: column;
+}
+.item-container form[name="item"] {
+	display: flex;
+	flex-direction: row;
+	margin: 10px 0;
+}
+.item-container form[name="item"] input[name="value"] {
+	margin: 0 10px;
+	padding: 10px 0;
+	width: 2ch; /* width를 더 줄이면 값이 제대로 보이지 않음; 좌우 패딩이 있는 경우 width 값을 더 크게 지정해야 함 */
+	border-color: transparent; 
+	text-align: center;
+	font-weight: 700;
+	pointer-events: none;
+}
+.item-container form[name="item"] input[name="value"]:focus {
+	outline-color: transparent;
+}
+
+/* 응답 범주: 선다형 */
+.item-container.multiple-choice {
+	
+}
+
+/* 응답 범주: 척도형 */
+.item-container.likert-scale {
+	flex-direction: row;
+	justify-content: space-between;
+}
+.item-container.likert-scale form[name="item"] {
+	min-width: 60px;
+	flex-direction: column;
+	align-items: center;
+}
+.item-container.likert-scale form[name="item"]:first-child {
+	align-items: flex-end;
+}
+.item-container.likert-scale form[name="item"]:last-child {
+	align-items: flex-start;
+}
+.item-container.likert-scale form[name="item"] input[name="vallabel"] {
+	display: none;
+	max-width: 120px;
+}
+.item-container.likert-scale form[name="item"]:first-child input[name="vallabel"]
+,.item-container.likert-scale form[name="item"]:last-child input[name="vallabel"] {
+	display: block;
+}
+
+/* 응답 범주: 단답형 */
+.item-container.short-answer {
+	
+}

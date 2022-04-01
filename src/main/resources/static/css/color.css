@@ -3,6 +3,7 @@
 :root {
 	--point: #8474e4;
 	--point-muted: #9789e8;
+	--point-transparent: #9789e899; /* 60% */
 	
 	--black: #24292f;
 	--black-muted: #57606a;

@@ -3,9 +3,14 @@ const selectCategory = document.querySelector('ul.question-type select[name="cat
 const inputItems = document.querySelector('ul.question-type input[name="items"]');
 const content = document.querySelector('li.content');
 const itemContainer = document.querySelector('li.item-container');
+const itemContainerLabel = document.querySelector('li.item-container-label');
+
+// Placeholder
 const varlabelPlaceholder = '선거 관심';
 const contentPlaceholder = '선생님께서는 이번 선거에 얼마나 관심이 있으십니까?';
-const vallabelPlaceholders = ['응답 내용', '매우 관심 있었다', '조금 관심 있었다', '별로 관심 없었다', '전혀 관심 없었다'];
+const fakeItemPlaceholder = '응답 내용';
+const vallabelChoicePlaceholders = ['매우 관심이 있었다', '조금 관심이 있었다', '별로 관심이 없었다', '전혀 관심이 없었다'];
+const vallabelScalePlaceholders = ['매우 그렇다', '전혀 그렇지 않다'];
 
 // 접속한 링크에 따라 문항 및 응답 범주 초기화
 initialize(link);
@@ -55,6 +60,10 @@ function createFormQuestion() {
 		type:'text',
 		placeholder:varlabelPlaceholder
 	}));
+	divVarlabel.append(Object.assign(document.createElement('div'), {
+		textContent:'변수명은 생략 가능하며, 최대 256자까지만 입력 가능합니다.',
+		className:'notice'
+	}));
 	formQuestion.append(divVarlabel);
 	
 	let divContent = document.createElement('div');
@@ -67,6 +76,10 @@ function createFormQuestion() {
 		type:'text',
 		placeholder:contentPlaceholder
 	}));
+	divContent.append(Object.assign(document.createElement('div'), {
+		textContent:'문항 번호는 자동으로 부여됩니다.',
+		className:'notice'
+	}));
 	formQuestion.append(divContent);
 
 	return formQuestion;
@@ -76,29 +89,19 @@ function createFormQuestion() {
 function createFormItem(i) {
 	const formItem = Object.assign(document.createElement('form'), {name:'item'});
 	
-	let divValue = document.createElement('div');
-	divValue.append(Object.assign(document.createElement('label'), {
-		htmlFor:'value',
-		textContent:'번호',
-	}));
-	divValue.append(Object.assign(document.createElement('input'), {
+	// 응답 범주 값
+	formItem.append(Object.assign(document.createElement('input'), {
 		name:'value',
-		type:'number',
-		value:i
-	}));
-	formItem.append(divValue);
-	
-	let divVallabel = document.createElement('div');
-	divVallabel.append(Object.assign(document.createElement('label'), {
-		htmlFor:'vallabel',
-		textContent:'보기'
-	}));
-	divVallabel.append(Object.assign(document.createElement('input'), {
-		name:'vallabel',
 		type:'text',
-		placeholder:i<5 ? vallabelPlaceholders[i] : ''
+		value:i,
+		readOnly: true
 	}));
-	formItem.append(divVallabel);
+	
+	// 응답 범주 라벨
+	formItem.append(Object.assign(document.createElement('input'), {
+		name:'vallabel',
+		type:'text'
+	}));
 		
 	return formItem;
 }
@@ -108,8 +111,10 @@ function createFormFakeItem() {
 	const formFakeItem = Object.assign(document.createElement('form'), {name:'fakeItem'});
 	
 	let divVallabel = document.createElement('div');
-	divVallabel.append(Object.assign(document.createElement('label'), {textContent:vallabelPlaceholders[0]}));
-	divVallabel.append(Object.assign(document.createElement('input'), {type:'text'}));
+	divVallabel.append(Object.assign(document.createElement('input'), {
+		type:'text',
+		placeholder:fakeItemPlaceholder
+	}));
 	formFakeItem.append(divVallabel);
 		
 	return formFakeItem;
@@ -123,13 +128,15 @@ selectCategory.addEventListener('change', function() {
 function setInputCategory() {
 	const inputCategory = document.querySelector('form[name="question"] input[name="category"]');
 	inputCategory.value = selectCategory.options[selectCategory.selectedIndex].value;
+	itemContainer.className = 'item-container'; // item-container 외의 다른 클래스를 모두 제거
+	itemContainer.classList.add(inputCategory.value.replace('_','-')); // 선택된 문항 유형명을 클래스로 추가
 	
 	if(inputCategory.value=='multiple_choice') { // 선다형 기본값
 		inputItems.value = 4;
 		inputItems.disabled = false;
 	}
 	else if(inputCategory.value=='likert_scale') { // 척도형 기본값
-		inputItems.value = 5;
+		inputItems.value = 7;
 		inputItems.disabled = false;
 	}
 	else if(inputCategory.value=='short_answer') { // 단답형 기본값
@@ -171,4 +178,6 @@ function resizeFormItems(goal) {
 	else if(!formFakeItem && goal==0) { // 가짜 응답 범주가 없고, 바꿀 응답 범주 수가 0이면
 		itemContainer.append(createFormFakeItem());
 	}
+	
+	itemContainerLabel.classList.remove('display-none');
 }
