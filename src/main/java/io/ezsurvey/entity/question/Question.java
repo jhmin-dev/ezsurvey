@@ -9,9 +9,11 @@ import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Formula;
@@ -24,6 +26,8 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // JPA에서 Entity 관리시 필요
+@Table(indexes = {@Index(name = "question_idx_survey", columnList = "survey_id")
+				, @Index(name = "question_idx_parent", columnList = "parent_id")})
 @Entity
 @DynamicUpdate // 변경한 필드만 대응
 public class Question {
