@@ -89,7 +89,7 @@ ul.question-menu li button {
 	display: flex;
 	flex-direction: column;
 }
-.item-container form[name="item"] {
+.item-container form[name="item"],.item-container form[name="fakeItem"] {
 	display: flex;
 	flex-direction: row;
 	margin: 10px 0;

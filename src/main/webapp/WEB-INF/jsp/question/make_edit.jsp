@@ -59,7 +59,7 @@
 	</li>
 </ul>
 </article>
-<link rel="stylesheet" href="/css/preview.css">
+<link rel="stylesheet" href="/css/question.css">
 <script type="text/javascript" src="/js/ui/question.js"></script>
 <script type="text/javascript" src="/js/ajax/question.js"></script>
 </main>

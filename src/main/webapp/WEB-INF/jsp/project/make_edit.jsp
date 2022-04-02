@@ -94,7 +94,7 @@
 	</ul>
 </form:form>
 </article>
-<link rel="stylesheet" href="/css/make_edit.css">
+<link rel="stylesheet" href="/css/survey.css">
 <script type="text/javascript" src="/js/ui/survey.js"></script>
 <script type="text/javascript" src="/js/ajax/survey.js"></script>
 </main>
