@@ -17,7 +17,7 @@ public class ExceptionHandlingUtil {
 		mav.addObject("url", request.getRequestURL());
 		mav.addObject("exception", e);
 		mav.addObject("errorCode", errorCode);
-		mav.addObject("status", HttpStatus.valueOf(errorCode.getStatus()));
+		mav.addObject("status", errorCode.getStatus());
 		
 		mav.setViewName(ErrorPage.DEFAULT_VIEW.getName());
 		

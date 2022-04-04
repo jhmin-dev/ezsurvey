@@ -27,18 +27,20 @@ ${status} ${error}
 		<div>
 			원인: 
 			<c:choose>
-			<c:when test="${!empty exception}">
+			<c:when test="${!empty errorCode || !empty exception}">
 			${exception.message}
 			</c:when>
-			<c:when test="${status eq 403}">
+			<c:otherwise>
+			<c:if test="${status eq 403}">
 			접근 권한이 없습니다.
-			</c:when>
-			<c:when test="${status eq 404}">
+			</c:if>
+			<c:if test="${status eq 404}">
 			요청한 자원이 서버에 존재하지 않습니다.
-			</c:when>
-			<c:when test="${status eq 500}">
+			</c:if>
+			<c:if test="${status eq 500}">
 			서버 내부 오류입니다.
-			</c:when>
+			</c:if>
+			</c:otherwise>
 			</c:choose>
 		</div>
 	</li>
@@ -46,7 +48,7 @@ ${status} ${error}
 	<!-- 이동 버튼 시작 -->
 	<li class="redirect">
 		<c:choose>
-		<c:when test="${errorCode.status eq 403 || status eq 403}">
+		<c:when test="${(!empty errorCode && errorCode.status eq 403) || (empty errorCode && status eq 403)}">
 		<c:if test="${empty user}">
 		<button type="button" class="reverse-button" onclick="location.href = '/login';">로그인</button>
 		</c:if>
