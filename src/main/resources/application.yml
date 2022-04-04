@@ -7,6 +7,14 @@ spring:
     - jdbc
     - oauth
     - ssl
+    - redis
+  devtools:
+    livereload:
+      enabled: true # 정적 파일들의 실시간 갱신
+  session:
+    store-type: redis # @EnableRedisHttpSession과 같은 효과
+    redis:
+      flush-mode: on-save
   mvc:
     view:
       prefix: /WEB-INF/jsp/
@@ -35,10 +43,6 @@ server:
 logging:
   level:
     root: INFO
-    org:
-      springframework:
-        web:
-          filter: DEBUG
 decorator:
   datasource:
     p6spy:
