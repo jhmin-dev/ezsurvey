@@ -2,8 +2,6 @@ package io.ezsurvey.web;
 
 import java.time.LocalDateTime;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.commons.lang3.StringUtils;
 
 import io.ezsurvey.dto.survey.SurveyAuthDTO;
@@ -16,7 +14,6 @@ import io.ezsurvey.exception.InvalidSurveyStatusException;
 import io.ezsurvey.exception.InvalidSurveyVisibilityException;
 
 public class SurveyAuthUtil {
-	
 	public static void hasDetailAuthOrThrowException(SurveyAuthDTO authDTO, SessionUser sessionUser) {
 		existsOrThrowException(authDTO); // 존재하지 않거나 삭제된 설문조사 번호로 접속한 경우
 
@@ -66,7 +63,7 @@ public class SurveyAuthUtil {
 	}
 	
 	private static boolean isOwner(SurveyAuthDTO authDTO, Long userId) {
-		return authDTO.getUserId()==userId;
+		return authDTO.getUserId().equals(userId); // 값만 비교해야 하므로 == 연산자가 아니라 equals()를 사용해야 함
 	}
 	
 	private static boolean isDistributed(SurveyAuthDTO authDTO) {
