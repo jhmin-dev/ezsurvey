@@ -11,6 +11,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import static io.ezsurvey.entity.survey.QSurvey.survey;
 import static io.ezsurvey.entity.user.QUser.user;
 
+import io.ezsurvey.dto.survey.SurveyAuthDTO;
 import io.ezsurvey.dto.survey.SurveyServiceDTO;
 import io.ezsurvey.entity.SearchField;
 import io.ezsurvey.entity.survey.Survey;
@@ -69,8 +70,8 @@ public class CustomSurveyRepositoryImpl implements CustomSurveyRepository {
 	}
 
 	@Override
-	public SurveyServiceDTO getServiceDTOById(Long survey_id) {
-		JPAQuery<SurveyServiceDTO> content = jpaQueryFactory
+	public SurveyServiceDTO getServiceDTOById(Long surveyId) {
+		return jpaQueryFactory
 				.select(Projections.fields(SurveyServiceDTO.class
 						, survey.id.as("survey"), survey.user
 						, survey.title, survey.content
@@ -78,8 +79,19 @@ public class CustomSurveyRepositoryImpl implements CustomSurveyRepository {
 						, survey.distributed, survey.expires, survey.status
 						, survey.visibility, survey.shared))
 				.from(survey)
-				.where(survey.id.eq(survey_id));
-		
-		return content.fetchOne();
+				.where(survey.id.eq(surveyId))
+				.fetchOne();
+	}
+	
+	@Override
+	public SurveyAuthDTO getAuthDTOById(Long surveyId) {
+		return jpaQueryFactory
+				.select(Projections.fields(SurveyAuthDTO.class
+						, survey.id.as("surveyId"), survey.user.id.as("userId")
+						, survey.distributed, survey.expires, survey.status
+						, survey.visibility, survey.shared))
+				.from(survey)
+				.where(survey.id.eq(surveyId))
+				.fetchOne();
 	}
 }

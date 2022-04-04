@@ -21,13 +21,10 @@ import io.ezsurvey.dto.user.SessionUser;
 import io.ezsurvey.dto.EnumDTO;
 import io.ezsurvey.entity.EnumBase;
 import io.ezsurvey.entity.SearchField;
-import io.ezsurvey.entity.survey.Visibility;
-import io.ezsurvey.exception.DeletedSurveyException;
-import io.ezsurvey.exception.EntityNotFoundException;
-import io.ezsurvey.exception.InvalidSurveyVisibilityException;
 import io.ezsurvey.service.survey.BookmarkSurveyReadService;
 import io.ezsurvey.service.survey.SurveyReadService;
 import io.ezsurvey.web.PagingUtil;
+import io.ezsurvey.web.SurveyAuthUtil;
 
 @Controller
 public class SurveyReadController { 
@@ -47,28 +44,16 @@ public class SurveyReadController {
 	// 전체 공개 경로이므로 sessionUser의 null 검사 필수
 	@RequestMapping("/project/{survey}")
 	public String detail(@PathVariable(name = "survey") Long survey, Model model, HttpSession session) {
-		// 잘못된 설문조사 번호로 접속한 경우
-		SurveyResponseDTO responseDTO = surveyService.getResponseDTOById(survey);
-		if(responseDTO==null) {
-			throw new EntityNotFoundException();
-		}
-		
-		// 설문조사가 삭제된 경우
-		if(responseDTO.getVisibility().equals(Visibility.DELETED.getKey())) {
-			throw new DeletedSurveyException();
-		}
-		
-		// 설문조사가 전체 공개가 아니고, 로그인한 사용자가 설문조사 생성자와 불일치하는 경우
+		// 세션에 저장된 회원 정보 구하기
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
-		boolean hasAccess = responseDTO.getVisibility().equals(Visibility.PUBLIC.getKey()); // 전체 공개인 경우
-		if(sessionUser!=null) { // 로그인되어 있고
-			hasAccess |= responseDTO.getUserId()==sessionUser.getMember(); // 로그인한 사용자가 설문조사 생성자와 일치하는 경우
-		}
-		if(!hasAccess) {
-			throw new InvalidSurveyVisibilityException();
-		}
 		
-		// 로그인한 사용자가 현재 설문조사를 즐겨찾기했는지 확인
+		// 설문조사 접근 권한 검사
+		SurveyAuthUtil.hasDetailAuthOrThrowException(surveyService.getAuthDTOById(survey), sessionUser);
+		
+		// 설문조사 정보 가져오기
+		SurveyResponseDTO responseDTO = surveyService.getResponseDTOById(survey);
+		
+		// 로그인되어 있는 경우 현재 설문조사를 즐겨찾기했는지 확인
 		if(sessionUser!=null) {
 			responseDTO.setHasBookmarked(bookmarkSurveyService.existsBookmark(survey, sessionUser.getMember()));
 		}
@@ -140,7 +125,7 @@ public class SurveyReadController {
 		return "/list"; // Tiles 설정명 반환
 	}
 
-	public void setSurveyAttributes(Model model, Page<SurveyResponseDTO> page) {
+	private void setSurveyAttributes(Model model, Page<SurveyResponseDTO> page) {
 		model.addAttribute("page", page);
 		PagingUtil.setPageAttributes(model, page, 5);
 		model.addAttribute("searchField", searchField);

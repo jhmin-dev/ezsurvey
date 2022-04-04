@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.ezsurvey.dto.survey.SurveyAuthDTO;
 import io.ezsurvey.dto.survey.SurveyResponseDTO;
 import io.ezsurvey.dto.survey.SurveyServiceDTO;
 import io.ezsurvey.entity.SearchField;
@@ -60,5 +61,9 @@ public class SurveyReadService {
 		SurveyServiceDTO serviceDTO = surveyRepository.getServiceDTOById(survey);
 		
 		return serviceDTO==null ? null : new SurveyResponseDTO(serviceDTO);
+	}
+	
+	public SurveyAuthDTO getAuthDTOById(Long survey) {
+		return surveyRepository.getAuthDTOById(survey);
 	}
 }

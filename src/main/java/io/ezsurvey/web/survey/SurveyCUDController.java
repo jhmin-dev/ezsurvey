@@ -1,7 +1,5 @@
 package io.ezsurvey.web.survey;
 
-import java.time.LocalDateTime;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -17,19 +15,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import io.ezsurvey.dto.survey.SurveyRequestDTO;
 import io.ezsurvey.dto.user.SessionUser;
-import io.ezsurvey.entity.survey.Visibility;
-import io.ezsurvey.exception.DeletedSurveyException;
-import io.ezsurvey.exception.EntityNotFoundException;
-import io.ezsurvey.exception.InvalidSurveyOwnerException;
-import io.ezsurvey.exception.InvalidSurveyStatusException;
 import io.ezsurvey.service.survey.SurveyCUDService;
+import io.ezsurvey.service.survey.SurveyReadService;
+import io.ezsurvey.web.SurveyAuthUtil;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor // 생성자 방식 의존성 주입
 @Controller
 public class SurveyCUDController { // Spring Security에서 인증을 요구하므로 sessionUser의 null 검사 불필요
 	private static final Logger logger = LoggerFactory.getLogger(SurveyCUDController.class);
-	private final SurveyCUDService surveyService;
+	private final SurveyCUDService surveyCUDService;
+	private final SurveyReadService surveyReadService;
 	
 	@ModelAttribute("requestDTO")
 	public SurveyRequestDTO initCommand() {
@@ -58,7 +54,7 @@ public class SurveyCUDController { // Spring Security에서 인증을 요구하�
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
 		
 		// 설문조사 생성
-		Long survey = surveyService.insert(requestDTO.toServiceDTO(), sessionUser.getMember());
+		Long survey = surveyCUDService.insert(requestDTO.toServiceDTO(), sessionUser.getMember());
 		
 		// 문항 추가로 리다이렉트
 		return "redirect:/edit/project/" + survey + "/make/question";
@@ -68,28 +64,14 @@ public class SurveyCUDController { // Spring Security에서 인증을 요구하�
 	public String edit(@PathVariable(name = "survey") Long survey, Model model, HttpSession session) {
 		// 요청 URL로 첫 접속시 URL에 포함된 PK 값으로 설문조사 정보를 조회
 		if(!model.containsAttribute("hasErrors")) { // 폼에 오류가 있어 메서드가 재호출된 경우에는 쿼리를 전송하지 않음; requestDTO는 initCommand()에 의해 빈 객체가 기본적으로 저장되기 때문에 containsAttribute() 결과가 항상 true임
-			// 잘못된 설문조사 번호로 접속한 경우
-			SurveyRequestDTO requestDTO = surveyService.getRequestDTOById(survey);
-			if(requestDTO==null) {
-				throw new EntityNotFoundException();
-			}
-			
-			// 삭제된 설문조사인 경우
-			if(requestDTO.getVisibility().equals(Visibility.DELETED.getKey())) {
-				throw new DeletedSurveyException();
-			}
-			
-			// 로그인한 사용자가 설문조사 생성자와 불일치하는 경우
+			// 세션에 저장된 회원 정보 구하기
 			SessionUser sessionUser = (SessionUser)session.getAttribute("user");
-			if(requestDTO.getUser().getId()!=sessionUser.getMember()) {
-				throw new InvalidSurveyOwnerException();
-			}
 			
-			// 현재 시각이 배포 시작 시각 이후인 경우
-			LocalDateTime distributed = requestDTO.getDistributed();
-			if(distributed!=null && LocalDateTime.now().isAfter(distributed)) {
-				throw new InvalidSurveyStatusException();
-			}
+			// 설문조사 접근 권한 검사
+			SurveyAuthUtil.hasEditAuthOrThrowException(surveyReadService.getAuthDTOById(survey), sessionUser.getMember());
+			
+			// 설문조사 정보 가져오기
+			SurveyRequestDTO requestDTO = surveyCUDService.getRequestDTOById(survey);
 			
 			model.addAttribute("requestDTO", requestDTO);
 		}
@@ -113,7 +95,7 @@ public class SurveyCUDController { // Spring Security에서 인증을 요구하�
 			return edit(survey, model, session);
 		}
 		
-		surveyService.update(requestDTO.toServiceDTO());
+		surveyCUDService.update(requestDTO.toServiceDTO());
 		
 		return "redirect:/project/" + survey; // 설문조사 상세로 리다이렉트
 	}

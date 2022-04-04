@@ -3,6 +3,7 @@ package io.ezsurvey.repository.survey;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import io.ezsurvey.dto.survey.SurveyAuthDTO;
 import io.ezsurvey.dto.survey.SurveyServiceDTO;
 import io.ezsurvey.entity.SearchField;
 import io.ezsurvey.entity.survey.Survey;
@@ -17,4 +18,7 @@ public interface CustomSurveyRepository {
 	
 	// 1건을 DTO로 조회
 	SurveyServiceDTO getServiceDTOById(Long survey);
+	
+	// 1건의 접근 권한 관련 정보를 DTO로 조회
+	SurveyAuthDTO getAuthDTOById(Long survey);
 }
