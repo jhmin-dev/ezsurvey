@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,22 +13,48 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.ezsurvey.dto.EnumDTO;
+import io.ezsurvey.dto.survey.SurveyResponseDTO;
 import io.ezsurvey.dto.user.SessionUser;
 import io.ezsurvey.repository.EnumMapper;
+import io.ezsurvey.service.survey.SurveyReadService;
 import io.ezsurvey.web.PagingUtil;
+import io.ezsurvey.web.SurveyAuthUtil;
 
 @Controller
 public class QuestionReadController {
 	private static final Logger logger = LoggerFactory.getLogger(QuestionReadController.class);
+	private final SurveyReadService surveyReadService;
+	private final EnumMapper enumMapper; // AppConfig에 등록
+	private final List<EnumDTO> searchField;
 	
-	@Autowired
-	private EnumMapper enumMapper; // AppConfig에 등록
+	// 생성자 방식 의존성 주입
+	public QuestionReadController(SurveyReadService surveyReadService, EnumMapper enumMapper
+			, @Qualifier("searchFieldQuestion") List<EnumDTO> searchField) {
+		this.surveyReadService = surveyReadService;
+		this.enumMapper = enumMapper;
+		this.searchField = searchField;
+	}
 	
-	@Autowired @Qualifier("searchFieldQuestion")
-	private List<EnumDTO> searchField;
+	@RequestMapping("/edit/project/{survey}/index")
+	public String index(@PathVariable(name = "survey") Long survey, Model model, HttpSession session) {
+		// 세션에 저장된 회원 정보 구하기
+		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
+		
+		// 설문조사 접근 권한 검사
+		SurveyAuthUtil.hasEditAuthOrThrowException(surveyReadService.getAuthDTOById(survey), sessionUser.getMember());
+		
+		// 설문조사 정보 가져오기
+		SurveyResponseDTO responseDTO = surveyReadService.getResponseDTOById(survey);
+		
+		model.addAttribute("survey", responseDTO);
+		model.addAttribute("title", "문항 관리");
+		
+		return "/question/index"; // Tiles 설정명 반환		
+	}
 	
 	// BookmarkQuestion에서 검색하기 때문에 sort 기준 프로퍼티명은 question. 또는 user.으로 접근해야 함
 	@RequestMapping("/bookmark/question")
@@ -52,11 +77,11 @@ public class QuestionReadController {
 		return "/list"; // Tiles 설정명 반환
 	}
 	
-	public void setQuestionAttributes(Model model, Page<Object> page) {
+	private void setQuestionAttributes(Model model, Page<Object> page) {
 		model.addAttribute("page", page);
 		PagingUtil.setPageAttributes(model, page, 5);
 		model.addAttribute("searchField", searchField);
+		model.addAttribute("category", enumMapper.get("Category"));
 		model.addAttribute("type", "question");
-		model.addAttribute("category", enumMapper.get("Category")); // 문항 목록 화면 구성에 필요한 정보 저장
 	}
 }
