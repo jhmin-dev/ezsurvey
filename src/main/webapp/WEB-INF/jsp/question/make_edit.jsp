@@ -49,16 +49,16 @@
 	<li>
 		<c:if test="${link eq 'make'}">
 		<button type="button" class="point-button" onclick="makeQuestion();">추가하기</button>
+		<div class="notice">현재 작성 중인 문항은 추가하지 않으면 사라집니다.</div>
 		</c:if>
 		<c:if test="${link eq 'edit'}">
 		<button type="button" class="point-button" onclick="">수정하기</button>
 		</c:if>
-		<div class="notice">현재 작성 중인 문항은 추가하지 않으면 사라집니다.</div>
 	</li>
 	<li>
 		<button type="button" class="reverse-button" onclick="location.href = '/edit/project/${survey.surveyId}/index';">
 			<c:if test="${link eq 'make'}">완료하기</c:if>
-			<c:if test="${link eq 'link'}">문항 관리</c:if>
+			<c:if test="${link eq 'edit'}">문항 관리</c:if>
 		</button>
 		<button type="button" onclick="history.go(-1);">이전으로</button>
 	</li>

@@ -1,6 +1,7 @@
 package io.ezsurvey.web.question;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -10,14 +11,20 @@ import javax.validation.Valid;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.ezsurvey.dto.question.ItemRequestDTO;
+import io.ezsurvey.dto.question.QuestionRequestDTO;
+import io.ezsurvey.dto.question.QuestionServiceDTO;
 import io.ezsurvey.dto.question.RequestDTOWrapper;
 import io.ezsurvey.repository.EnumMapper;
+import io.ezsurvey.service.question.ItemReadService;
 import io.ezsurvey.service.question.QuestionCUDService;
+import io.ezsurvey.service.question.QuestionReadService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,7 +34,9 @@ import lombok.extern.slf4j.Slf4j;
 public class QuestionCUDAjaxController {
 	private static final ResourceBundle resource = ResourceBundle.getBundle("messages.validation");
 	private final EnumMapper enumMapper; // AppConfig에 등록
-	private final QuestionCUDService questionService;
+	private final QuestionCUDService questionCUDService;
+	private final QuestionReadService questionReadService;
+	private final ItemReadService itemReadService;
 	
 	@PostMapping("/ajax/make/question")
 	public Map<String, Object> make(@Valid @RequestBody RequestDTOWrapper wrapper, BindingResult bindingResult) {
@@ -61,7 +70,7 @@ public class QuestionCUDAjaxController {
 		}
 		else {
 			// 문항 추가
-			Map<String, Object> inserted = questionService.insert(wrapper.getQuestion().toServiceDTO()
+			Map<String, Object> inserted = questionCUDService.insert(wrapper.getQuestion().toServiceDTO()
 					, wrapper.getItemList().stream().map(ItemRequestDTO::toServiceDTO).collect(Collectors.toList())
 					, wrapper.getSurvey());
 			
@@ -69,6 +78,32 @@ public class QuestionCUDAjaxController {
 			map.put("insertedQuestion", inserted.get("question"));
 			map.put("insertedItems", inserted.get("items"));
 		}
+		
+		return map;
+	}
+	
+	@GetMapping("/ajax/edit/project/{surveyId}/edit/question/{questionId}")
+	public RequestDTOWrapper edit(@PathVariable(name = "surveyId") Long surveyId
+			, @PathVariable(name = "questionId") Long questionId) {
+		QuestionServiceDTO questionServiceDTO = questionReadService.getServiceDTOById(questionId);
+		QuestionRequestDTO question = new QuestionRequestDTO(questionServiceDTO);
+		
+		if(questionServiceDTO.getItems()>0) { // 응답 범주가 있는 문항(선다형, 척도형 등)	
+			List<ItemRequestDTO> itemList = itemReadService.findServiceDTOByQuestionId(questionId)
+					.stream().map(ItemRequestDTO::new).collect(Collectors.toList());
+			
+			return new RequestDTOWrapper(question, itemList);
+		}
+		else { // 응답 범주가 없는 문항(단답형 등)
+			return new RequestDTOWrapper(question, null);
+		}
+	}
+	
+	@PostMapping("/ajax/edit/project/{surveyId}/edit/question/{questionId}")
+	public Map<String, Object> edit(@PathVariable(name = "surveyId") Long surveyId
+			, @PathVariable(name = "questionId") Long questionId
+			, @Valid @RequestBody RequestDTOWrapper wrapper, BindingResult bindingResult) {
+		Map<String, Object> map = new HashMap<>();
 		
 		return map;
 	}

@@ -27,6 +27,19 @@ public class QuestionRequestDTO {
 	@Size(max = 256)
 	private String picture;
 	
+	// ServiceDTO to RequestDTO
+	public QuestionRequestDTO(QuestionServiceDTO serviceDTO) {
+		this.questionId = serviceDTO.getQuestionId();
+		this.category = serviceDTO.getCategory().getKey();
+		this.startFromOne = serviceDTO.getStartFromOne();
+		this.branched = serviceDTO.getBranched();
+		this.randomized = serviceDTO.getRandomized();
+		this.varlabel = serviceDTO.getVarlabel();
+		this.content = serviceDTO.getContent();
+		this.picture = serviceDTO.getPicture();
+	}
+	
+	// RequestDTO to ServiceDTO
 	public QuestionServiceDTO toServiceDTO() {
 		return QuestionServiceDTO.builder()
 				.category(EnumBase.findByKey(Category.class, category))

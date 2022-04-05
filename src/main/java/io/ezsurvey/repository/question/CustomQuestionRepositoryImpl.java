@@ -2,6 +2,7 @@ package io.ezsurvey.repository.question;
 
 import java.util.List;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -31,8 +32,16 @@ public class CustomQuestionRepositoryImpl implements CustomQuestionRepository {
 
 	@Override
 	public QuestionServiceDTO getServiceDTOById(Long questionId) {
-		// TODO Auto-generated method stub
-		return null;
+		return jpaQueryFactory.select(Projections.fields(QuestionServiceDTO.class
+				, question.id.as("questionId") // 설문조사 정보 및 부모 문항 정보 생략
+				, question.category, question.startFromOne
+				, question.branched, question.randomized
+				, question.idx, question.subidx // 문항 수정시 불필요, 미리보기시 필요
+				, question.varlabel, question.content, question.article, question.picture
+				, question.items, question.subquestions)) // 문항 수정이나 미리보기시 즐겨찾기 수 불필요
+				.from(question)
+				.where(question.id.eq(questionId))
+				.fetchOne();
 	}
 	
 	private BooleanExpression gtQuestionId(Long questionId) {

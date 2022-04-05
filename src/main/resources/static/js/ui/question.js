@@ -1,3 +1,4 @@
+const current_url = window.location.href.replace(window.location.origin,'');
 const link = document.querySelector('article').dataset.link;
 const selectCategory = document.querySelector('ul.question-type select[name="category"]');
 const inputItems = document.querySelector('ul.question-type input[name="items"]');
@@ -13,9 +14,12 @@ const vallabelChoicePlaceholders = ['매우 관심이 있었다', '조금 관심
 const vallabelScalePlaceholders = ['매우 그렇다', '전혀 그렇지 않다'];
 
 // 접속한 링크에 따라 문항 및 응답 범주 초기화
-initialize(link);
+window.onload = function() { // 문항 수정의 경우 Ajax로 초기 정보를 불러오는 함수가 별도 파일에 있으므로 문서 전체를 읽어야 호출 가능
+	initialize(link);
+}
 function initialize(link) {
 	if(link=='make') initializeMake();
+	else if(link=='edit') getQuestionToEdit();
 }
 
 // 문항 추가하는 경우의 초기화 함수

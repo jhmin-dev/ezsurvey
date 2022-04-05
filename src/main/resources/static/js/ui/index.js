@@ -31,7 +31,7 @@ function render(data) {
 				let a = document.createElement('a');
 				li.append(a);
 
-				a.href = '/edit/project/' + survey + '/edit/question/' + dto['question'];
+				a.href = '/edit/project/' + survey + '/edit/question/' + dto['questionId'];
 				a.textContent = dto[key] || content; // 변수명이 비어 있으면 문항 내용으로 대체
 			}
 			else if(key=='category') { // 문항 유형의 경우

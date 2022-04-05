@@ -79,3 +79,14 @@ function getFormData() {
 	
 	return [question, itemList];
 }
+
+// 수정할 문항을 불러오는 함수
+function getQuestionToEdit() {
+	$.ajax({
+		url:'/ajax' + current_url,
+		type:'GET',
+		success:function(param) {
+			console.log(param);
+		}
+	}); // end of ajax
+}

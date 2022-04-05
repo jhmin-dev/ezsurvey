@@ -21,10 +21,17 @@ public class QuestionServiceDTO {
 	private Question parent;
 	private Boolean branched;
 	private Boolean randomized;
+	private Integer idx;
+	private Integer subidx;
 	private String varlabel;
 	private String content;
 	private String article;
 	private String picture;
+	
+	// 테이블에 없는 가상 컬럼
+	private Long bookmarks;
+	private Long items;
+	private Long subquestions;
 	
 	// ServiceDTO to Entity
 	public Question toEntity() {

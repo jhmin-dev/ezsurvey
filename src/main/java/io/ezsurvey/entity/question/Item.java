@@ -51,7 +51,8 @@ public class Item {
 		this.picture = picture;
 	}
 	
-	public Item update(String vallabel) {
+	public Item update(Integer value, String vallabel) {
+		this.value = value;
 		this.vallabel = vallabel;
 		
 		return this;

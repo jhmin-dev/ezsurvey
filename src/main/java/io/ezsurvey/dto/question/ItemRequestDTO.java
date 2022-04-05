@@ -20,6 +20,15 @@ public class ItemRequestDTO {
 	@Size(max = 256)
 	private String picture;
 	
+	// ServiceDTO to RequestDTO
+	public ItemRequestDTO(ItemServiceDTO serviceDTO) {
+		this.itemId = serviceDTO.getItemId();
+		this.value = serviceDTO.getValue();
+		this.vallabel = serviceDTO.getVallabel();
+		this.picture = serviceDTO.getPicture();
+	}
+	
+	// RequestDTO to ServiceDTO
 	public ItemServiceDTO toServiceDTO() {
 		return ItemServiceDTO.builder()
 				.value(value)

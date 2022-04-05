@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.ezsurvey.dto.question.QuestionPaginationDTO;
+import io.ezsurvey.dto.question.QuestionServiceDTO;
 import io.ezsurvey.entity.question.Question;
 import io.ezsurvey.repository.question.QuestionRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,5 +41,9 @@ public class QuestionReadService {
 	
 	public boolean existsBySuveyAndId(Long surveyId, Long questionId) {
 		return questionRepository.existsBySurveyIdAndIdGreaterThan(surveyId, questionId);
+	}
+	
+	public QuestionServiceDTO getServiceDTOById(Long questionId) {
+		return questionRepository.getServiceDTOById(questionId);
 	}
 }
