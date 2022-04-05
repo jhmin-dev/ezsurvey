@@ -68,7 +68,7 @@ public class SurveyCUDController { // Spring Security에서 인증을 요구하�
 			SurveyAuthUtil.hasEditAuthOrThrowException(surveyReadService.getAuthDTOById(surveyId), sessionUser.getUserId());
 			
 			// 설문조사 정보 가져오기
-			SurveyRequestDTO requestDTO = surveyCUDService.getRequestDTOById(surveyId);	
+			SurveyRequestDTO requestDTO = new SurveyRequestDTO(surveyReadService.getServiceDTOById(surveyId));	
 			model.addAttribute("requestDTO", requestDTO);
 		}
 		

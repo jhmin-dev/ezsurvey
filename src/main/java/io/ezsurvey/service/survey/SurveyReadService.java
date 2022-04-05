@@ -8,10 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import io.ezsurvey.dto.survey.SurveyAuthDTO;
 import io.ezsurvey.dto.survey.SurveyIndexDTO;
 import io.ezsurvey.dto.survey.SurveyPaginationDTO;
-import io.ezsurvey.dto.survey.SurveyResponseDTO;
 import io.ezsurvey.dto.survey.SurveyServiceDTO;
 import io.ezsurvey.entity.SearchField;
-import io.ezsurvey.entity.survey.Survey;
 import io.ezsurvey.entity.user.User;
 import io.ezsurvey.repository.survey.SurveyRepository;
 import io.ezsurvey.repository.user.UserRepository;
@@ -44,5 +42,9 @@ public class SurveyReadService {
 	
 	public SurveyAuthDTO getAuthDTOById(Long surveyId) {
 		return surveyRepository.getAuthDTOById(surveyId);
+	}
+	
+	public Long getUserIdById(Long surveyId) {
+		return surveyRepository.getUserIdById(surveyId);
 	}
 }

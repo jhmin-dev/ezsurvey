@@ -16,7 +16,6 @@ import io.ezsurvey.dto.survey.SurveyIndexDTO;
 import io.ezsurvey.dto.survey.SurveyPaginationDTO;
 import io.ezsurvey.dto.survey.SurveyServiceDTO;
 import io.ezsurvey.entity.SearchField;
-import io.ezsurvey.entity.survey.Survey;
 import io.ezsurvey.entity.survey.Visibility;
 import io.ezsurvey.entity.user.User;
 import io.ezsurvey.repository.QuerydslUtil;
@@ -110,6 +109,14 @@ public class CustomSurveyRepositoryImpl implements CustomSurveyRepository {
 						, survey.id.as("surveyId"), survey.user.id.as("userId")
 						, survey.distributed, survey.expires, survey.status
 						, survey.visibility, survey.shared))
+				.from(survey)
+				.where(survey.id.eq(surveyId))
+				.fetchOne();
+	}
+
+	@Override
+	public Long getUserIdById(Long surveyId) {
+		return jpaQueryFactory.select(survey.user.id)
 				.from(survey)
 				.where(survey.id.eq(surveyId))
 				.fetchOne();

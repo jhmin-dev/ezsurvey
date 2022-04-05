@@ -8,7 +8,6 @@ import io.ezsurvey.dto.survey.SurveyIndexDTO;
 import io.ezsurvey.dto.survey.SurveyPaginationDTO;
 import io.ezsurvey.dto.survey.SurveyServiceDTO;
 import io.ezsurvey.entity.SearchField;
-import io.ezsurvey.entity.survey.Survey;
 import io.ezsurvey.entity.user.User;
 
 public interface CustomSurveyRepository {
@@ -26,4 +25,7 @@ public interface CustomSurveyRepository {
 	
 	// 접근 권한 관련 정보를 DTO로 조회
 	SurveyAuthDTO getAuthDTOById(Long surveyId);
+	
+	// 생성자 회원 번호 조회
+	Long getUserIdById(Long surveyId);
 }

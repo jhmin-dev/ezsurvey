@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.ezsurvey.dto.survey.SurveyRequestDTO;
 import io.ezsurvey.dto.survey.SurveyServiceDTO;
 import io.ezsurvey.entity.survey.Status;
 import io.ezsurvey.entity.survey.Visibility;
@@ -34,12 +33,6 @@ public class SurveyCUDService {
 		}
 		
 		return surveyRepository.save(serviceDTO.toEntity()).getId();
-	}
-	
-	public SurveyRequestDTO getRequestDTOById(Long surveyId) {
-		SurveyServiceDTO serviceDTO = surveyRepository.getServiceDTOById(surveyId);
-		
-		return serviceDTO==null ? null : new SurveyRequestDTO(serviceDTO);
 	}
 	
 	public void update(SurveyServiceDTO serviceDTO) {

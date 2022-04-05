@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.ezsurvey.dto.user.SessionUser;
 import io.ezsurvey.service.survey.BookmarkSurveyCUDService;
 import io.ezsurvey.service.survey.SurveyCUDService;
+import io.ezsurvey.service.survey.SurveyReadService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SurveyCUDAjaxController {
 	private final BookmarkSurveyCUDService bookmarkSurveyCUDService;
 	private final SurveyCUDService surveyCUDService;
+	private final SurveyReadService surveyReadService;
 	
 	@PostMapping("/ajax/delete/project")
 	public Map<String, String> delete(Long surveyId, HttpSession session) {
@@ -32,7 +34,7 @@ public class SurveyCUDAjaxController {
 		if(sessionUser==null) { // 로그인되어 있지 않은 경우
 			map.put("result", "logout");
 		}
-		else if(!sessionUser.getUserId().equals(surveyCUDService.getRequestDTOById(surveyId).getUser().getId())) { // 로그인한 사용자와 설문조사 생성자가 불일치하는 경우
+		else if(!sessionUser.getUserId().equals(surveyReadService.getUserIdById(surveyId))) { // 로그인한 사용자와 설문조사 생성자가 불일치하는 경우
 			map.put("result", "wrongAccess");
 		}
 		else {
