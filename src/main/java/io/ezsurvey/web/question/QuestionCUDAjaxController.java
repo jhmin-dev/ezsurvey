@@ -38,8 +38,9 @@ public class QuestionCUDAjaxController {
 	private final QuestionReadService questionReadService;
 	private final ItemReadService itemReadService;
 	
-	@PostMapping("/ajax/make/question")
-	public Map<String, Object> make(@Valid @RequestBody RequestDTOWrapper wrapper, BindingResult bindingResult) {
+	@PostMapping("/ajax/edit/project/{surveyId}/make/question")
+	public Map<String, Object> make(@PathVariable(name = "surveyId") Long surveyId
+			, @Valid @RequestBody RequestDTOWrapper wrapper, BindingResult bindingResult) {
 		Map<String, Object> map = new HashMap<>();
 		
 		if(bindingResult.getAllErrors().size()>0) { // 유효성 검증 결과 오류가 있으면
@@ -72,7 +73,7 @@ public class QuestionCUDAjaxController {
 			// 문항 추가
 			Map<String, Object> inserted = questionCUDService.insert(wrapper.getQuestion().toServiceDTO()
 					, wrapper.getItemList().stream().map(ItemRequestDTO::toServiceDTO).collect(Collectors.toList())
-					, wrapper.getSurvey());
+					, surveyId);
 			
 			map.put("result", "success");
 			map.put("insertedQuestion", inserted.get("question"));

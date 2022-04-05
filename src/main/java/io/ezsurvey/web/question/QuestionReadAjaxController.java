@@ -4,12 +4,14 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.ezsurvey.dto.question.QuestionPaginationDTO;
+import io.ezsurvey.dto.question.QuestionResponseDTO;
 import io.ezsurvey.repository.EnumMapper;
 import io.ezsurvey.service.question.QuestionReadService;
 import lombok.RequiredArgsConstructor;
@@ -27,12 +29,12 @@ public class QuestionReadAjaxController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		int pageSize = 10;
-		List<QuestionPaginationDTO> list = questionReadService.findBySurvey(surveyId, lastQuestionId, pageSize);
+		List<QuestionResponseDTO> list = questionReadService.findPaginationDTOBySurveyId(surveyId, lastQuestionId, pageSize)
+				.stream().map(QuestionResponseDTO::new).collect(Collectors.toList());
 		map.put("list", list);
 		
-		QuestionPaginationDTO newLastQuestion = list.stream().max(Comparator.comparing(QuestionPaginationDTO::getQuestionId)).orElse(null);
-		if(newLastQuestion!=null) {
-			Long newLastQuestionId = newLastQuestion.getQuestionId();
+		if(list.size()>0) { // 목록이 비어 있지 않으면
+			Long newLastQuestionId = list.get(list.size()-1).getQuestionId(); // 오름차순 정렬이므로 가장 마지막 요소의 문항 번호가 최댓값
 			map.put("last", newLastQuestionId);
 			
 			boolean hasMore = false;

@@ -15,12 +15,11 @@ function makeQuestion() {
 	formData = getFormData();
 	
 	$.ajax({
-		url:'/ajax/make/question',
+		url:'/ajax' + current_url,
 		contentType:'application/json;charset=UTF-8', // Ajax로 리스트를 넘기기 위한 옵션
 		data:JSON.stringify({
 			question:formData[0],
-			itemList:formData[1],
-			survey:survey
+			itemList:formData[1]
 		}), // @RequestBody로 받을 때 Unrecognized token으로 인한 JsonParseException을 피하려면 {} 형태로 보내는 data 전체에 JSON.stringify() 적용
 		success:function(param) {
 			postResultText.textContent = ''; // 기존 메시지 제거

@@ -6,12 +6,11 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import static io.ezsurvey.entity.question.QItem.item;
 import static io.ezsurvey.entity.survey.QSurvey.survey;
 
+import io.ezsurvey.dto.question.QuestionPaginationDTO;
 import io.ezsurvey.dto.question.QuestionServiceDTO;
 import io.ezsurvey.entity.question.QQuestion;
-import io.ezsurvey.entity.question.Question;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor // 생성자 방식 의존성 주입
@@ -21,10 +20,17 @@ public class CustomQuestionRepositoryImpl implements CustomQuestionRepository {
 	QQuestion parent = new QQuestion("parent"); // 같은 자료형의 다른 인스턴스 변수
 	
 	@Override
-	public List<Question> findBySurvey(Long surveyId, Long lastQuestionId, int pageSize) {
-		return jpaQueryFactory.select(question).from(question)
-				.leftJoin(question.parent, parent).fetchJoin() // parent는 Nullable이므로 leftJoin
-				.where(question.survey.id.eq(surveyId), gtQuestionId(lastQuestionId))
+	public List<QuestionPaginationDTO> findPaginationDTOBySurveyId(Long surveyId, Long lastQuestionId, int pageSize) {
+		return jpaQueryFactory.select(Projections.fields(QuestionPaginationDTO.class
+				, question.id.as("questionId"), question.category
+				, parent.id.as("parentId"), question.branched, question.randomized
+				, question.idx, question.subidx
+				, question.varlabel, question.content
+				, question.bookmarks, question.items, question.subquestions))
+				.from(question)
+				.leftJoin(question.parent, parent) // parent는 Nullable이므로 leftJoin
+				.innerJoin(question.survey, survey)
+				.where(survey.id.eq(surveyId), gtQuestionId(lastQuestionId))
 				.orderBy(question.id.asc())
 				.limit(pageSize)
 				.fetch();

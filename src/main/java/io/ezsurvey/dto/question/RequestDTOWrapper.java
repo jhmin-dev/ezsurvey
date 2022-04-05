@@ -16,8 +16,7 @@ public class RequestDTOWrapper {
 	private QuestionRequestDTO question;
 	@Valid
 	private List<ItemRequestDTO> itemList;
-	private Long survey;
-
+	
 	// RequestDTOs to Wrapper
 	public RequestDTOWrapper(QuestionRequestDTO question, List<ItemRequestDTO> itemList) {
 		this.question = question;

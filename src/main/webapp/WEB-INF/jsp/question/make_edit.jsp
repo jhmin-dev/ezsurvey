@@ -17,7 +17,7 @@
 <ul class="question-type">
 	<li>
 		<label>문항 유형</label>
-		<select name="category">
+		<select name="category" <c:if test="${link eq 'edit'}">disabled</c:if>>
 			<c:forEach items="${category}" var="cat">
 			<option value="${cat.key}">${cat.name}</option>
 			</c:forEach>
@@ -25,7 +25,7 @@
 	</li>
 	<li>
 		<label>응답 범주 수</label>
-		<input type="number" name="items" min="1" max="11">
+		<input type="number" name="items" min="1" max="11" <c:if test="${link eq 'edit'}">disabled</c:if>>
 	</li>
 </ul>
 <ul class="question-main">

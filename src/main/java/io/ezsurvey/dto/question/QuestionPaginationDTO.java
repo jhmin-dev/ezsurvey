@@ -1,17 +1,14 @@
 package io.ezsurvey.dto.question;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import io.ezsurvey.entity.question.Category;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@Getter @ToString
-@Builder @AllArgsConstructor // @Builder는 인자가 있는 생성자를 요구
+@Getter
 @NoArgsConstructor
 public class QuestionPaginationDTO {
 	private Long questionId;
-	private String category;
+	private Category category;
 	private Long parentId;
 	private Boolean branched;
 	private Boolean randomized;
