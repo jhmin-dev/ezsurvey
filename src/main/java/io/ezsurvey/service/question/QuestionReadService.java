@@ -2,6 +2,7 @@ package io.ezsurvey.service.question;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,7 @@ public class QuestionReadService {
 				.content(q.getContent())
 				.items(q.getItems())
 				.subquestions(q.getSubquestions())
-				.build()).toList();
+				.build()).collect(Collectors.toList());
 	}
 	
 	public boolean existsBySuveyAndId(Long surveyId, Long questionId) {
