@@ -2,12 +2,6 @@ const survey = document.querySelector('article').dataset.survey;
 const container = document.querySelector('ul.list-main li.page');
 const list_main = document.querySelector('.list-main');
 const list_none = document.querySelector('.list-none');
-const pagination = document.querySelector('.pagination');
-
-// pagination의 data-last 속성에 저장된 값보다 최근 문항만 조회하는 함수
-function getMoreQuestions() {
-	getQuestions(pagination.dataset.last);
-}
 
 // 목록을 화면에 출력하는 함수
 function render(data) {

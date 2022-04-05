@@ -24,7 +24,7 @@
 	</li>
 </ul>
 <div class="list-total notice">
-	[<span class="total-elements"></span>개의 문항]
+	[<span class="total-elements">${survey.questions}</span>개의 문항]
 </div>
 <div class="list-none notice">
 	조회할 내용이 없습니다.

@@ -23,19 +23,26 @@ public class QuestionReadAjaxController {
 	private final EnumMapper enumMapper; // AppConfig에 등록
 	
 	@PostMapping("/ajax/edit/project/{surveyId}/index")
-	public Map<String, Object> index(@PathVariable(name = "surveyId") Long surveyId, Long lastQuestionId) {
-		log.info("survey: {}, last: {}", surveyId, lastQuestionId);
-		
+	public Map<String, Object> index(@PathVariable(name = "surveyId") Long surveyId, Long lastQuestionId, Integer totalElements) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		List<QuestionPaginationDTO> list = questionReadService.findBySurvey(surveyId, lastQuestionId, 10);
+		int pageSize = 10;
+		List<QuestionPaginationDTO> list = questionReadService.findBySurvey(surveyId, lastQuestionId, pageSize);
 		map.put("list", list);
 		
 		QuestionPaginationDTO newLastQuestion = list.stream().max(Comparator.comparing(QuestionPaginationDTO::getQuestionId)).orElse(null);
 		if(newLastQuestion!=null) {
 			Long newLastQuestionId = newLastQuestion.getQuestionId();
 			map.put("last", newLastQuestionId);
-			map.put("hasMore", questionReadService.existsBySuveyAndId(surveyId, newLastQuestionId));
+			
+			boolean hasMore = false;
+			if(lastQuestionId!=null) { // 두 번째 페이지부터는 항상 쿼리로 더보기할 문항이 있는지 확인
+				hasMore = questionReadService.existsBySuveyAndId(surveyId, newLastQuestionId);
+			}
+			else if(totalElements>pageSize) { // 첫 번째 페이지는 총 문항 수를 이용하여 더보기할 문항이 있는지 판단
+				hasMore = true;
+			}
+			map.put("hasMore", hasMore);
 		}
 		
 		map.put("category", enumMapper.get("Category"));
