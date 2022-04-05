@@ -6,7 +6,7 @@ if(button_delete) {
 		$.ajax({
 			url:'/ajax/delete/project',
 			data:{
-				survey:button_delete.dataset.survey,
+				surveyId:button_delete.dataset.survey,
 			},
 			success:function(param) {
 				if(param.result=='logout') {

@@ -22,20 +22,20 @@ public class QuestionReadAjaxController {
 	private final QuestionReadService questionReadService;
 	private final EnumMapper enumMapper; // AppConfig에 등록
 	
-	@PostMapping("/ajax/edit/project/{survey}/index")
-	public Map<String, Object> index(@PathVariable(name = "survey") Long survey, Long lastQuestion) {
-		log.info("survey: {}, last: {}", survey, lastQuestion);
+	@PostMapping("/ajax/edit/project/{surveyId}/index")
+	public Map<String, Object> index(@PathVariable(name = "surveyId") Long surveyId, Long lastQuestionId) {
+		log.info("survey: {}, last: {}", surveyId, lastQuestionId);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		List<QuestionPaginationDTO> list = questionReadService.findBySurvey(survey, lastQuestion, 10);
+		List<QuestionPaginationDTO> list = questionReadService.findBySurvey(surveyId, lastQuestionId, 10);
 		map.put("list", list);
 		
-		QuestionPaginationDTO newLast = list.stream().max(Comparator.comparing(QuestionPaginationDTO::getQuestionId)).orElse(null);
-		if(newLast!=null) {
-			Long newLastQuestion = newLast.getQuestionId();
-			map.put("last", newLastQuestion);
-			map.put("hasMore", questionReadService.existsBySuveyAndId(survey, newLastQuestion));
+		QuestionPaginationDTO newLastQuestion = list.stream().max(Comparator.comparing(QuestionPaginationDTO::getQuestionId)).orElse(null);
+		if(newLastQuestion!=null) {
+			Long newLastQuestionId = newLastQuestion.getQuestionId();
+			map.put("last", newLastQuestionId);
+			map.put("hasMore", questionReadService.existsBySuveyAndId(surveyId, newLastQuestionId));
 		}
 		
 		map.put("category", enumMapper.get("Category"));

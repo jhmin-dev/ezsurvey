@@ -4,14 +4,14 @@ const current_url = window.location.href.replace(window.location.origin,'');
 getQuestions();
 
 // 문항 목록을 조회하는 함수
-function getQuestions(lastQuestion) {
+function getQuestions(lastQuestionId) {
 	$.ajax({
 		url:'/ajax' + current_url,
 		data: {
-			lastQuestion:lastQuestion
+			lastQuestionId:lastQuestionId
 		},
 		success:function(param) {
-			if(!lastQuestion) { // 첫 페이지 출력시 container 초기화
+			if(!lastQuestionId) { // 첫 페이지 출력시 container 초기화
 				clearChildNodes([container]);
 			}
 			

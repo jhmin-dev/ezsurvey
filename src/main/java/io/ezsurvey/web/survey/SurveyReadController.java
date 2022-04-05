@@ -41,20 +41,20 @@ public class SurveyReadController {
 	}
 	
 	// 전체 공개 경로이므로 sessionUser의 null 검사 필수
-	@RequestMapping("/project/{survey}")
-	public String detail(@PathVariable(name = "survey") Long survey, Model model, HttpSession session) {
+	@RequestMapping("/project/{surveyId}")
+	public String detail(@PathVariable(name = "surveyId") Long surveyId, Model model, HttpSession session) {
 		// 세션에 저장된 회원 정보 구하기
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
 		
 		// 설문조사 접근 권한 검사
-		SurveyAuthUtil.hasDetailAuthOrThrowException(surveyService.getAuthDTOById(survey), sessionUser);
+		SurveyAuthUtil.hasDetailAuthOrThrowException(surveyService.getAuthDTOById(surveyId), sessionUser);
 		
 		// 설문조사 정보 가져오기
-		SurveyResponseDTO responseDTO = surveyService.getResponseDTOById(survey);
+		SurveyResponseDTO responseDTO = surveyService.getResponseDTOById(surveyId);
 		
 		// 로그인되어 있는 경우 현재 설문조사를 즐겨찾기했는지 확인
 		if(sessionUser!=null) {
-			responseDTO.setHasBookmarked(bookmarkSurveyService.existsBookmark(survey, sessionUser.getUserId()));
+			responseDTO.setHasBookmarked(bookmarkSurveyService.existsBookmark(surveyId, sessionUser.getUserId()));
 		}
 		model.addAttribute("responseDTO", responseDTO);
 		

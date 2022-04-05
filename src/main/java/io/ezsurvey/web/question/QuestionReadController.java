@@ -38,16 +38,16 @@ public class QuestionReadController {
 		this.searchField = searchField;
 	}
 	
-	@RequestMapping("/edit/project/{survey}/index")
-	public String index(@PathVariable(name = "survey") Long survey, Model model, HttpSession session) {
+	@RequestMapping("/edit/project/{surveyId}/index")
+	public String index(@PathVariable(name = "surveyId") Long surveyId, Model model, HttpSession session) {
 		// 세션에 저장된 회원 정보 구하기
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
 		
 		// 설문조사 접근 권한 검사
-		SurveyAuthUtil.hasEditAuthOrThrowException(surveyReadService.getAuthDTOById(survey), sessionUser.getUserId());
+		SurveyAuthUtil.hasEditAuthOrThrowException(surveyReadService.getAuthDTOById(surveyId), sessionUser.getUserId());
 		
 		// 설문조사 정보 가져오기
-		SurveyResponseDTO responseDTO = surveyReadService.getResponseDTOById(survey);
+		SurveyResponseDTO responseDTO = surveyReadService.getResponseDTOById(surveyId);
 		
 		model.addAttribute("survey", responseDTO);
 		model.addAttribute("title", "문항 관리");

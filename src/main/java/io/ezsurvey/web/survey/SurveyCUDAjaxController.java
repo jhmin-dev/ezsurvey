@@ -25,26 +25,26 @@ public class SurveyCUDAjaxController {
 	private final SurveyCUDService surveyCUDService;
 	
 	@PostMapping("/ajax/delete/project")
-	public Map<String, String> delete(Long survey, HttpSession session) {
+	public Map<String, String> delete(Long surveyId, HttpSession session) {
 		Map<String, String> map = new HashMap<String, String>();
 		
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
 		if(sessionUser==null) { // 로그인되어 있지 않은 경우
 			map.put("result", "logout");
 		}
-		else if(sessionUser.getUserId()!=surveyCUDService.getRequestDTOById(survey).getUser().getId()) { // 로그인한 사용자와 설문조사 생성자가 불일치하는 경우
+		else if(!sessionUser.getUserId().equals(surveyCUDService.getRequestDTOById(surveyId).getUser().getId())) { // 로그인한 사용자와 설문조사 생성자가 불일치하는 경우
 			map.put("result", "wrongAccess");
 		}
 		else {
-			surveyCUDService.delete(survey);
+			surveyCUDService.delete(surveyId);
 			map.put("result", "success");
 		}
 		
 		return map;
 	}
 	
-	@PostMapping("/ajax/toggle/bookmark/project/{survey}")
-	public Map<String, String> toggleBookmark(@PathVariable(name = "survey") Long survey, HttpSession session) {
+	@PostMapping("/ajax/toggle/bookmark/project/{surveyId}")
+	public Map<String, String> toggleBookmark(@PathVariable(name = "surveyId") Long surveyId, HttpSession session) {
 		Map<String, String> map = new HashMap<String, String>();
 		
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
@@ -52,14 +52,14 @@ public class SurveyCUDAjaxController {
 			map.put("result", "logout");
 		}
 		else {
-			Long member = sessionUser.getUserId();
-			Long bookmark = bookmarkSurveyCUDService.getBookmark(survey, member);
-			if(bookmark==null) { // 기존에 즐겨찾기되어 있지 않으면 추가
-				bookmarkSurveyCUDService.insertBookmark(survey, member);
+			Long userId = sessionUser.getUserId();
+			Long bookmarkId = bookmarkSurveyCUDService.getBookmark(surveyId, userId);
+			if(bookmarkId==null) { // 기존에 즐겨찾기되어 있지 않으면 추가
+				bookmarkSurveyCUDService.insertBookmark(surveyId, userId);
 				map.put("result", "inserted");
 			}
 			else { // 기존에 즐겨찾기되어 있으면 삭제
-				bookmarkSurveyCUDService.deleteBookmark(bookmark, member);
+				bookmarkSurveyCUDService.deleteBookmark(bookmarkId, userId);
 				map.put("result", "deleted");
 			}
 		}
@@ -68,10 +68,10 @@ public class SurveyCUDAjaxController {
 	}
 	
 	@PostMapping("/ajax/delete/bookmark/project")
-	public Map<String, Object> deleteBookmark(@RequestBody List<Long> bookmarks, HttpSession session) {
+	public Map<String, Object> deleteBookmark(@RequestBody List<Long> bookmarkIds, HttpSession session) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		if(bookmarks==null || bookmarks.size()==0) { // 아무것도 선택하지 않은 경우
+		if(bookmarkIds==null || bookmarkIds.size()==0) { // 아무것도 선택하지 않은 경우
 			map.put("result", "null");
 		}
 		else {
@@ -80,8 +80,8 @@ public class SurveyCUDAjaxController {
 				map.put("result", "logout");
 			}
 			else {
-				Long member = sessionUser.getUserId();
-				Long affected_rows = bookmarkSurveyCUDService.deleteBookmarksByIdIn(bookmarks, member);
+				Long userId = sessionUser.getUserId();
+				Long affected_rows = bookmarkSurveyCUDService.deleteBookmarksByIdIn(bookmarkIds, userId);
 	
 				map.put("result", "success");
 				map.put("affected_rows", affected_rows);

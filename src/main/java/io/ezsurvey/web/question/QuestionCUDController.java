@@ -18,6 +18,7 @@ import io.ezsurvey.exception.InvalidSurveyOwnerException;
 import io.ezsurvey.exception.InvalidSurveyStatusException;
 import io.ezsurvey.repository.EnumMapper;
 import io.ezsurvey.service.survey.SurveyReadService;
+import io.ezsurvey.web.SurveyAuthUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,35 +27,21 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class QuestionCUDController {
 	private final EnumMapper enumMapper; // AppConfig에 등록
-	private final SurveyReadService surveyService;
+	private final SurveyReadService surveyReadService;
 	
-	@GetMapping("edit/project/{survey}/make/question")
-	public String make(@PathVariable(name = "survey") Long survey, Model model, HttpSession session) {
-		// 잘못된 설문조사 번호로 접속한 경우
-		SurveyResponseDTO responseDTO = surveyService.getResponseDTOById(survey);
-		if(responseDTO==null) {
-			throw new EntityNotFoundException();
-		}
-		
-		// 삭제된 설문조사인 경우
-		if(responseDTO.getVisibility().equals(Visibility.DELETED.getKey())) {
-			throw new DeletedSurveyException();
-		}
-		
-		// 로그인한 사용자와 설문조사 생성자가 불일치하는 경우
+	@GetMapping("edit/project/{surveyId}/make/question")
+	public String make(@PathVariable(name = "surveyId") Long surveyId, Model model, HttpSession session) {
+		// 세션에 저장된 회원 정보 구하기
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
-		if(responseDTO.getUserId()!=sessionUser.getUserId()) {
-			throw new InvalidSurveyOwnerException();
-		}
 		
-		// 현재 시각이 배포 시작 시각 이후인 경우
-		String distributed = responseDTO.getDistributed();
-		if(distributed!=null && LocalDateTime.now().isAfter(LocalDateTime.parse(distributed))) {
-			throw new InvalidSurveyStatusException();
-		}
+		// 설문조사 접근 권한 검사
+		SurveyAuthUtil.hasEditAuthOrThrowException(surveyReadService.getAuthDTOById(surveyId), sessionUser.getUserId());
+
+		// 설문조사 정보 가져오기
+		SurveyResponseDTO responseDTO = surveyReadService.getResponseDTOById(surveyId);
+		model.addAttribute("survey", responseDTO);
 		
 		// 현재 요청 URL 관련 정보 저장
-		model.addAttribute("survey", responseDTO);
 		model.addAttribute("title", "문항 추가");
 		model.addAttribute("link", "make");
 		model.addAttribute("category", enumMapper.get("Category"));

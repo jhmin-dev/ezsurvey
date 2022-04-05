@@ -51,27 +51,24 @@ public class SurveyCUDController { // Spring Security에서 인증을 요구하�
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
 		
 		// 설문조사 생성
-		Long survey = surveyCUDService.insert(requestDTO.toServiceDTO(), sessionUser.getUserId());
+		Long surveyId = surveyCUDService.insert(requestDTO.toServiceDTO(), sessionUser.getUserId());
 		
 		// 문항 추가로 리다이렉트
-		return "redirect:/edit/project/" + survey + "/make/question";
+		return "redirect:/edit/project/" + surveyId + "/make/question";
 	}
 	
-	@GetMapping("/edit/project/{survey}")
-	public String edit(@PathVariable(name = "survey") Long survey, Model model, HttpSession session) {
+	@GetMapping("/edit/project/{surveyId}")
+	public String edit(@PathVariable(name = "surveyId") Long surveyId, Model model, HttpSession session) {
 		// 요청 URL로 첫 접속시 URL에 포함된 PK 값으로 설문조사 정보를 조회
 		if(!model.containsAttribute("hasErrors")) { // 폼에 오류가 있어 메서드가 재호출된 경우에는 쿼리를 전송하지 않음; requestDTO는 initCommand()에 의해 빈 객체가 기본적으로 저장되기 때문에 containsAttribute() 결과가 항상 true임
 			// 세션에 저장된 회원 정보 구하기
 			SessionUser sessionUser = (SessionUser)session.getAttribute("user");
-			
-			log.info(sessionUser.toString());
-			
+
 			// 설문조사 접근 권한 검사
-			SurveyAuthUtil.hasEditAuthOrThrowException(surveyReadService.getAuthDTOById(survey), sessionUser.getUserId());
+			SurveyAuthUtil.hasEditAuthOrThrowException(surveyReadService.getAuthDTOById(surveyId), sessionUser.getUserId());
 			
 			// 설문조사 정보 가져오기
-			SurveyRequestDTO requestDTO = surveyCUDService.getRequestDTOById(survey);
-			
+			SurveyRequestDTO requestDTO = surveyCUDService.getRequestDTOById(surveyId);	
 			model.addAttribute("requestDTO", requestDTO);
 		}
 		
@@ -82,18 +79,18 @@ public class SurveyCUDController { // Spring Security에서 인증을 요구하�
 		return "/project/make_edit"; // Tiles 설정명 반환
 	}
 	
-	@PostMapping("/edit/project/{survey}")
-	public String edit(@PathVariable(name = "survey") Long survey
+	@PostMapping("/edit/project/{surveyId}")
+	public String edit(@PathVariable(name = "surveyId") Long surveyId
 			, @Valid @ModelAttribute("requestDTO") SurveyRequestDTO requestDTO
 			, BindingResult result, Model model, HttpSession session) {
 		if(result.hasErrors()) { // 폼에 오류가 있으면 다시 폼 호출
 			model.addAttribute("hasErrors", true); // edit() 메서드가 재호출되었는지 식별하기 위해 Model에 값 저장
 			
-			return edit(survey, model, session);
+			return edit(surveyId, model, session);
 		}
 		
 		surveyCUDService.update(requestDTO.toServiceDTO());
 		
-		return "redirect:/project/" + survey; // 설문조사 상세로 리다이렉트
+		return "redirect:/project/" + surveyId; // 설문조사 상세로 리다이렉트
 	}
 }
