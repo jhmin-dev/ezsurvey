@@ -5,9 +5,17 @@
 
 ## 개발 환경
 
+- Spring Tools 4 for Eclipse
 - Spring Boot 2.6.6.RELEASE
+	+ Spring Session & Spring Data Redis
+	+ Spring Data JPA & Querydsl
 - Java 11
-- Spring Data JPA & Querydsl
-- Oracle Cloud Autonomous Database (Oracle Database 19c)
 - Lombok
 - Gradle
+
+## 배포 환경
+
+- Ubuntu 20.04.4 LTS on Oracle Cloud VM
+- Apache Tomcat 9.0.31
+- Redis server 5.0.7
+- Oracle Cloud Autonomous Database (Oracle Database 19c)
