@@ -41,6 +41,7 @@ docs/
 
 ### security ###
 *.p12
+*.jks
 wallet/
 user.sql
 application-*.yml

@@ -5,7 +5,7 @@
 <div class="title">
 	${title}
 </div>
-<article data-survey="${survey.survey}" data-link="${link}">
+<article data-survey="${survey.surveyId}" data-link="${link}">
 <ul class="question-info">
 	<li class="survey-title">
 		${survey.title}
