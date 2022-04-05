@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,10 +21,11 @@ import io.ezsurvey.repository.EnumMapper;
 import io.ezsurvey.service.survey.SurveyReadService;
 import io.ezsurvey.web.PagingUtil;
 import io.ezsurvey.web.SurveyAuthUtil;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class QuestionReadController {
-	private static final Logger logger = LoggerFactory.getLogger(QuestionReadController.class);
 	private final SurveyReadService surveyReadService;
 	private final EnumMapper enumMapper; // AppConfig에 등록
 	private final List<EnumDTO> searchField;
@@ -45,7 +44,7 @@ public class QuestionReadController {
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
 		
 		// 설문조사 접근 권한 검사
-		SurveyAuthUtil.hasEditAuthOrThrowException(surveyReadService.getAuthDTOById(survey), sessionUser.getMember());
+		SurveyAuthUtil.hasEditAuthOrThrowException(surveyReadService.getAuthDTOById(survey), sessionUser.getUserId());
 		
 		// 설문조사 정보 가져오기
 		SurveyResponseDTO responseDTO = surveyReadService.getResponseDTOById(survey);

@@ -2,7 +2,6 @@ package io.ezsurvey.service.survey;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,36 +9,33 @@ import io.ezsurvey.entity.survey.BookmarkSurvey;
 import io.ezsurvey.repository.survey.BookmarkSurveyRepository;
 import io.ezsurvey.repository.survey.SurveyRepository;
 import io.ezsurvey.repository.user.UserRepository;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor // 생성자 방식 의존성 주입
 @Transactional
 @Service
 public class BookmarkSurveyCUDService {
-	@Autowired
-	private BookmarkSurveyRepository bookmarkSurveyRepository;
+	private final BookmarkSurveyRepository bookmarkSurveyRepository;
+	private final SurveyRepository surveyRepository;
+	private final UserRepository userRepository;
 	
-	@Autowired
-	private SurveyRepository surveyRepository;
-	
-	@Autowired
-	private UserRepository userRepository;
-	
-	public Long getBookmark(Long survey, Long member) {
-		BookmarkSurvey bookmarkSurvey = bookmarkSurveyRepository.getBySurveyAndUser(survey, member);
+	public Long getBookmark(Long surveyId, Long userId) {
+		BookmarkSurvey bookmarkSurvey = bookmarkSurveyRepository.getBySurveyAndUser(surveyId, userId);
 		
 		return bookmarkSurvey==null ? null : bookmarkSurvey.getId();
 	}
 	
-	public Long insertBookmark(Long survey, Long member) {
+	public Long insertBookmark(Long surveyId, Long userId) {
 		return bookmarkSurveyRepository.save(BookmarkSurvey.builder()
-				.survey(surveyRepository.getById(survey))
-				.user(userRepository.getById(member)).build()).getId();
+				.survey(surveyRepository.getById(surveyId))
+				.user(userRepository.getById(userId)).build()).getId();
 	}
 	
-	public Long deleteBookmark(Long bookmark, Long member) {
-		return bookmarkSurveyRepository.deleteById(bookmark, member);
+	public Long deleteBookmark(Long bookmarkId, Long userId) {
+		return bookmarkSurveyRepository.deleteById(bookmarkId, userId);
 	}
 	
-	public Long deleteBookmarksByIdIn(List<Long> bookmarks, Long member) {
-		return bookmarkSurveyRepository.deleteByIdIn(bookmarks, member);
+	public Long deleteBookmarksByIdIn(List<Long> bookmarks, Long userId) {
+		return bookmarkSurveyRepository.deleteByIdIn(bookmarks, userId);
 	}
 }

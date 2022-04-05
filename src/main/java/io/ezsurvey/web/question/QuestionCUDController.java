@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +19,12 @@ import io.ezsurvey.exception.InvalidSurveyStatusException;
 import io.ezsurvey.repository.EnumMapper;
 import io.ezsurvey.service.survey.SurveyReadService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class QuestionCUDController {
-	private static final Logger logger = LoggerFactory.getLogger(QuestionCUDController.class);
 	private final EnumMapper enumMapper; // AppConfig에 등록
 	private final SurveyReadService surveyService;
 	
@@ -44,7 +43,7 @@ public class QuestionCUDController {
 		
 		// 로그인한 사용자와 설문조사 생성자가 불일치하는 경우
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
-		if(responseDTO.getUserId()!=sessionUser.getMember()) {
+		if(responseDTO.getUserId()!=sessionUser.getUserId()) {
 			throw new InvalidSurveyOwnerException();
 		}
 		

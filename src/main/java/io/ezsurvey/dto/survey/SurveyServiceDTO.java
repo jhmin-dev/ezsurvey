@@ -17,7 +17,7 @@ import lombok.ToString;
 @Builder @AllArgsConstructor // @Builder는 인자가 있는 생성자를 요구
 @NoArgsConstructor
 public class SurveyServiceDTO {
-	private Long survey;
+	private Long surveyId;
 	private User user;
 	private String title;
 	private String content;

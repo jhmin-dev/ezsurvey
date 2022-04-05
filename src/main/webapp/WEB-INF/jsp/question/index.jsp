@@ -4,7 +4,7 @@
 <div class="title">
 	${title}
 </div>
-<article data-survey="${survey.survey}">
+<article data-survey="${survey.surveyId}">
 <ul class="list-top">
 	<li>
 		<span class="survey-title">${survey.title}</span>
@@ -18,7 +18,7 @@
 				<input type="button" value="문항 순서 변경하기" onclick="">
 			</li>
 			<li>
-				<input type="button" class="point-button" value="문항 추가하기" onclick="location.href = '/edit/project/${survey.survey}/make/question';">
+				<input type="button" class="point-button" value="문항 추가하기" onclick="location.href = '/edit/project/${survey.surveyId}/make/question';">
 			</li>
 		</ul>
 	</li>

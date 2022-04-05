@@ -10,10 +10,9 @@ import lombok.ToString;
 @Builder @AllArgsConstructor // @Builder는 인자가 있는 생성자를 요구
 @NoArgsConstructor
 public class QuestionPaginationDTO {
-	private Long question;
-	private Long survey;
+	private Long questionId;
 	private String category;
-	private Long parent;
+	private Long parentId;
 	private Boolean branched;
 	private Boolean randomized;
 	private Integer idx;

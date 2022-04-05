@@ -17,9 +17,9 @@ function render(data) {
 	// 노드 추가 순환
 	data.list.forEach(function(element) {
 		// 구조 분해 할당
-		const {question, varlabel, content, category, items, subquestions} = element;
+		const {questionId, varlabel, content, category, items, subquestions} = element;
 		// 목록으로 출력할 객체
-		const dto = {question, varlabel, category, items, subquestions};
+		const dto = {questionId, varlabel, category, items, subquestions};
 
 		// ul 요소를 생성하고 문서 조각으로 이동
 		let ul = document.createElement('ul');
@@ -52,7 +52,7 @@ function render(data) {
 				li.textContent = dto[key];
 			}
 			
-			if(key=='question') li.classList.add('sm')
+			if(key=='questionId') li.classList.add('sm')
 		}
 
 		// 드래그 박스용 li 요소를 생성하고 문서 조각으로 이동

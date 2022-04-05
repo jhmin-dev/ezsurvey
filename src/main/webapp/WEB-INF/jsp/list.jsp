@@ -117,16 +117,16 @@
 		<c:forEach items="${page.content}" var="element">
 		<ul class="page-element ${type}">
 			<li class="sm">
-				<c:if test="${type eq 'survey'}">${element.survey}</c:if>
-				<c:if test="${type eq 'question'}">${element.question}</c:if>
+				<c:if test="${type eq 'survey'}">${element.surveyId}</c:if>
+				<c:if test="${type eq 'question'}">${element.questionId}</c:if>
 			</li>
 			<li class="lg">
 				<c:if test="${type eq 'survey'}">
 				<c:if test="${link eq 'my'}">
-				<a href="/edit/project/${element.survey}">
+				<a href="/edit/project/${element.surveyId}">
 				</c:if>
 				<c:if test="${link ne 'my'}">
-				<a href="/project/${element.survey}">
+				<a href="/project/${element.surveyId}">
 				</c:if>
 					${element.title}
 				</a>

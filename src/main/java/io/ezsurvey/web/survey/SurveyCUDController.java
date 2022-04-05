@@ -3,8 +3,6 @@ package io.ezsurvey.web.survey;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,11 +17,12 @@ import io.ezsurvey.service.survey.SurveyCUDService;
 import io.ezsurvey.service.survey.SurveyReadService;
 import io.ezsurvey.web.SurveyAuthUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor // 생성자 방식 의존성 주입
 @Controller
 public class SurveyCUDController { // Spring Security에서 인증을 요구하므로 sessionUser의 null 검사 불필요
-	private static final Logger logger = LoggerFactory.getLogger(SurveyCUDController.class);
 	private final SurveyCUDService surveyCUDService;
 	private final SurveyReadService surveyReadService;
 	
@@ -43,9 +42,7 @@ public class SurveyCUDController { // Spring Security에서 인증을 요구하�
 	
 	@PostMapping("/make/project")
 	public String make(@Valid @ModelAttribute("requestDTO") SurveyRequestDTO requestDTO, BindingResult result
-			, Model model, HttpSession session) { // BindingResult가 마지막 인자인 경우 White Label로 이동
-		logger.info(requestDTO.toString());
-
+			, Model model, HttpSession session) { // BindingResult는 검증 대상 바로 다음에 있지 않으면 에러
 		if(result.hasErrors()) { // 폼에 오류가 있으면 다시 폼 호출
 			return make(model);
 		}
@@ -54,7 +51,7 @@ public class SurveyCUDController { // Spring Security에서 인증을 요구하�
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
 		
 		// 설문조사 생성
-		Long survey = surveyCUDService.insert(requestDTO.toServiceDTO(), sessionUser.getMember());
+		Long survey = surveyCUDService.insert(requestDTO.toServiceDTO(), sessionUser.getUserId());
 		
 		// 문항 추가로 리다이렉트
 		return "redirect:/edit/project/" + survey + "/make/question";
@@ -67,8 +64,10 @@ public class SurveyCUDController { // Spring Security에서 인증을 요구하�
 			// 세션에 저장된 회원 정보 구하기
 			SessionUser sessionUser = (SessionUser)session.getAttribute("user");
 			
+			log.info(sessionUser.toString());
+			
 			// 설문조사 접근 권한 검사
-			SurveyAuthUtil.hasEditAuthOrThrowException(surveyReadService.getAuthDTOById(survey), sessionUser.getMember());
+			SurveyAuthUtil.hasEditAuthOrThrowException(surveyReadService.getAuthDTOById(survey), sessionUser.getUserId());
 			
 			// 설문조사 정보 가져오기
 			SurveyRequestDTO requestDTO = surveyCUDService.getRequestDTOById(survey);
@@ -87,8 +86,6 @@ public class SurveyCUDController { // Spring Security에서 인증을 요구하�
 	public String edit(@PathVariable(name = "survey") Long survey
 			, @Valid @ModelAttribute("requestDTO") SurveyRequestDTO requestDTO
 			, BindingResult result, Model model, HttpSession session) {
-		logger.info(requestDTO.toString());
-
 		if(result.hasErrors()) { // 폼에 오류가 있으면 다시 폼 호출
 			model.addAttribute("hasErrors", true); // edit() 메서드가 재호출되었는지 식별하기 위해 Model에 값 저장
 			

@@ -27,13 +27,13 @@ public class CustomBookmarkSurveyRepositoryImpl implements CustomBookmarkSurveyR
 	}
 	
 	@Override
-	public Page<BookmarkSurvey> findByVisibilityAndUser(User member, SearchField field, String word, Pageable pageable) {
+	public Page<BookmarkSurvey> findByVisibilityAndUser(User u, SearchField field, String word, Pageable pageable) {
 		JPAQuery<BookmarkSurvey> content = jpaQueryFactory
 				.select(bookmarkSurvey).from(bookmarkSurvey)
 				.innerJoin(bookmarkSurvey.survey, survey).fetchJoin() // where절에서 survey의 필드로 검색하고 있기 때문에 innerJoin 명시하지 않으면 크로스 조인 발생
 				.innerJoin(bookmarkSurvey.user, user).fetchJoin() // N+1 방지; select(bookmarkSurvey)이므로 bookmarkSurvey.user에 대해 fetchJoin해야 함
 				.where(survey.visibility.eq(Visibility.PUBLIC)
-						, user.eq(member)
+						, user.eq(u)
 						, SurveySearchCondition.contains(field, word));
 		
 		// 페이징과 정렬 처리
@@ -43,7 +43,7 @@ public class CustomBookmarkSurveyRepositoryImpl implements CustomBookmarkSurveyR
 				.innerJoin(bookmarkSurvey.survey, survey) // where절에서 survey의 필드로 검색하고 있기 때문에 innerJoin 명시하지 않으면 크로스 조인 발생
 				.innerJoin(bookmarkSurvey.user, user)
 				.where(survey.visibility.eq(Visibility.PUBLIC)
-						, user.eq(member)
+						, user.eq(u)
 						, SurveySearchCondition.contains(field, word));
 		
 		// 총 레코드 수가 페이지 크기보다 작거나, 마지막 페이지인 경우 마지막 인자의 함수(쿼리)를 실행하지 않음
@@ -52,24 +52,24 @@ public class CustomBookmarkSurveyRepositoryImpl implements CustomBookmarkSurveyR
 	}
 
 	@Override
-	public BookmarkSurvey getBySurveyAndUser(Long survey_id, Long member_id) {
+	public BookmarkSurvey getBySurveyAndUser(Long surveyId, Long userId) {
 		JPAQuery<BookmarkSurvey> content = jpaQueryFactory.select(bookmarkSurvey).from(bookmarkSurvey)
 				.innerJoin(bookmarkSurvey.survey, survey)
 				.innerJoin(bookmarkSurvey.user, user)
-				.where(survey.id.eq(survey_id), user.id.eq(member_id));
+				.where(survey.id.eq(surveyId), user.id.eq(userId));
 		
 		return content.fetchOne();
 	}
 
 	@Override
-	public Long deleteById(Long bookmark_id, Long member_id) {
+	public Long deleteById(Long bookmarkId, Long userId) {
 		return jpaQueryFactory.delete(bookmarkSurvey)
-				.where(bookmarkSurvey.id.eq(bookmark_id), bookmarkSurvey.user.id.eq(member_id)).execute();
+				.where(bookmarkSurvey.id.eq(bookmarkId), bookmarkSurvey.user.id.eq(userId)).execute();
 	}
 
 	@Override
-	public Long deleteByIdIn(List<Long> bookmarks, Long member_id) {
+	public Long deleteByIdIn(List<Long> bookmarkIds, Long userId) {
 		return jpaQueryFactory.delete(bookmarkSurvey)
-				.where(bookmarkSurvey.id.in(bookmarks), bookmarkSurvey.user.id.eq(member_id)).execute();
+				.where(bookmarkSurvey.id.in(bookmarkIds), bookmarkSurvey.user.id.eq(userId)).execute();
 	}
 }

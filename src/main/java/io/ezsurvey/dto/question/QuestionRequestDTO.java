@@ -13,10 +13,10 @@ import lombok.ToString;
 @Getter @Setter @ToString
 @NoArgsConstructor
 public class QuestionRequestDTO {
-	private Long question;
+	private Long questionId;
 	private String category;
 	private Boolean startFromOne;
-	private Long parent;
+	private Long parentId;
 	private Boolean branched;
 	private Boolean randomized;
 	@Size(max = 256)

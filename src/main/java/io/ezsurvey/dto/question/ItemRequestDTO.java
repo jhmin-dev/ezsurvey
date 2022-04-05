@@ -11,8 +11,8 @@ import lombok.ToString;
 @Getter @Setter @ToString
 @NoArgsConstructor
 public class ItemRequestDTO {
-	private Long item;
-	private Long question;
+	private Long itemId;
+	private Long questionId;
 	@NotNull
 	private Integer value;
 	@Size(max = 256)

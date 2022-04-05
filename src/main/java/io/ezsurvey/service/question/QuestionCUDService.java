@@ -25,8 +25,8 @@ public class QuestionCUDService {
 	private final SurveyRepository surveyRepository;
 	
 	// 문항 추가
-	public Map<String, Object> insert(QuestionServiceDTO serviceDTO, List<ItemServiceDTO> itemServiceDTOs, Long survey) {
-		serviceDTO.setSurvey(surveyRepository.getById(survey));
+	public Map<String, Object> insert(QuestionServiceDTO serviceDTO, List<ItemServiceDTO> itemServiceDTOs, Long surveyId) {
+		serviceDTO.setSurvey(surveyRepository.getById(surveyId));
 		
 		Question question = questionRepository.save(serviceDTO.toEntity());
 		
@@ -41,9 +41,9 @@ public class QuestionCUDService {
 	}
 	
 	// 하위 문항 추가
-	public Long insert(QuestionServiceDTO serviceDTO, Long survey, Long parent) {
-		serviceDTO.setSurvey(surveyRepository.getById(survey));
-		serviceDTO.setParent(questionRepository.getById(parent));
+	public Long insert(QuestionServiceDTO serviceDTO, Long surveyId, Long parentId) {
+		serviceDTO.setSurvey(surveyRepository.getById(surveyId));
+		serviceDTO.setParent(questionRepository.getById(parentId));
 		
 		return questionRepository.save(serviceDTO.toEntity()).getId();
 	}

@@ -6,9 +6,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,16 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 import io.ezsurvey.dto.user.SessionUser;
 import io.ezsurvey.service.survey.BookmarkSurveyCUDService;
 import io.ezsurvey.service.survey.SurveyCUDService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@RequiredArgsConstructor // 생성자 방식 의존성 주입
 @RestController
 public class SurveyCUDAjaxController {
-	private static final Logger logger = LoggerFactory.getLogger(SurveyCUDAjaxController.class);
-	
-	@Autowired
-	BookmarkSurveyCUDService bookmarkSurveyService;
-	
-	@Autowired
-	SurveyCUDService surveyService;
+	private final BookmarkSurveyCUDService bookmarkSurveyCUDService;
+	private final SurveyCUDService surveyCUDService;
 	
 	@PostMapping("/ajax/delete/project")
 	public Map<String, String> delete(Long survey, HttpSession session) {
@@ -36,11 +32,11 @@ public class SurveyCUDAjaxController {
 		if(sessionUser==null) { // 로그인되어 있지 않은 경우
 			map.put("result", "logout");
 		}
-		else if(sessionUser.getMember()!=surveyService.getRequestDTOById(survey).getUser().getId()) { // 로그인한 사용자와 설문조사 생성자가 불일치하는 경우
+		else if(sessionUser.getUserId()!=surveyCUDService.getRequestDTOById(survey).getUser().getId()) { // 로그인한 사용자와 설문조사 생성자가 불일치하는 경우
 			map.put("result", "wrongAccess");
 		}
 		else {
-			surveyService.delete(survey);
+			surveyCUDService.delete(survey);
 			map.put("result", "success");
 		}
 		
@@ -56,14 +52,14 @@ public class SurveyCUDAjaxController {
 			map.put("result", "logout");
 		}
 		else {
-			Long member = sessionUser.getMember();
-			Long bookmark = bookmarkSurveyService.getBookmark(survey, member);
+			Long member = sessionUser.getUserId();
+			Long bookmark = bookmarkSurveyCUDService.getBookmark(survey, member);
 			if(bookmark==null) { // 기존에 즐겨찾기되어 있지 않으면 추가
-				bookmarkSurveyService.insertBookmark(survey, member);
+				bookmarkSurveyCUDService.insertBookmark(survey, member);
 				map.put("result", "inserted");
 			}
 			else { // 기존에 즐겨찾기되어 있으면 삭제
-				bookmarkSurveyService.deleteBookmark(bookmark, member);
+				bookmarkSurveyCUDService.deleteBookmark(bookmark, member);
 				map.put("result", "deleted");
 			}
 		}
@@ -84,8 +80,8 @@ public class SurveyCUDAjaxController {
 				map.put("result", "logout");
 			}
 			else {
-				Long member = sessionUser.getMember();
-				Long affected_rows = bookmarkSurveyService.deleteBookmarksByIdIn(bookmarks, member);
+				Long member = sessionUser.getUserId();
+				Long affected_rows = bookmarkSurveyCUDService.deleteBookmarksByIdIn(bookmarks, member);
 	
 				map.put("result", "success");
 				map.put("affected_rows", affected_rows);

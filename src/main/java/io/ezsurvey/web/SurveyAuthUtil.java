@@ -18,7 +18,7 @@ public class SurveyAuthUtil {
 		existsOrThrowException(authDTO); // 존재하지 않거나 삭제된 설문조사 번호로 접속한 경우
 
 		if(!isPublic(authDTO)) { // 설문조사가 전체 공개가 아니고,
-			if(sessionUser!=null && !isOwner(authDTO, sessionUser.getMember())) { // 로그인한 사용자가 설문조사 생성자와 불일치하는 경우
+			if(sessionUser!=null && !isOwner(authDTO, sessionUser.getUserId())) { // 로그인한 사용자가 설문조사 생성자와 불일치하는 경우
 				throw new InvalidSurveyVisibilityException();
 			}
 		}

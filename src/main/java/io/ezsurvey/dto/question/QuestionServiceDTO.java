@@ -14,7 +14,7 @@ import lombok.ToString;
 @Builder @AllArgsConstructor // @Builder는 인자가 있는 생성자를 요구
 @NoArgsConstructor
 public class QuestionServiceDTO {
-	private Long question;
+	private Long questionId;
 	private Survey survey;
 	private Category category;
 	private Boolean startFromOne;

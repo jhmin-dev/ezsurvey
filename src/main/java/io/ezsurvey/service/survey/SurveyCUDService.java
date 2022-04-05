@@ -3,7 +3,6 @@ package io.ezsurvey.service.survey;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,18 +12,17 @@ import io.ezsurvey.entity.survey.Status;
 import io.ezsurvey.entity.survey.Visibility;
 import io.ezsurvey.repository.survey.SurveyRepository;
 import io.ezsurvey.repository.user.UserRepository;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor // 생성자 방식 의존성 주입
 @Transactional
 @Service
 public class SurveyCUDService {
-	@Autowired
-	private SurveyRepository surveyRepository;
+	private final SurveyRepository surveyRepository;
+	private final UserRepository userRepository;
 	
-	@Autowired
-	private UserRepository userRepository;
-	
-	public Long insert(SurveyServiceDTO serviceDTO, Long member) {
-		serviceDTO.setUser(userRepository.getById(member));
+	public Long insert(SurveyServiceDTO serviceDTO, Long userId) {
+		serviceDTO.setUser(userRepository.getById(userId));
 		
 		// 필수 필드에 값 저장
 		serviceDTO.setStatus(Status.BEFORE); // 설문조사 생성 시에는 배포 상태가 항상 배포 전으로 설정되어야 함
@@ -38,8 +36,8 @@ public class SurveyCUDService {
 		return surveyRepository.save(serviceDTO.toEntity()).getId();
 	}
 	
-	public SurveyRequestDTO getRequestDTOById(Long survey) {
-		SurveyServiceDTO serviceDTO = surveyRepository.getServiceDTOById(survey);
+	public SurveyRequestDTO getRequestDTOById(Long surveyId) {
+		SurveyServiceDTO serviceDTO = surveyRepository.getServiceDTOById(surveyId);
 		
 		return serviceDTO==null ? null : new SurveyRequestDTO(serviceDTO);
 	}
@@ -50,12 +48,12 @@ public class SurveyCUDService {
 			serviceDTO.setShared(UUID.randomUUID().toString()); // 설문조사 UUID 값을 생성하여 저장
 		}
 		
-		surveyRepository.getById(serviceDTO.getSurvey())
+		surveyRepository.getById(serviceDTO.getSurveyId())
 				.update(serviceDTO.getTitle(), serviceDTO.getContent()
 						, serviceDTO.getVisibility(), serviceDTO.getShared());
 	}
 	
-	public void delete(Long survey) {
-		surveyRepository.getById(survey).setVisibilityToDeleted();
+	public void delete(Long surveyId) {
+		surveyRepository.getById(surveyId).setVisibilityToDeleted();
 	}
 }

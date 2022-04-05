@@ -6,12 +6,8 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,11 +19,12 @@ import io.ezsurvey.dto.question.RequestDTOWrapper;
 import io.ezsurvey.repository.EnumMapper;
 import io.ezsurvey.service.question.QuestionCUDService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor // 생성자 방식 의존성 주입
 @RestController
 public class QuestionCUDAjaxController {
-	private static final Logger logger = LoggerFactory.getLogger(QuestionCUDAjaxController.class);
 	private static final ResourceBundle resource = ResourceBundle.getBundle("messages.validation");
 	private final EnumMapper enumMapper; // AppConfig에 등록
 	private final QuestionCUDService questionService;

@@ -12,7 +12,7 @@ import lombok.ToString;
 @Builder @AllArgsConstructor
 @NoArgsConstructor
 public class SurveyResponseDTO { // 민감한 회원 정보 및 share 링크 값을 제외한 조회 전용 DTO
-	private Long survey;
+	private Long surveyId;
 	private Long bookmarkId;
 	private Long userId;
 	private String userName;
@@ -33,7 +33,7 @@ public class SurveyResponseDTO { // 민감한 회원 정보 및 share 링크 값
 	
 	// ServiceDTO to ResponseDTO
 	public SurveyResponseDTO(SurveyServiceDTO serviceDTO) {
-		this.survey = serviceDTO.getSurvey();
+		this.surveyId = serviceDTO.getSurveyId();
 		this.userId = serviceDTO.getUser().getId();
 		this.userName = serviceDTO.getUser().getName();
 		this.userProfileURL = serviceDTO.getUser().getProfileURL();

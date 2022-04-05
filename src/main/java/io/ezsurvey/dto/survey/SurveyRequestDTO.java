@@ -17,7 +17,7 @@ import lombok.ToString;
 @Getter @Setter @ToString(exclude = {"user"})
 @NoArgsConstructor
 public class SurveyRequestDTO {
-	private Long survey;
+	private Long surveyId;
 	private User user;
 	@NotBlank @Size(max = 128)
 	private String title;
@@ -33,7 +33,7 @@ public class SurveyRequestDTO {
 	
 	// ServiceDTO to RequestDTO
 	public SurveyRequestDTO(SurveyServiceDTO serviceDTO) {
-		this.survey = serviceDTO.getSurvey();
+		this.surveyId = serviceDTO.getSurveyId();
 		this.user = serviceDTO.getUser();
 		this.title = serviceDTO.getTitle();
 		this.content = serviceDTO.getContent();
@@ -49,7 +49,7 @@ public class SurveyRequestDTO {
 	// RequestDTO to ServiceDTO
 	public SurveyServiceDTO toServiceDTO() {
 		return SurveyServiceDTO.builder()
-				.survey(survey)
+				.surveyId(surveyId)
 				.user(user)
 				.title(title)
 				.content(content)

@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,10 +23,11 @@ import io.ezsurvey.service.survey.BookmarkSurveyReadService;
 import io.ezsurvey.service.survey.SurveyReadService;
 import io.ezsurvey.web.PagingUtil;
 import io.ezsurvey.web.SurveyAuthUtil;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
-public class SurveyReadController { 
-	private static final Logger logger = LoggerFactory.getLogger(SurveyReadController.class);
+public class SurveyReadController {
 	private final BookmarkSurveyReadService bookmarkSurveyService;
 	private final SurveyReadService surveyService;
 	private final List<EnumDTO> searchField;
@@ -55,7 +54,7 @@ public class SurveyReadController {
 		
 		// 로그인되어 있는 경우 현재 설문조사를 즐겨찾기했는지 확인
 		if(sessionUser!=null) {
-			responseDTO.setHasBookmarked(bookmarkSurveyService.existsBookmark(survey, sessionUser.getMember()));
+			responseDTO.setHasBookmarked(bookmarkSurveyService.existsBookmark(survey, sessionUser.getUserId()));
 		}
 		model.addAttribute("responseDTO", responseDTO);
 		
@@ -89,7 +88,7 @@ public class SurveyReadController {
 		
 		// 로그인한 사용자가 생성한 설문조사 목록 가져오기
 		Page<SurveyResponseDTO> page = Page.empty();
-		page = surveyService.getSurveyByUser(sessionUser.getMember()
+		page = surveyService.getSurveyByUser(sessionUser.getUserId()
 				, EnumBase.findByKey(SearchField.class, field), word, pageable);
 		
 		// 설문조사 목록 관련 정보 저장
@@ -112,7 +111,7 @@ public class SurveyReadController {
 		
 		// 로그인한 사용자가 즐겨찾기한 설문조사 중 전체 공개인 설문조사 목록 가져오기
 		Page<SurveyResponseDTO> page = Page.empty();
-		page = bookmarkSurveyService.getByVisibilityAndUser(sessionUser.getMember()
+		page = bookmarkSurveyService.getByVisibilityAndUser(sessionUser.getUserId()
 				, EnumBase.findByKey(SearchField.class, field), word, pageable);
 		
 		// 설문조사 목록 관련 정보 저장

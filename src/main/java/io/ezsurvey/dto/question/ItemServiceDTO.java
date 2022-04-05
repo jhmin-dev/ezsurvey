@@ -12,7 +12,7 @@ import lombok.ToString;
 @Builder @AllArgsConstructor // @Builder는 인자가 있는 생성자를 요구
 @NoArgsConstructor
 public class ItemServiceDTO {
-	private Long item;
+	private Long itemId;
 	private Question question;
 	private Integer value;
 	private String vallabel;

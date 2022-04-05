@@ -61,7 +61,7 @@
 		<li>
 			<label>링크 복사</label>
 			<div class="copy-link">
-			<input type="text" data-link="/project/${requestDTO.survey}/preview" readonly>
+			<input type="text" data-link="/project/${requestDTO.surveyId}/preview" readonly>
 			<div onclick="copyToClipboard();">
 				<i class="bi bi-clipboard2-fill button"></i>
 			</div>
@@ -74,7 +74,7 @@
 				<span>배포 날짜 설정</span>
 			</button>
 			<hr>
-			<button type="button" class="reverse-button" onclick="location.href = '/edit/project/${requestDTO.survey}/index';">
+			<button type="button" class="reverse-button" onclick="location.href = '/edit/project/${requestDTO.surveyId}/index';">
 				<i class="bi bi-pencil-square"></i>
 				<span>문항 관리</span>
 			</button>
@@ -87,7 +87,7 @@
 			</c:if>
 			<c:if test="${link eq 'edit'}">
 			<input type="submit" value="수정하기">
-			<input type="button" value="삭제하기" id="delete" data-survey="${requestDTO.survey}">
+			<input type="button" value="삭제하기" id="delete" data-survey="${requestDTO.surveyId}">
 			</c:if>
 			<input type="button" value="이전으로" onclick="history.go(-1);">
 		</li>

@@ -2,7 +2,6 @@ package io.ezsurvey.repository.question;
 
 import java.util.List;
 
-import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -12,7 +11,6 @@ import static io.ezsurvey.entity.survey.QSurvey.survey;
 import io.ezsurvey.dto.question.QuestionServiceDTO;
 import io.ezsurvey.entity.question.QQuestion;
 import io.ezsurvey.entity.question.Question;
-import io.ezsurvey.entity.survey.Survey;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor // 생성자 방식 의존성 주입
