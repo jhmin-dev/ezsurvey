@@ -7,7 +7,7 @@
 <article data-survey="${survey.surveyId}">
 <ul class="list-top">
 	<li>
-		<span class="survey-title">${survey.title}</span>
+		<div class="survey-title">《${survey.title}》</div>
 	</li>
 	<li class="page-menu">
 		<ul>

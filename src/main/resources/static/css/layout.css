@@ -68,6 +68,7 @@ main > .title,main > article {
 	width: 100%;
 }
 main > .title {
+	padding: 0 60px;
 	margin-bottom: 30px;
 }
 main > article {	

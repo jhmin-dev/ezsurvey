@@ -49,6 +49,9 @@ body,.header-container,header.mobile,footer {
 }
 
 /* 공통: 자주 사용되는 버튼 색상 */
+[type="submit"]:focus,[type="button"]:focus { /* 탭 키로 선택되었을 때 */
+	outline-color: transparent;
+}
 [type="submit"] { /* 전경색이 밝은 계열이면 hover시 진한 배경 */
 	color: var(--white);
 	background-color: var(--point-muted);

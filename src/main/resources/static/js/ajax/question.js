@@ -4,8 +4,8 @@ document.addEventListener('submit', function(e) {
 })
 
 // 결과 메시지 관련 태그들
-const postResult = document.querySelector('li.post-result');
-const postResultDiv = postResult.querySelector('li.post-result div');
+const postResult = document.querySelector('.post-result');
+const postResultDiv = postResult.querySelector('.post-result div');
 const postResultIcon = postResult.querySelector('i.bi');
 const postResultText = postResult.querySelector('span');
 
@@ -38,10 +38,10 @@ function makeQuestion() {
 					messages += param.errors[key];
 					i++;
 				}
-				postResultText.textContent = messages;			
+				postResultText.textContent = messages;	
 			}
 			else if(param.result=='success') { // 문항 추가에 성공한 경우
-				initializeMake(true); // <form> 태그들 초기화
+				initializeMake(true); // form 태그들 초기화
 				
 				postResultDiv.className = 'success'; // 배경색 변경
 				
@@ -65,6 +65,7 @@ function makeQuestion() {
 	}); // end of Ajax
 }
 
+// form 태그들을 FormData 객체로 변환하는 함수
 function getFormData() {
 	const formDataQuestion = new FormData(document.querySelector('form[name="question"]'));
 	const question = Object.fromEntries(formDataQuestion);

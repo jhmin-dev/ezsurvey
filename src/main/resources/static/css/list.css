@@ -14,7 +14,9 @@
 }
 .list-total {
 	justify-self: start;
+	margin: 0 auto; /* 설정하지 않으면 충분히 큰 화면에서 list-total만 왼쪽으로 튀어나옴 */
 	padding: 0 60px;
+	max-width: 1200px;
 	width: inherit;
 }
 
@@ -104,4 +106,12 @@
 .pagination ul li.disabled.active a {
 	color: var(--white-subtle);
 	background-color: var(--point);
+}
+
+/* 문항 관리: 설문조사 제목 */
+.survey-title {
+	max-width: 540px;
+	color: var(--dark-gray);
+	font-size: 1.5rem;
+	font-weight: 700;
 }

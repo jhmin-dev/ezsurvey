@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /* 공통 */
-ul.question-info,ul.question-type,ul.question-main,ul.question-menu {
+.post-result,ul.question-type,ul.question-main,ul.question-menu {
 	margin: 0 auto;
 	padding: 15px 60px;
 	max-width: 1200px;
@@ -13,14 +13,27 @@ label {
 	font-size: 1.25rem;
 	font-weight: 700;
 }
+input::placeholder,textarea::placeholder {
+	color: var(--light-gray);
+	font-style: italic;
+}
 
 /* 설문조사 제목 */
-ul.question-info li.survey-title {
-	
+.survey-title {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	margin: 0 auto; /* 설정하지 않으면 가운데 정렬 안 됨 */
+	max-width: 600px;
+	justify-content: center;
+	align-items: center;
+	color: var(--dark-gray);
+	font-size: 1.5rem;
+	font-weight: 700;
 }
 
 /* 서버 전송 결과 알림 */
-ul.question-info li.post-result div {
+.post-result div { /* li 자체에 display: flex 적용시 display-none과 충돌하여 제대로 숨겨지지 않음 */
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -31,18 +44,18 @@ ul.question-info li.post-result div {
 	border: 1px solid transparent;	
 	border-radius: 5px;
 }
-ul.question-info li.post-result div.success {
+.post-result div.success {
 	background-color: var(--point-transparent);
 	border-color: var(--point);		
 }
-ul.question-info li.post-result div.failure {
+.post-result div.failure {
 	background-color: var(--error-transparent);
 	border-color: var(--error);	
 }
-ul.question-info li.post-result i.bi {
+.post-result i.bi {
 	margin-right: 10px;
 }
-ul.question-info li.post-result span {
+.post-result span {
 	white-space: pre;
 }
 
@@ -64,11 +77,21 @@ ul.question-type li:first-child {
 ul.question-menu li {
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
+	margin-bottom: 30px;
 }
 ul.question-menu li button {
-	max-width: 180px;
 	flex-grow: 1;
+}
+ul.question-menu li:first-child {
+	flex-direction: column;
+}
+ul.question-menu li:first-child button {
+	flex-grow: 2;
+	flex-direction: column;
+	align-items: center;
+}
+ul.question-menu .notice {
+	padding: 0 10px;
 }
 
 /* 문항 */
@@ -79,9 +102,6 @@ ul.question-menu li button {
 .content form[name="question"] div {
 	display: flex;
 	flex-direction: column;
-}
-.content form[name="question"] div input {
-	
 }
 
 /* 응답 범주: 공통 */
@@ -106,10 +126,16 @@ ul.question-menu li button {
 .item-container form[name="item"] input[name="value"]:focus {
 	outline-color: transparent;
 }
+.item-container form[name="item"] input[name="vallabel"],.item-container form[name="fakeItem"] input {
+	flex-grow:1;
+}
 
 /* 응답 범주: 선다형 */
 .item-container.multiple-choice {
 	
+}
+.item-container.multiple-choice form[name="item"] input[name="vallabel"] {
+	margin-right: 10px;	
 }
 
 /* 응답 범주: 척도형 */

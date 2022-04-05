@@ -62,9 +62,8 @@ function createFormQuestion() {
 		htmlFor:'content',
 		textContent:'문항'
 	}));
-	divContent.append(Object.assign(document.createElement('input'), {
+	divContent.append(Object.assign(document.createElement('textarea'), {
 		name:'content',
-		type:'text',
 		placeholder:contentPlaceholder
 	}));
 	divContent.append(Object.assign(document.createElement('div'), {
@@ -101,12 +100,11 @@ function createFormItem(i) {
 function createFormFakeItem() {
 	const formFakeItem = Object.assign(document.createElement('form'), {name:'fakeItem'});
 	
-	let divVallabel = document.createElement('div');
-	divVallabel.append(Object.assign(document.createElement('input'), {
+	let fakeItemInput = Object.assign(document.createElement('input'), {
 		type:'text',
 		placeholder:fakeItemPlaceholder
-	}));
-	formFakeItem.append(divVallabel);
+	});
+	formFakeItem.append(fakeItemInput);
 		
 	return formFakeItem;
 }
@@ -124,14 +122,17 @@ function setInputCategory() {
 	
 	if(inputCategory.value=='multiple_choice') { // 선다형 기본값
 		inputItems.value = 4;
+		inputItems.min = 1;
 		inputItems.disabled = false;
 	}
 	else if(inputCategory.value=='likert_scale') { // 척도형 기본값
 		inputItems.value = 7;
+		inputItems.min = 4;
 		inputItems.disabled = false;
 	}
 	else if(inputCategory.value=='short_answer') { // 단답형 기본값
 		inputItems.value = '';
+		inputItems.min = 1;
 		inputItems.disabled = true;
 	}
 	

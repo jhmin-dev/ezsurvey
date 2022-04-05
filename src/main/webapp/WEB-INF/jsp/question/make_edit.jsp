@@ -3,19 +3,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <main>
 <div class="title">
-	${title}
+	<div>${title}</div>
+	<div class="survey-title">
+		《${survey.title}》
+	</div>
 </div>
 <article data-survey="${survey.surveyId}" data-link="${link}">
-<ul class="question-info">
-	<li class="survey-title">
-		${survey.title}
-	</li>
-	<li class="post-result display-none">
-		<div>
-			<i class="bi"></i><span></span>
-		</div>
-	</li>
-</ul>
+<div class="post-result display-none">
+	<div>
+		<i class="bi"></i><span></span>
+	</div>
+</div>
 <ul class="question-type">
 	<li>
 		<label>문항 유형</label>
@@ -55,6 +53,13 @@
 		<c:if test="${link eq 'edit'}">
 		<button type="button" class="point-button" onclick="">수정하기</button>
 		</c:if>
+		<div class="notice">현재 작성 중인 문항은 추가하지 않으면 사라집니다.</div>
+	</li>
+	<li>
+		<button type="button" class="reverse-button" onclick="location.href = '/edit/project/${survey.surveyId}/index';">
+			<c:if test="${link eq 'make'}">완료하기</c:if>
+			<c:if test="${link eq 'link'}">문항 관리</c:if>
+		</button>
 		<button type="button" onclick="history.go(-1);">이전으로</button>
 	</li>
 </ul>
