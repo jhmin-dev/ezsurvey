@@ -27,8 +27,10 @@ public class SurveyResponseDTO { // 민감한 회원 정보 및 share 링크 값
 	private String visibility;
 	
 	// 테이블에 없는 가상 컬럼
-	private Long questions;
 	private Long bookmarks;
+	private Long questions;
+	
+	// 상세 조회시에만 필요한 가상 컬럼
 	private Boolean hasBookmarked;
 	
 	// ServiceDTO to ResponseDTO
@@ -45,6 +47,35 @@ public class SurveyResponseDTO { // 민감한 회원 정보 및 share 링크 값
 		this.expires = Objects.toString(serviceDTO.getExpires(), null);
 		this.status = serviceDTO.getStatus().getKey();
 		this.visibility = serviceDTO.getVisibility().getKey();
+		
+		// 테이블에 없는 가상 컬럼
+		this.bookmarks = serviceDTO.getBookmarks();
+		this.questions = serviceDTO.getQuestions();
+	}
+	
+	// PaginationDTO to ResponseDTO
+	public SurveyResponseDTO(SurveyPaginationDTO paginationDTO) {
+		this.surveyId = paginationDTO.getSurveyId();
+		this.userName = paginationDTO.getUserName();
+		this.userProfileURL = paginationDTO.getUserProfileURL();
+		this.title = paginationDTO.getTitle();
+		this.created = paginationDTO.getCreated().toString();
+		if(paginationDTO.getVisibility()!=null) { // 내 설문조사 목록을 조회하는 경우에만 Not Null
+			this.visibility = paginationDTO.getVisibility().getKey();
+		}
+		
+		// 테이블에 없는 가상 컬럼
+		this.bookmarks = paginationDTO.getBookmarks();
+		this.questions = paginationDTO.getQuestions();
+	}
+	
+	// IndexDTO to ResponseDTO
+	public SurveyResponseDTO(SurveyIndexDTO indexDTO) {
+		this.surveyId = indexDTO.getSurveyId();
+		this.title = indexDTO.getTitle();
+		
+		// 테이블에 없는 가상 컬럼
+		this.questions = indexDTO.getQuestions();
 	}
 
 	public void setHasBookmarked(Boolean hasBookmarked) {

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.ezsurvey.dto.survey.SurveyAuthDTO;
+import io.ezsurvey.dto.survey.SurveyIndexDTO;
+import io.ezsurvey.dto.survey.SurveyPaginationDTO;
 import io.ezsurvey.dto.survey.SurveyResponseDTO;
 import io.ezsurvey.dto.survey.SurveyServiceDTO;
 import io.ezsurvey.entity.SearchField;
@@ -22,43 +24,22 @@ public class SurveyReadService {
 	private final SurveyRepository surveyRepository;
 	private final UserRepository userRepository;
 
-	public Page<SurveyResponseDTO> getSurveyByVisibility(SearchField field, String word
-			, Pageable pageable) {
-		Page<Survey> page = Page.empty();
-
-		page = surveyRepository.findByVisibility(field, word, pageable);
-		
-		return page.map(s -> SurveyResponseDTO.builder()
-				.surveyId(s.getId())
-				.userName(s.getUser().getName())
-				.title(s.getTitle())
-				.created(s.getCreated().toString())
-				.questions(s.getQuestions())
-				.bookmarks(s.getBookmarks())
-				.build());
+	public Page<SurveyPaginationDTO> findSurveyByVisibility(SearchField field, String word, Pageable pageable) {
+		return surveyRepository.findByVisibility(field, word, pageable);
 	}
 
-	public Page<SurveyResponseDTO> getSurveyByUser(Long userId, SearchField field, String word
-			, Pageable pageable) {
+	public Page<SurveyPaginationDTO> findSurveyByUser(Long userId, SearchField field, String word, Pageable pageable) {
 		User user = userRepository.getById(userId);
-		Page<Survey> page = Page.empty();
 		
-		page = surveyRepository.findByUser(user, field, word, pageable);
-		
-		return page.map(s -> SurveyResponseDTO.builder()
-				.surveyId(s.getId())
-				.title(s.getTitle())
-				.created(s.getCreated().toString())
-				.visibility(s.getVisibility().getKey())
-				.questions(s.getQuestions())
-				.bookmarks(s.getBookmarks())
-				.build());
+		return surveyRepository.findByUser(user, field, word, pageable);
 	}
 
-	public SurveyResponseDTO getResponseDTOById(Long surveyId) {
-		SurveyServiceDTO serviceDTO = surveyRepository.getServiceDTOById(surveyId);
-		
-		return serviceDTO==null ? null : new SurveyResponseDTO(serviceDTO);
+	public SurveyServiceDTO getServiceDTOById(Long surveyId) {
+		return surveyRepository.getServiceDTOById(surveyId);
+	}
+	
+	public SurveyIndexDTO getIndexDTOById(Long surveyId) {
+		return surveyRepository.getIndexDTOById(surveyId);
 	}
 	
 	public SurveyAuthDTO getAuthDTOById(Long surveyId) {

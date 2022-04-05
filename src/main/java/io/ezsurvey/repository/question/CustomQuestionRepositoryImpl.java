@@ -22,9 +22,8 @@ public class CustomQuestionRepositoryImpl implements CustomQuestionRepository {
 	@Override
 	public List<Question> findBySurvey(Long surveyId, Long lastQuestionId, int pageSize) {
 		return jpaQueryFactory.select(question).from(question)
-				.innerJoin(question.survey, survey).fetchJoin() // survey는 Not Null이므로 innerJoin
 				.leftJoin(question.parent, parent).fetchJoin() // parent는 Nullable이므로 leftJoin
-				.where(survey.id.eq(surveyId), gtQuestionId(lastQuestionId))
+				.where(question.survey.id.eq(surveyId), gtQuestionId(lastQuestionId))
 				.orderBy(question.id.asc())
 				.limit(pageSize)
 				.fetch();

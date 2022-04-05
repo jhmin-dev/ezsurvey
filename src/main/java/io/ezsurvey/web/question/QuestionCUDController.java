@@ -1,7 +1,5 @@
 package io.ezsurvey.web.question;
 
-import java.time.LocalDateTime;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -11,11 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import io.ezsurvey.dto.survey.SurveyResponseDTO;
 import io.ezsurvey.dto.user.SessionUser;
-import io.ezsurvey.entity.survey.Visibility;
-import io.ezsurvey.exception.DeletedSurveyException;
-import io.ezsurvey.exception.EntityNotFoundException;
-import io.ezsurvey.exception.InvalidSurveyOwnerException;
-import io.ezsurvey.exception.InvalidSurveyStatusException;
 import io.ezsurvey.repository.EnumMapper;
 import io.ezsurvey.service.survey.SurveyReadService;
 import io.ezsurvey.web.SurveyAuthUtil;
@@ -38,7 +31,7 @@ public class QuestionCUDController {
 		SurveyAuthUtil.hasEditAuthOrThrowException(surveyReadService.getAuthDTOById(surveyId), sessionUser.getUserId());
 
 		// 설문조사 정보 가져오기
-		SurveyResponseDTO responseDTO = surveyReadService.getResponseDTOById(surveyId);
+		SurveyResponseDTO responseDTO = new SurveyResponseDTO(surveyReadService.getIndexDTOById(surveyId));
 		model.addAttribute("survey", responseDTO);
 		
 		// 현재 요청 URL 관련 정보 저장

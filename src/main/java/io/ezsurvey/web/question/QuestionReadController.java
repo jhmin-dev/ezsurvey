@@ -47,7 +47,7 @@ public class QuestionReadController {
 		SurveyAuthUtil.hasEditAuthOrThrowException(surveyReadService.getAuthDTOById(surveyId), sessionUser.getUserId());
 		
 		// 설문조사 정보 가져오기
-		SurveyResponseDTO responseDTO = surveyReadService.getResponseDTOById(surveyId);
+		SurveyResponseDTO responseDTO = new SurveyResponseDTO(surveyReadService.getIndexDTOById(surveyId));
 		
 		model.addAttribute("survey", responseDTO);
 		model.addAttribute("title", "문항 관리");

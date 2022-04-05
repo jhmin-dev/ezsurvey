@@ -28,7 +28,11 @@ public class SurveyServiceDTO {
 	private Status status;
 	private Visibility visibility;
 	private String shared;
-
+	
+	// 테이블에 없는 가상 컬럼
+	private Long bookmarks;
+	private Long questions;
+	
 	// ServiceDTO to Entity
 	public Survey toEntity() {
 		return Survey.builder()
