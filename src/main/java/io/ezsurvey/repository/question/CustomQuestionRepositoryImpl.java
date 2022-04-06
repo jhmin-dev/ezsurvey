@@ -23,14 +23,13 @@ public class CustomQuestionRepositoryImpl implements CustomQuestionRepository {
 	public List<QuestionPaginationDTO> findPaginationDTOBySurveyId(Long surveyId, Long lastQuestionId, int pageSize) {
 		return jpaQueryFactory.select(Projections.fields(QuestionPaginationDTO.class
 				, question.id.as("questionId"), question.category
-				, parent.id.as("parentId"), question.branched, question.randomized
+				, question.branched, question.randomized
 				, question.idx, question.subidx
 				, question.varlabel, question.content
 				, question.bookmarks, question.items, question.subquestions))
 				.from(question)
-				.leftJoin(question.parent, parent) // parent는 Nullable이므로 leftJoin
-				.innerJoin(question.survey, survey)
-				.where(survey.id.eq(surveyId), gtQuestionId(lastQuestionId))
+				.where(question.survey.id.eq(surveyId), question.parent.id.isNull() // 자식 문항이 아닌 문항들만 조회
+						, gtQuestionId(lastQuestionId))
 				.orderBy(question.id.asc())
 				.limit(pageSize)
 				.fetch();
@@ -54,8 +53,7 @@ public class CustomQuestionRepositoryImpl implements CustomQuestionRepository {
 	public List<Long> findParentIdBySurveyId(Long surveyId) {
 		return jpaQueryFactory.select(question.id)
 				.from(question)
-				.innerJoin(question.survey, survey)
-				.where(survey.id.eq(surveyId), question.parent.isNull()) // 특정 설문조사에서 자식 문항이 아닌 문항들만 조회
+				.where(question.survey.id.eq(surveyId), question.parent.isNull()) // 특정 설문조사에서 자식 문항이 아닌 문항들만 조회
 				.fetch();
 	}
 	

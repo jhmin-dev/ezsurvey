@@ -71,7 +71,7 @@ public class Survey extends BaseTime {
 	
 	// 테이블에 없는 가상 컬럼
 	@Basic(fetch = FetchType.LAZY)
-	@Formula("(select count(*) from question q where q.survey_id = survey_id)")
+	@Formula("(select count(*) from question q where q.survey_id = survey_id and q.parent_id is null)") // 자식 문항이 아닌 문항 수만 집계
 	private Long questions;
 	
 	@Builder // 자동 생성되는 PK 값이나 등록일, 수정일을 builder()에서 제외해야 하기 때문에 클래스 수준 @Builder는 부적절
