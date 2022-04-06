@@ -116,10 +116,10 @@ public class SurveyCUDAjaxController {
 			copyDTO.setTitle(COPY_PREFIX + copyDTO.getTitle());
 			log.info("copyDTO: {}", copyDTO);
 			
-			Long newSurveyId = surveyCUDService.copy(copyDTO, surveyId);
+			Long cloneId = surveyCUDService.copy(copyDTO, surveyId);
 			
 			map.put("result", "success");
-			map.put("newSurveyId", newSurveyId);
+			map.put("cloneId", cloneId);
 		}
 		
 		return map;

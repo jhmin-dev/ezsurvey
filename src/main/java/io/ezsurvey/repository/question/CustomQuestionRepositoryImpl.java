@@ -50,6 +50,23 @@ public class CustomQuestionRepositoryImpl implements CustomQuestionRepository {
 				.fetchOne();
 	}
 	
+	@Override
+	public List<Long> findParentIdBySurveyId(Long surveyId) {
+		return jpaQueryFactory.select(question.id)
+				.from(question)
+				.innerJoin(question.survey, survey)
+				.where(survey.id.eq(surveyId), question.parent.isNull()) // 특정 설문조사에서 자식 문항이 아닌 문항들만 조회
+				.fetch();
+	}
+	
+	@Override
+	public List<Long> findChildIdByParentId(Long parentId) {
+		return jpaQueryFactory.select(question.id)
+				.from(question)
+				.where(question.parent.id.eq(parentId)) // 특정 문항의 자식 문항들만 조회
+				.fetch();
+	}
+	
 	private BooleanExpression gtQuestionId(Long questionId) {
 		return questionId==null ? null : question.id.gt(questionId);
 	}

@@ -123,4 +123,12 @@ public class Question {
 		
 		return this;
 	}
+	
+	public Question copy(Survey survey, Question parent) {
+		this.id = null;
+		this.survey = survey;
+		if(parent!=null) this.parent = parent;
+		
+		return this;
+	}
 }

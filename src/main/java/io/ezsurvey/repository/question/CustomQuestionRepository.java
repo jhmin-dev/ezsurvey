@@ -11,4 +11,10 @@ public interface CustomQuestionRepository {
 	
 	// 1건을 DTO로 조회
 	QuestionServiceDTO getServiceDTOById(Long questionId);
+	
+	// 설문조사에 포함된 부모 문항 PK 목록
+	List<Long> findParentIdBySurveyId(Long surveyId);
+	
+	// 자식 문항 PK 목록
+	List<Long> findChildIdByParentId(Long parentId);
 }

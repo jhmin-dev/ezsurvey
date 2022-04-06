@@ -16,6 +16,7 @@ import io.ezsurvey.entity.survey.Survey;
 import io.ezsurvey.entity.survey.Visibility;
 import io.ezsurvey.repository.survey.SurveyRepository;
 import io.ezsurvey.repository.user.UserRepository;
+import io.ezsurvey.service.question.QuestionCUDService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +28,7 @@ public class SurveyCUDService {
 	@PersistenceContext
 	private EntityManager entityManager;
 	
+	private final QuestionCUDService questionCUDService;
 	private final SurveyRepository surveyRepository;
 	private final UserRepository userRepository;
 	
@@ -60,23 +62,25 @@ public class SurveyCUDService {
 		surveyRepository.getById(surveyId).setVisibilityToDeleted();
 	}
 	
-	public Long copy(SurveyCopyDTO copyDTO, Long oldSurveyId) {
+	public Long copy(SurveyCopyDTO copyDTO, Long originalId) {
 		/*  
 		 * surveyRepository의 getById()는 실제 Entity가 아닌 Entity의 참조(=프록시 객체)를 반환
 		 * detach() 후 프록시 객체에 copy() 메서드 사용시 LazyInitializationException: could not initialize proxy – no Session 발생
 		 * entityManager를 이용하여 실제 Entity를 불러와야 예외가 발생하지 않음
 		 */
-		Survey clone = entityManager.find(Survey.class, oldSurveyId);
+		Survey clone = entityManager.find(Survey.class, originalId);
 		
 		// 현재 Entity를 더티 체킹 대상에서 제외
 		entityManager.detach(clone);
-		// 현재 Entity의 값 변경; copy()는 내부적으로 Id를 null로 변경하여 이후 persist()시 새 Id 할당받을 수 있게 함
+		
+		// 현재 Entity의 값 변경; copy()는 내부적으로 PK를 null로 변경하여 이후 persist()시 새 PK 할당받을 수 있게 함
 		clone.copy(userRepository.getById(copyDTO.getUserId()), copyDTO.getTitle(), copyDTO.getContent());
 		
-		entityManager.persist(clone); // 현재 Entity를 영속화(새 Id 할당 및 DB에 삽입)
+		// 현재 Entity를 영속화(새 PK 할당 및 DB에 삽입)
+		entityManager.persist(clone);
 		
 		// 문항 복제
-		
+		questionCUDService.copyAllBySurvey(originalId, clone);
 		
 		return clone.getId();
 	}

@@ -8,6 +8,9 @@ function copySurvey() {
 		}),
 		success:function(param) {
 			console.log(param.result);
+			if(param.result=='success') {
+				location.href = '/edit/project/' + param.cloneId + '/index';
+			}
 		}
 	}); // end of Ajax
 }
