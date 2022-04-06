@@ -106,4 +106,18 @@ public class Survey extends BaseTime {
 
 		return this;
 	}
+	
+	public Survey copy(User user, String title, String content) {
+		this.id = null;
+		this.user = user;
+		this.title = title;
+		this.content = content;
+		this.distributed = null;
+		this.expires = null;
+		this.status = Status.BEFORE;
+		this.visibility = Visibility.HIDDEN;
+		this.shared = null;
+		
+		return this;
+	}
 }

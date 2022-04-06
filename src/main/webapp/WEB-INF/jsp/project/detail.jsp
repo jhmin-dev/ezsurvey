@@ -7,10 +7,10 @@
 </div>
 <article>
 	<ul>
-		<li>
+		<li class="survey-title">
 			${responseDTO.title}
 		</li>
-		<li>
+		<li class="survey-content">
 			${responseDTO.content}
 		</li>
 		<li>
@@ -18,7 +18,7 @@
 		</li>
 		<li>
 			<label class="label-button">
-				<input type="button" onclick="toggleBookmark()">
+				<input type="button" onclick="toggleBookmark();">
 				<c:if test="${responseDTO.hasBookmarked}">
 				<i class="bi bi-bookmark-fill bookmark"></i>
 				</c:if>
@@ -27,7 +27,13 @@
 				</c:if>
 			</label>
 		</li>
+		<c:if test="${!empty user}">
+		<li>
+			<button class="reverse-button" onclick="copySurvey();">복제하기</button>
+		</li>
+		</c:if>
 	</ul>
 </article>
 <script type="text/javascript" src="/js/ajax/bookmark.js"></script>
+<script type="text/javascript" src="/js/ajax/copy.js"></script>
 </main>

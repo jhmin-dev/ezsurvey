@@ -2,21 +2,31 @@ package io.ezsurvey.service.survey;
 
 import java.util.UUID;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.ezsurvey.dto.survey.SurveyCopyDTO;
 import io.ezsurvey.dto.survey.SurveyServiceDTO;
 import io.ezsurvey.entity.survey.Status;
+import io.ezsurvey.entity.survey.Survey;
 import io.ezsurvey.entity.survey.Visibility;
 import io.ezsurvey.repository.survey.SurveyRepository;
 import io.ezsurvey.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor // 생성자 방식 의존성 주입
 @Transactional
 @Service
 public class SurveyCUDService {
+	@PersistenceContext
+	private EntityManager entityManager;
+	
 	private final SurveyRepository surveyRepository;
 	private final UserRepository userRepository;
 	
@@ -48,5 +58,26 @@ public class SurveyCUDService {
 	
 	public void delete(Long surveyId) {
 		surveyRepository.getById(surveyId).setVisibilityToDeleted();
+	}
+	
+	public Long copy(SurveyCopyDTO copyDTO, Long oldSurveyId) {
+		/*  
+		 * surveyRepository의 getById()는 실제 Entity가 아닌 Entity의 참조(=프록시 객체)를 반환
+		 * detach() 후 프록시 객체에 copy() 메서드 사용시 LazyInitializationException: could not initialize proxy – no Session 발생
+		 * entityManager를 이용하여 실제 Entity를 불러와야 예외가 발생하지 않음
+		 */
+		Survey clone = entityManager.find(Survey.class, oldSurveyId);
+		
+		// 현재 Entity를 더티 체킹 대상에서 제외
+		entityManager.detach(clone);
+		// 현재 Entity의 값 변경; copy()는 내부적으로 Id를 null로 변경하여 이후 persist()시 새 Id 할당받을 수 있게 함
+		clone.copy(userRepository.getById(copyDTO.getUserId()), copyDTO.getTitle(), copyDTO.getContent());
+		
+		entityManager.persist(clone); // 현재 Entity를 영속화(새 Id 할당 및 DB에 삽입)
+		
+		// 문항 복제
+		
+		
+		return clone.getId();
 	}
 }
