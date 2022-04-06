@@ -63,4 +63,11 @@ public class Item {
 		
 		return this;
 	}
+	
+	public Item copy(Question question) {
+		this.id = null;
+		this.question = question;
+		
+		return this;
+	}
 }

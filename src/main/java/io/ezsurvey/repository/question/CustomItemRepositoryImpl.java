@@ -23,4 +23,12 @@ public class CustomItemRepositoryImpl implements CustomItemRepository {
 				.where(item.question.id.eq(questionId))
 				.fetch();
 	}
+	
+	@Override
+	public List<Long> findIdByQuestionId(Long questionId) {
+		return jpaQueryFactory.select(item.id)
+				.from(item)
+				.where(item.question.id.eq(questionId))
+				.fetch();
+	}
 }

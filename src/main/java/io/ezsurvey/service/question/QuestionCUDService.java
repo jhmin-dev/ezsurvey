@@ -29,7 +29,7 @@ public class QuestionCUDService {
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	private final ItemCUDService itemService;
+	private final ItemCUDService itemCUDService;
 	private final QuestionRepository questionRepository;
 	private final SurveyRepository surveyRepository;
 	
@@ -39,7 +39,7 @@ public class QuestionCUDService {
 		
 		Question question = questionRepository.save(serviceDTO.toEntity());
 		
-		List<Item> items = itemService.insertList(itemServiceDTOs.stream()
+		List<Item> items = itemCUDService.insertList(itemServiceDTOs.stream()
 				.map(item -> item.updateQuestion(question)).collect(Collectors.toList()));
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -59,8 +59,10 @@ public class QuestionCUDService {
 	
 	// 설문조사 단위로 문항 복제
 	public void copyAllBySurvey(Long originalSurveyId, Survey cloneSurvey) {
+		// 원본 설문조사에 포함된 부모 문항 목록 가져오기
 		List<Long> originalParentIds = questionRepository.findParentIdBySurveyId(originalSurveyId);
 		
+		// 개별 부모 문항에 대해
 		originalParentIds.stream()
 				.map(originalId -> {
 					Question clone = questionRepository.findById(originalId).get();
@@ -85,14 +87,20 @@ public class QuestionCUDService {
 	
 	// 설문조사 단위로 문항 복제
 	private void copyOneBySurvey(Survey survey, Question clone, Question parent) {
+		// 원본 문항의 PK와 응답 범주 수
+		Long originalId = clone.getId();
+		Long items = clone.getItems();
+		
+		// 현재 Entity를 더티 체킹 대상에서 제외
 		entityManager.detach(clone);
 		
+		// 현재 Entity의 값 변경; copy()는 내부적으로 PK를 null로 변경하여 이후 persist()시 새 PK 할당받을 수 있게 함
 		clone.copy(survey, parent);
 
+		// 현재 Entity를 영속화(새 PK 할당 및 DB에 삽입)
 		entityManager.persist(clone);
 	
 		// 응답 범주 복제
-		
-
+		if(items>0) itemCUDService.copy(originalId, clone);
 	}
 }

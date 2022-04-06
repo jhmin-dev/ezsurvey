@@ -6,4 +6,6 @@ import io.ezsurvey.dto.question.ItemServiceDTO;
 
 public interface CustomItemRepository {
 	List<ItemServiceDTO> findServiceDTOByQuestionId(Long questionId);
+	
+	List<Long> findIdByQuestionId(Long questionId);
 }
