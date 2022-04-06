@@ -57,9 +57,7 @@ public class CustomBookmarkSurveyRepositoryImpl implements CustomBookmarkSurveyR
 	@Override
 	public BookmarkSurvey getBySurveyAndUser(Long surveyId, Long userId) {
 		JPAQuery<BookmarkSurvey> content = jpaQueryFactory.select(bookmarkSurvey).from(bookmarkSurvey)
-				.innerJoin(bookmarkSurvey.survey, survey)
-				.innerJoin(bookmarkSurvey.user, user)
-				.where(survey.id.eq(surveyId), user.id.eq(userId));
+				.where(bookmarkSurvey.survey.id.eq(surveyId), bookmarkSurvey.user.id.eq(userId));
 		
 		return content.fetchOne();
 	}
