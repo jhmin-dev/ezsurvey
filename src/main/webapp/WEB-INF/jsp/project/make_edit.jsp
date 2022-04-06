@@ -87,7 +87,7 @@
 			</c:if>
 			<c:if test="${link eq 'edit'}">
 			<input type="submit" value="수정하기">
-			<input type="button" value="삭제하기" id="delete" data-survey="${requestDTO.surveyId}">
+			<input type="button" value="삭제하기" onclick="deleteSurvey(${requestDTO.surveyId});">
 			</c:if>
 			<input type="button" value="이전으로" onclick="history.go(-1);">
 		</li>

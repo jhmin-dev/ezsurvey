@@ -1,9 +1,5 @@
-const current_url = window.location.href.replace(window.location.origin,'');
 const totalElements = document.querySelector('span.total-elements').textContent;
 const pagination = document.querySelector('.pagination');
-
-// 문항 목록 최초 조회
-getQuestions();
 
 // pagination의 data-last 속성에 저장된 값보다 최근 문항만 조회하는 함수
 function getMoreQuestions() {

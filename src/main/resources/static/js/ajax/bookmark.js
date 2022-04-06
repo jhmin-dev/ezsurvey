@@ -1,8 +1,5 @@
-const current_url = window.location.href.replace(window.location.origin,'');
-
 // 즐겨찾기 토글
 const bookmark_button = document.querySelector('i.bi.bookmark');
-
 function toggleBookmark() {
 	$.ajax({
 		url:'/ajax/toggle/bookmark' + current_url,

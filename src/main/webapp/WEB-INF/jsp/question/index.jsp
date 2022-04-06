@@ -67,4 +67,5 @@
 <script type="text/javascript" src="/js/UIUtil.js"></script>
 <script type="text/javascript" src="/js/ui/index.js"></script>
 <script type="text/javascript" src="/js/ajax/index.js"></script>
+<script type="text/javascript" src="/js/onload/index.js"></script>
 </main>

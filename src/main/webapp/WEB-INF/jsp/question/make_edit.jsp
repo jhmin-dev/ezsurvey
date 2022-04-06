@@ -68,4 +68,5 @@
 <script type="text/javascript" src="/js/UIUtil.js"></script>
 <script type="text/javascript" src="/js/ui/question.js"></script>
 <script type="text/javascript" src="/js/ajax/question.js"></script>
+<script type="text/javascript" src="/js/onload/question.js"></script>
 </main>

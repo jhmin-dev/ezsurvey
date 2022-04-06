@@ -9,7 +9,7 @@ function copySurvey() {
 		success:function(param) {
 			console.log(param.result);
 			if(param.result=='success') {
-				location.href = '/edit/project/' + param.cloneId + '/index';
+				location.href = '/edit/project/' + param.cloneId;
 			}
 		}
 	}); // end of Ajax

@@ -31,8 +31,8 @@ public class SurveyCUDAjaxController {
 	
 	private static final String COPY_PREFIX = "(복제됨) "; // 문구 수정시 SurveyCopyDTO의 @Size max값도 변경해야 함
 	
-	@PostMapping("/ajax/delete/project")
-	public Map<String, String> delete(Long surveyId, HttpSession session) {
+	@PostMapping("/ajax/delete/project/{surveyId}")
+	public Map<String, String> delete(@PathVariable(name = "surveyId") Long surveyId, HttpSession session) {
 		Map<String, String> map = new HashMap<String, String>();
 		
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");

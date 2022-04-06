@@ -1,4 +1,3 @@
-const current_url = window.location.href.replace(window.location.origin,'');
 const link = document.querySelector('article').dataset.link;
 const selectCategory = document.querySelector('ul.question-type select[name="category"]');
 const inputItems = document.querySelector('ul.question-type input[name="items"]');
@@ -13,10 +12,6 @@ const fakeItemPlaceholder = '응답 내용';
 const vallabelChoicePlaceholders = ['매우 관심이 있었다', '조금 관심이 있었다', '별로 관심이 없었다', '전혀 관심이 없었다'];
 const vallabelScalePlaceholders = ['매우 그렇다', '전혀 그렇지 않다'];
 
-// 접속한 링크에 따라 문항 및 응답 범주 초기화
-window.onload = function() { // 문항 수정의 경우 Ajax로 초기 정보를 불러오는 함수가 별도 파일에 있으므로 문서 전체를 읽어야 호출 가능
-	initialize(link);
-}
 function initialize(link) {
 	if(link=='make') initializeMake();
 	else if(link=='edit') getQuestionToEdit();
@@ -113,10 +108,6 @@ function createFormFakeItem() {
 	return formFakeItem;
 }
 
-// 문항 유형 select 태그 값이 변하면 발생하는 이벤트
-selectCategory.addEventListener('change', function() {
-	setInputCategory();
-});
 // 문항 유형 input 태그의 값을 문항 유형 select 태그에서 선택된 값으로 변경하고, 유형에 맞게 응답 범주 수 input 태그 값과 응답 범주 form 태그 수를 변경하는 함수
 function setInputCategory() {
 	const inputCategory = document.querySelector('form[name="question"] input[name="category"]');
@@ -143,10 +134,6 @@ function setInputCategory() {
 	resizeFormItems(inputItems.value);
 }
 
-// 응답 범주 수 input 태그 값이 변하면 발생하는 이벤트
-inputItems.addEventListener('change', function(e) {
-	resizeFormItems(e.target.value);
-});
 // 응답 범주 form 태그의 수를 변경하는 함수
 function resizeFormItems(goal) {
 	const formItems = document.querySelectorAll('form[name="item"]'); // querySelectorAll()은 DOM과 별도인 정적 노드 리스트 반환
