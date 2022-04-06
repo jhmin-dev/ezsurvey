@@ -48,3 +48,6 @@ application-*.yml
 
 ### Querydsl ###
 src/main/generated/
+
+### local jar library ###
+libs/

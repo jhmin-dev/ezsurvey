@@ -1,20 +1,9 @@
-debug: true
 spring:
   config:
-    use-legacy-processing: true
-  profiles:
-    include:
-    - jdbc
-    - oauth
-    - ssl
-    - redis
-  devtools:
-    livereload:
-      enabled: true # 정적 파일들의 실시간 갱신
+    activate:
+      on-profile: common
   session:
     store-type: redis # @EnableRedisHttpSession과 같은 효과
-    redis:
-      flush-mode: on-save
   mvc:
     view:
       prefix: /WEB-INF/jsp/
@@ -23,11 +12,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.Oracle12cDialect
-        # show_sql: true
-        # format_sql: true
-        # use_sql_comments: true
-    hibernate:
-      ddl-auto: update
   data:
     web:
       pageable:
@@ -36,14 +20,18 @@ spring:
   messages:
     basename: messages.validation
     encoding: UTF-8
-server:
-  port: 8443
-  http2:
-    enabled: true
 logging:
   level:
     root: INFO
-decorator:
-  datasource:
-    p6spy:
-      enable-logging: true # 개발 환경에서만 사용
+---
+# spring.profiles.group은 spring.config.activate.on-profile과 같은 파일에 있을 수 없음
+spring:
+  profiles:
+    group:
+      dev: common, oauth, devdb
+      prod: common, oauth, proddb
+---
+# 현재 활성화할 프로필 그룹을 지정
+spring:
+  profiles:
+    active: dev

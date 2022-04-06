@@ -50,9 +50,17 @@ dependencies {
 	implementation 'org.apache.tiles:tiles-jsp:3.0.7'
 	
 	// Oracle Cloud Database
+	/*
 	implementation 'com.oracle.database.security:oraclepki'
 	implementation 'com.oracle.database.security:osdt_core'
 	implementation 'com.oracle.database.security:osdt_cert'
+	*/
+	
+	// Gradle에서 OJDBC 관련 NoSuchFileException이 지속적으로 발생하여 로컬 jar로 대체
+	implementation files('libs/ojdbc11.jar')
+	implementation files('libs/oraclepki.jar')
+	implementation files('libs/osdt_cert.jar')
+	implementation files('libs/osdt_core.jar')
 	
 	// Querydsl
 	implementation 'com.querydsl:querydsl-core'
@@ -66,7 +74,7 @@ dependencies {
 	
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
+	// runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
 	annotationProcessor 'org.projectlombok:lombok'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
