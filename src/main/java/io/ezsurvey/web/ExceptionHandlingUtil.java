@@ -2,7 +2,6 @@ package io.ezsurvey.web;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import io.ezsurvey.exception.BusinessException;
