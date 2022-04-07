@@ -19,10 +19,10 @@ public class SurveySearchCondition {
 	}
 	
 	private static BooleanExpression containsTitle(String word) {
-		return survey.title.contains(word);
+		return survey.title.containsIgnoreCase(word);
 	}
 	
 	private static BooleanExpression containsContent(String word) {
-		return survey.content.contains(word);
+		return survey.content.containsIgnoreCase(word);
 	}
 }
