@@ -56,6 +56,7 @@ public class SurveyResponseDTO { // 민감한 회원 정보 및 share 링크 값
 	// PaginationDTO to ResponseDTO
 	public SurveyResponseDTO(SurveyPaginationDTO paginationDTO) {
 		this.surveyId = paginationDTO.getSurveyId();
+		this.bookmarkId = paginationDTO.getBookmarkId();
 		this.userName = paginationDTO.getUserName();
 		this.userProfileURL = paginationDTO.getUserProfileURL();
 		this.title = paginationDTO.getTitle();

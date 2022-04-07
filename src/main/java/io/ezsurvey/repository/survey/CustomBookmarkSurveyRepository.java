@@ -17,9 +17,6 @@ public interface CustomBookmarkSurveyRepository {
 	// 1건 조회
 	BookmarkSurvey getBySurveyAndUser(Long surveyId, Long userId);
 	
-	// 1건 삭제
-	Long deleteById(Long bookmarkId, Long userId);
-	
 	// 선택 항목 삭제
-	Long deleteByIdIn(List<Long> bookmarkIds, Long userId);
+	Long deleteByIdIn(List<Long> bookmarkIds);
 }

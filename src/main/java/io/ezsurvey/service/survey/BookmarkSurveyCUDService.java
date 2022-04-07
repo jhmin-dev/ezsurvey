@@ -31,11 +31,11 @@ public class BookmarkSurveyCUDService {
 				.user(userRepository.getById(userId)).build()).getId();
 	}
 	
-	public Long deleteBookmark(Long bookmarkId, Long userId) {
-		return bookmarkSurveyRepository.deleteById(bookmarkId, userId);
+	public void deleteBookmark(Long bookmarkId) {
+		bookmarkSurveyRepository.deleteById(bookmarkId);
 	}
 	
-	public Long deleteBookmarksByIdIn(List<Long> bookmarks, Long userId) {
-		return bookmarkSurveyRepository.deleteByIdIn(bookmarks, userId);
+	public Long deleteBookmarksByIdIn(List<Long> bookmarkIds) {
+		return bookmarkSurveyRepository.deleteByIdIn(bookmarkIds);
 	}
 }

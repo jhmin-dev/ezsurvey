@@ -56,21 +56,17 @@ public class CustomBookmarkSurveyRepositoryImpl implements CustomBookmarkSurveyR
 
 	@Override
 	public BookmarkSurvey getBySurveyAndUser(Long surveyId, Long userId) {
-		JPAQuery<BookmarkSurvey> content = jpaQueryFactory.select(bookmarkSurvey).from(bookmarkSurvey)
+		JPAQuery<BookmarkSurvey> content = jpaQueryFactory.select(bookmarkSurvey)
+				.from(bookmarkSurvey)
 				.where(bookmarkSurvey.survey.id.eq(surveyId), bookmarkSurvey.user.id.eq(userId));
 		
 		return content.fetchOne();
 	}
 
 	@Override
-	public Long deleteById(Long bookmarkId, Long userId) {
+	public Long deleteByIdIn(List<Long> bookmarkIds) {
 		return jpaQueryFactory.delete(bookmarkSurvey)
-				.where(bookmarkSurvey.id.eq(bookmarkId), bookmarkSurvey.user.id.eq(userId)).execute();
-	}
-
-	@Override
-	public Long deleteByIdIn(List<Long> bookmarkIds, Long userId) {
-		return jpaQueryFactory.delete(bookmarkSurvey)
-				.where(bookmarkSurvey.id.in(bookmarkIds), bookmarkSurvey.user.id.eq(userId)).execute();
+				.where(bookmarkSurvey.id.in(bookmarkIds))
+				.execute();
 	}
 }

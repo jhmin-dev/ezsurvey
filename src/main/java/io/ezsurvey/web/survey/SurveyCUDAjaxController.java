@@ -66,7 +66,7 @@ public class SurveyCUDAjaxController {
 				map.put("result", "inserted");
 			}
 			else { // 기존에 즐겨찾기되어 있으면 삭제
-				bookmarkSurveyCUDService.deleteBookmark(bookmarkId, userId);
+				bookmarkSurveyCUDService.deleteBookmark(bookmarkId);
 				map.put("result", "deleted");
 			}
 		}
@@ -88,7 +88,7 @@ public class SurveyCUDAjaxController {
 			}
 			else {
 				Long userId = sessionUser.getUserId();
-				Long affected_rows = bookmarkSurveyCUDService.deleteBookmarksByIdIn(bookmarkIds, userId);
+				Long affected_rows = bookmarkSurveyCUDService.deleteBookmarksByIdIn(bookmarkIds);
 	
 				map.put("result", "success");
 				map.put("affected_rows", affected_rows);
