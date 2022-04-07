@@ -20,6 +20,10 @@ html {
 .font-monospace,.font-monospace * {
 	font-family: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace;
 }
+.font-emphasis {
+	font-weight: 700;
+	font-style: italic;
+}
 
 /* 공통: 링크 스타일 (재)정의 */
 a,a:hover,a:active,a:visited {
@@ -81,8 +85,7 @@ label {
 	cursor: default;
 }
 
-
-/* 공통: 토글 버튼 */
+/* 공통: 토글 버튼 스타일 */
 .toggle-container {
 	width: 60px;
 	height: 30px;
@@ -107,6 +110,25 @@ label {
 }
 .toggle-switch.active {
 	left: 30px;
+}
+/* 공통: 토글 버튼 레이아웃 */
+.toggle {
+	display: grid;
+	grid-template-areas:
+		"label toggle"
+		"notice toggle";
+	place-content: stretch;
+	place-items: center start;
+}
+.toggle label {
+	grid-area: label;
+}
+.toggle .notice {
+	grid-area: notice;
+}
+.toggle .toggle-container {
+	grid-area: toggle;
+	justify-self: end;
 }
 
 /* 공통: 부트스트랩 아이콘 */

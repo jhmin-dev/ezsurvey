@@ -7,40 +7,18 @@ form#make,form#edit {
 }
 form ul {
 	margin: 0 auto;
-	min-width: 360px;
-	max-width: 640px;
+	max-width: 1200px;
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
 }
 form ul li {
-	max-width: 640px;
 	padding: 15px 60px;
 }
 form ul li:not(.toggle) {
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
-}
-
-/* 레이아웃: 토글 버튼 */
-.toggle {
-	display: grid;
-	grid-template-areas:
-		"label toggle"
-		"notice toggle";
-	place-content: stretch;
-	place-items: center start;
-}
-.toggle label {
-	grid-area: label;
-}
-.toggle .notice {
-	grid-area: notice;
-}
-.toggle .toggle-container {
-	grid-area: toggle;
-	justify-self: end;
 }
 
 /* 스타일 */

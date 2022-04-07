@@ -43,6 +43,9 @@ public class User {
 	@Column(length = 32, nullable = false)
 	private Role role;
 	
+	@Column(nullable = false)
+	private boolean deleted = false;
+	
 	@Builder
 	public User(Provider provider, String email, Boolean emailVerified
 			, String name, String profileURL, Role role) {
@@ -58,6 +61,17 @@ public class User {
 		this.emailVerified = emailVerified;
 		this.name = name;
 		this.profileURL = profileURL;
+		
+		return this;
+	}
+	
+	public User delete() {
+		this.email = this.id.toString(); // 재가입시 새 PK를 부여하기 위해 이메일 필드 값을 제거; 이메일은 Not Null에 UK이므로 빈 문자열 대신 기존 PK를 저장
+		this.emailVerified = null;
+		this.name = DeletedAccount.NAME.getName();
+		this.profileURL = DeletedAccount.PROFILE_URL.getName();
+		this.role = Role.GUEST; // 탈퇴 계정은 권한을 비회원으로 변경
+		this.deleted = true;
 		
 		return this;
 	}
