@@ -29,3 +29,13 @@ document.addEventListener('change', function(e) {
 		if(isTextarea) resizeTextarea(e.target);
 	}
 });
+
+// 토글 버튼 스위치 온/오프
+document.addEventListener('click', function(e) {
+	let toggle_container = e.target.closest('.toggle-container');
+	if(toggle_container && toggle_container.contains(e.target)) {
+		let toggle_switch = toggle_container.querySelector('.toggle-switch');
+		toggle_container.classList.toggle('active');
+		toggle_switch.classList.toggle('active');
+	}
+});
