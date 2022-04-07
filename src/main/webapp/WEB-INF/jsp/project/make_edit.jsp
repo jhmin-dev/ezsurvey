@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<link rel="stylesheet" href="/css/survey.css">
 <main>
 <div class="title">
 	${title}
@@ -94,7 +95,6 @@
 	</ul>
 </form:form>
 </article>
-<link rel="stylesheet" href="/css/survey.css">
 <script type="text/javascript" src="/js/UIUtil.js"></script>
 <script type="text/javascript" src="/js/ui/survey.js"></script>
 <script type="text/javascript" src="/js/ajax/survey.js"></script>

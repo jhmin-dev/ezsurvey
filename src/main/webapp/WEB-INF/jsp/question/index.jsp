@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="/css/list.css">
 <main>
 <div class="title">
 	${title}
@@ -63,7 +64,6 @@
 	</li>
 </ul>
 </article>
-<link rel="stylesheet" href="/css/list.css">
 <script type="text/javascript" src="/js/UIUtil.js"></script>
 <script type="text/javascript" src="/js/ui/index.js"></script>
 <script type="text/javascript" src="/js/ajax/index.js"></script>

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<link rel="stylesheet" href="/css/list.css">
 <main>
 <div class="title">
 	${title}
@@ -195,7 +196,6 @@
 	<!-- 페이지네이션 끝 -->
 </ul>
 </c:if>
-<link rel="stylesheet" href="/css/list.css">
 <script type="text/javascript" src="/js/StringUtil.js"></script>
 <script type="text/javascript" src="/js/ui/list.js"></script>
 <script type="text/javascript" src="/js/ajax/bookmark.js"></script>

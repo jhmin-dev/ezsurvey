@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link rel="stylesheet" href="/css/question.css">
 <main>
 <div class="title">
 	<div>${title}</div>
@@ -65,7 +66,6 @@
 	</li>
 </ul>
 </article>
-<link rel="stylesheet" href="/css/question.css">
 <script type="text/javascript" src="/js/UIUtil.js"></script>
 <script type="text/javascript" src="/js/ui/question.js"></script>
 <script type="text/javascript" src="/js/ajax/question.js"></script>

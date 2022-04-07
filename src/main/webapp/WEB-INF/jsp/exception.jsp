@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link rel="stylesheet" href="/css/exception.css">
 <main>
 <div class="title">
 <c:choose>
@@ -65,5 +66,4 @@ ${status} ${error}
 	<!-- 이동 버튼 끝 -->
 </ul>
 </article>
-<link rel="stylesheet" href="/css/exception.css">
 </main>
