@@ -89,3 +89,30 @@ function getQuestionToEdit() {
 		}
 	}); // end of ajax
 }
+
+// 문항을 삭제하는 함수
+function deleteQuestion() {
+	const project_url = current_url.slice(0,current_url.indexOf('/edit/question'));
+	const question_url = current_url.replace(project_url,'').replace('edit','delete');
+	
+	$.ajax({
+		url:'/ajax' + question_url,
+		success:function(param) {
+			if(param.result=='success') {
+				alert('문항이 삭제되었습니다!');
+				location.replace(project_url + '/index');
+			}
+			else {
+				postResultDiv.className = 'failure'; // 배경색 변경
+				
+				postResultIcon.classList.remove('bi-check-circle-fill');
+				postResultIcon.classList.add('bi-exclamation-triangle-fill');
+				
+				postResultText.textContent = '문항을 삭제하는 데 실패했습니다.'
+			}
+		}, // end of success
+		error:function() { // Global Handler 이전에 수행됨
+			postResult.classList.add('display-none'); // 결과 메시지 숨김
+		}
+	}); // end of Ajax
+}

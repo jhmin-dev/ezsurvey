@@ -21,7 +21,9 @@ import io.ezsurvey.entity.survey.Survey;
 import io.ezsurvey.repository.question.QuestionRepository;
 import io.ezsurvey.repository.survey.SurveyRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor // 생성자 방식 의존성 주입
 @Transactional
 @Service
@@ -30,6 +32,7 @@ public class QuestionCUDService {
 	private EntityManager entityManager;
 	
 	private final ItemCUDService itemCUDService;
+	private final ItemReadService itemReadService;
 	private final QuestionRepository questionRepository;
 	private final SurveyRepository surveyRepository;
 	
@@ -74,7 +77,7 @@ public class QuestionCUDService {
 				.filter(parentCopyDTO -> parentCopyDTO.getSubquestions()>0) // 원본이 자식 문항을 1개 이상 가지고 있는 경우만 남김
 				.flatMap(parentCopyDTO -> {
 					Long originalParentId = parentCopyDTO.getOriginalParentId();
-					List<Long> originalChildIds = questionRepository.findChildIdByParentId(originalParentId);
+					List<Long> originalChildIds = questionRepository.findIdByParentId(originalParentId);
 					
 					return originalChildIds.stream()
 							.map(originalChildId -> new ChildCopyDTO(originalChildId, parentCopyDTO.getCloneParent()));
@@ -102,5 +105,23 @@ public class QuestionCUDService {
 	
 		// 응답 범주 복제
 		if(items>0) itemCUDService.copy(originalId, clone);
+	}
+	
+	public void delete(Long questionId) {
+		Question question = questionRepository.findById(questionId).get(); // getById()의 경우 지연 로딩되어 응답 범주 수와 하위 문항 수를 확인할 때마다 SELECT 쿼리 발생
+		
+		// 자식 문항이 1개 이상 있는 경우
+		if(question.getSubquestions()>0) {
+			List<Long> childIds = questionRepository.findIdByParentId(questionId); // 자식 문항 PK 목록 조회
+			itemCUDService.deleteByQuestionIdIn(childIds); // 자식 문항의 응답 범주를 모두 삭제
+			questionRepository.deleteByIdIn(childIds); // 자식 문항을 모두 삭제
+		}
+		
+		// 응답 범주가 1개 이상 있는 경우
+		if(question.getItems()>0) {
+			itemCUDService.deleteByQuestionId(questionId);
+		}
+		
+		questionRepository.deleteById(questionId);
 	}
 }

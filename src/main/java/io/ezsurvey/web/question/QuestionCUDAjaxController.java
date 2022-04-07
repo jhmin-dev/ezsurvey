@@ -108,4 +108,15 @@ public class QuestionCUDAjaxController {
 		
 		return map;
 	}
+	
+	@PostMapping("/ajax/delete/question/{questionId}")
+	public Map<String, Object> delete(@PathVariable(name = "questionId") Long questionId) {
+		Map<String, Object> map = new HashMap<>();
+		
+		questionCUDService.delete(questionId);
+		
+		map.put("result", "success");
+		
+		return map;
+	}
 }

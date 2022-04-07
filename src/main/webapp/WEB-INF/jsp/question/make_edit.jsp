@@ -53,6 +53,7 @@
 		</c:if>
 		<c:if test="${link eq 'edit'}">
 		<button type="button" class="point-button" onclick="">수정하기</button>
+		<button type="button" onclick="deleteQuestion()">삭제하기</button>
 		</c:if>
 	</li>
 	<li>

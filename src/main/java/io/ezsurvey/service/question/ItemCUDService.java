@@ -48,4 +48,14 @@ public class ItemCUDService {
 			entityManager.persist(clone);
 		});
 	}
+	
+	// 특정 문항의 응답 범주 삭제
+	public Long deleteByQuestionId(Long questionId) {
+		return itemRepository.deleteByQuestionId(questionId);
+	}
+	
+	// 여러 문항의 응답 범주 일괄 삭제
+	public Long deleteByQuestionIdIn(List<Long> questionIds) {
+		return itemRepository.deleteByQuestionIdIn(questionIds);
+	}
 }

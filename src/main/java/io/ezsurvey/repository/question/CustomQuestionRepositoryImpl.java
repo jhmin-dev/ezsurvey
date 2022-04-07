@@ -58,11 +58,18 @@ public class CustomQuestionRepositoryImpl implements CustomQuestionRepository {
 	}
 	
 	@Override
-	public List<Long> findChildIdByParentId(Long parentId) {
+	public List<Long> findIdByParentId(Long parentId) {
 		return jpaQueryFactory.select(question.id)
 				.from(question)
 				.where(question.parent.id.eq(parentId)) // 특정 문항의 자식 문항들만 조회
 				.fetch();
+	}
+	
+	@Override
+	public Long deleteByIdIn(List<Long> questionIds) {
+		return jpaQueryFactory.delete(question)
+				.where(question.id.in(questionIds))
+				.execute();
 	}
 	
 	private BooleanExpression gtQuestionId(Long questionId) {

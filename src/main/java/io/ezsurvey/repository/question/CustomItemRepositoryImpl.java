@@ -31,4 +31,18 @@ public class CustomItemRepositoryImpl implements CustomItemRepository {
 				.where(item.question.id.eq(questionId))
 				.fetch();
 	}
+	
+	@Override
+	public Long deleteByQuestionIdIn(List<Long> questionIds) {
+		return jpaQueryFactory.delete(item)
+				.where(item.question.id.in(questionIds))
+				.execute();
+	}
+	
+	@Override
+	public Long deleteByQuestionId(Long questionId) {
+		return jpaQueryFactory.delete(item)
+				.where(item.question.id.eq(questionId))
+				.execute();
+	}
 }
