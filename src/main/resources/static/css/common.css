@@ -4,11 +4,11 @@
 @import 'color.css';
 @import 'layout.css';
 /* 공통: 폰트 */
-* {
-	font-family: 'Pretendard', sans-serif;
-}
 :lang(ko) {
 	word-break: keep-all;
+}
+* {
+	font-family: 'Pretendard', sans-serif;
 }
 html {
 	font-size: 16px;
@@ -16,6 +16,9 @@ html {
 }
 .notice,.error {
 	font-size: 0.875rem;
+}
+.font-monospace,.font-monospace * {
+	font-family: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace;
 }
 
 /* 공통: 링크 스타일 (재)정의 */
@@ -59,6 +62,10 @@ input,textarea,select,option {
 textarea {
 	resize: none;
 }
+label {
+	font-size: 1.25rem;
+	font-weight: 700;
+}
 
 /* 공통: 텍스트 버튼 */
 [type="submit"],[type="button"] {
@@ -72,6 +79,34 @@ textarea {
 }
 [type="button"]:disabled {
 	cursor: default;
+}
+
+
+/* 공통: 토글 버튼 */
+.toggle-container {
+	width: 60px;
+	height: 30px;
+	border-radius: 15px;
+	border: 1px solid var(--light-gray);
+	background-color: var(--light-gray);
+	transition: background-color 0.5s ease;
+}
+.toggle-container.active {
+	background-color: var(--point);
+}
+.toggle-switch {
+	position: relative;
+	z-index: 1;
+	left: 0px;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	border: 1px solid var(--light-gray);	
+	background-color: var(--white);
+	transition: left 0.5s ease;
+}
+.toggle-switch.active {
+	left: 30px;
 }
 
 /* 공통: 부트스트랩 아이콘 */
@@ -107,9 +142,8 @@ header {
 /* 상단 바: 제목 */
 header .title {
 	font-size: 2rem;
-	font-weight: 900;
+	font-weight: bold;
 	font-style: italic;
-	font-variant: small-caps;
 }
 
 /* 아이콘 메뉴 */
@@ -244,11 +278,16 @@ nav.dropdown-menu ul li.sub a {
 }
 
 /* 하단 바 */
-footer .copy {
+footer .copyright {
 	margin: 0 auto;
 	max-width: 1200px;
 	font-size: 1.25rem;
 	text-align: center;
+}
+footer .copyright .font-monospace {
+	font-size: 1.5rem;
+	font-style: italic;
+	font-weight: bold;
 }
 
 /* 본문: 제목 */

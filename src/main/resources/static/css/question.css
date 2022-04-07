@@ -10,8 +10,6 @@
 label {
 	display: block;
 	padding: 10px;
-	font-size: 1.25rem;
-	font-weight: 700;
 }
 input::placeholder,textarea::placeholder {
 	color: var(--light-gray);

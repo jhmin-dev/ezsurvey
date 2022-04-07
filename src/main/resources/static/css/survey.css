@@ -22,7 +22,9 @@ form ul li:not(.toggle) {
 	flex-direction: column;
 	flex-grow: 1;
 }
-li.toggle {
+
+/* 레이아웃: 토글 버튼 */
+.toggle {
 	display: grid;
 	grid-template-areas:
 		"label toggle"
@@ -30,13 +32,13 @@ li.toggle {
 	place-content: stretch;
 	place-items: center start;
 }
-li.toggle label {
+.toggle label {
 	grid-area: label;
 }
-li.toggle .notice {
+.toggle .notice {
 	grid-area: notice;
 }
-li.toggle .toggle-container {
+.toggle .toggle-container {
 	grid-area: toggle;
 	justify-self: end;
 }
@@ -44,35 +46,6 @@ li.toggle .toggle-container {
 /* 스타일 */
 label {
 	max-width: 240px;
-	font-size: 1.25rem;
-	font-weight: 700;
-}
-
-/* 토글 버튼 */
-.toggle-container {
-	width: 60px;
-	height: 30px;
-	border-radius: 15px;
-	border: 1px solid var(--light-gray);
-	background-color: var(--light-gray);
-	transition: background-color 0.5s ease;
-}
-.toggle-container.active {
-	background-color: var(--point);
-}
-.toggle-switch {
-	position: relative;
-	z-index: 1;
-	left: 0px;
-	width: 30px;
-	height: 30px;
-	border-radius: 50%;
-	border: 1px solid var(--light-gray);	
-	background-color: var(--white);
-	transition: left 0.5s ease;
-}
-.toggle-switch.active {
-	left: 30px;
 }
 
 /* 링크 복사 버튼 */
