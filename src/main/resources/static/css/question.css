@@ -25,9 +25,6 @@ input::placeholder,textarea::placeholder {
 	max-width: 600px;
 	justify-content: center;
 	align-items: center;
-	color: var(--dark-gray);
-	font-size: 1.5rem;
-	font-weight: 700;
 }
 
 /* 서버 전송 결과 알림 */

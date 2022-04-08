@@ -76,7 +76,7 @@ label {
 	font-size: 1.125rem;
 	font-weight: 700;
 	margin: 0 10px;
-	padding: 10px;
+	padding: 10px 20px;
 	border-radius: 5px;
 	transition: all 0.5s ease;
 	cursor: pointer;
@@ -330,7 +330,22 @@ main > .title {
 .label-button:hover i.bi {
 	color: var(--black-muted);
 }
+.label-button.disabled {
+	color: var(--gray);
+	pointer-events: none;
+}
+.label-button.disabled i.bi {
+	color: var(--light-gray-muted);
+}
+.label-button.disabled:hover i.bi {
+	color: var(--light-gray-muted);
+}
 
 .display-none {
 	display: none;
+}
+.survey-title {
+	color: var(--dark-gray);
+	font-size: 1.5rem;
+	font-weight: 700;
 }

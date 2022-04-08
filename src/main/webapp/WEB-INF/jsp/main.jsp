@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <main>
 <div class="title">
-	Spring Starter Project
+	설문조사를 지금 만들고 공유하세요!
 </div>
 <article>
 <!-- 검색 시작 -->

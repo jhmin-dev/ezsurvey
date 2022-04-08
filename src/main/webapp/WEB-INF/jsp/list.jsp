@@ -168,12 +168,7 @@
 			</li>
 			<li class="lg">
 				<c:if test="${type eq 'survey'}">
-				<c:if test="${link eq 'my'}">
-				<a href="/edit/project/${element.surveyId}">
-				</c:if>
-				<c:if test="${link ne 'my'}">
-				<a href="/project/${element.surveyId}">
-				</c:if>
+				<a href="<c:if test="${link eq 'my'}">/edit</c:if>/project/${element.surveyId}">
 					${element.title}
 				</a>
 				</c:if>
@@ -181,19 +176,17 @@
 			</li>
 			<li>
 				<c:if test="${type eq 'survey'}">${element.questions}</c:if>
-				<c:if test="${type eq 'question'}">
-				${element.category}
-				</c:if>
+				<c:if test="${type eq 'question'}">${element.category}</c:if>
 			</li>
 			<li>
 				<c:if test="${type eq 'survey'}">${element.bookmarks}</c:if>
-				<c:if test="${type eq 'question'}">응답 범주 수</c:if>
+				<c:if test="${type eq 'question'}">${element.items}</c:if>
 			</li>
 			<li>
 				<c:if test="${type eq 'survey'}">
 				<span class="date" data-created="${element.created}"></span>
 				</c:if>
-				<c:if test="${type eq 'question'}">하위 문항 수</c:if>
+				<c:if test="${type eq 'question'}">${element.subquestions}</c:if>
 			</li>
 			<c:if test="${link eq 'bookmark'}">
 			<li class="label-block">
@@ -208,7 +201,7 @@
 			</li>
 			</c:if>
 			<c:if test="${link eq 'list'}">
-			<li>
+			<li <c:if test="${element.userDeleted}">title="탈퇴한 계정"</c:if>>
 				${element.userName}
 			</li>
 			</c:if>
@@ -244,6 +237,7 @@
 <script type="text/javascript" src="/js/StringUtil.js"></script>
 <script type="text/javascript" src="/js/ParamUtil.js"></script>
 <script type="text/javascript" src="/js/ui/list.js"></script>
+<script type="text/javascript" src="/js/ui/bookmark.js"></script>
 <script type="text/javascript" src="/js/ajax/bookmark.js"></script>
 </article>
 </main>

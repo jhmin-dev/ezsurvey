@@ -14,6 +14,7 @@ public class SurveyPaginationDTO {
 	private Long bookmarkId;
 	private String userName;
 	private String userProfileURL;
+	private boolean userDeleted;
 	private String title;
 	private LocalDateTime created;
 	private Visibility visibility;

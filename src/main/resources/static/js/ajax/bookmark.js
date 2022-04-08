@@ -1,5 +1,4 @@
 // 즐겨찾기 토글
-const bookmark_button = document.querySelector('i.bi.bookmark');
 function toggleBookmark() {
 	$.ajax({
 		url:'/ajax/toggle/bookmark' + location.pathname,
@@ -8,10 +7,12 @@ function toggleBookmark() {
 				alert('로그인 후 즐겨찾기할 수 있습니다!');
 			}
 			else if(param.result=='inserted') {
-				bookmark_button.classList.replace('bi-bookmark', 'bi-bookmark-fill');
+				toggleBookmarkButton();
+				changeCurrentBookmarks(1);
 			}
 			else if(param.result=='deleted') {
-				bookmark_button.classList.replace('bi-bookmark-fill', 'bi-bookmark');
+				toggleBookmarkButton();
+				changeCurrentBookmarks(-1);		
 			}
 			else {
 				alert('즐겨찾기시 오류가 발생했습니다!');

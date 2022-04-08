@@ -30,7 +30,7 @@ public class CustomSurveyRepositoryImpl implements CustomSurveyRepository {
 		JPAQuery<SurveyPaginationDTO> content = jpaQueryFactory
 				.select(Projections.fields(SurveyPaginationDTO.class
 						, survey.id.as("surveyId")
-						, user.name.as("userName"), user.profileURL.as("userProfileURL")
+						, user.name.as("userName"), user.profileURL.as("userProfileURL"), user.deleted.as("userDeleted")
 						, survey.title, survey.created
 						, survey.bookmarks, survey.questions)) // 둘러보기 목록에는 생성자 정보 필요, 공개 범위 정보 불필요
 				.from(survey)

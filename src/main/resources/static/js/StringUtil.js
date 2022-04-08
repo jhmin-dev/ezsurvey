@@ -50,3 +50,8 @@ function getTimeSince(date) {
 	if(seconds<5) return "몇 초 전";
 	return seconds + "초 전";
 }
+
+function addDateUnitsTo(str) {
+	const date = new Date(str);
+	return date.getFullYear() + '년 ' + (date.getMonth() + 1) + '월 ' + date.getDate() + '일';
+}

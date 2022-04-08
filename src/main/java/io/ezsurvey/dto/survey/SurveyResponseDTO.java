@@ -11,12 +11,13 @@ import lombok.ToString;
 @Getter @ToString(exclude = {"userId"})
 @Builder @AllArgsConstructor
 @NoArgsConstructor
-public class SurveyResponseDTO { // 민감한 회원 정보 및 share 링크 값을 제외한 조회 전용 DTO
+public class SurveyResponseDTO {
 	private Long surveyId;
 	private Long bookmarkId;
 	private Long userId;
 	private String userName;
 	private String userProfileURL;
+	private boolean userDeleted;
 	private String title;
 	private String content;
 	private String created;
@@ -25,6 +26,7 @@ public class SurveyResponseDTO { // 민감한 회원 정보 및 share 링크 값
 	private String expires;
 	private String status;
 	private String visibility;
+	private String shared;
 	
 	// 테이블에 없는 가상 컬럼
 	private Long bookmarks;
@@ -39,6 +41,7 @@ public class SurveyResponseDTO { // 민감한 회원 정보 및 share 링크 값
 		this.userId = serviceDTO.getUser().getId();
 		this.userName = serviceDTO.getUser().getName();
 		this.userProfileURL = serviceDTO.getUser().getProfileURL();
+		this.userDeleted = serviceDTO.getUser().isDeleted();
 		this.title = serviceDTO.getTitle();
 		this.content = serviceDTO.getContent();
 		this.created = serviceDTO.getCreated().toString();
@@ -47,6 +50,7 @@ public class SurveyResponseDTO { // 민감한 회원 정보 및 share 링크 값
 		this.expires = Objects.toString(serviceDTO.getExpires(), null);
 		this.status = serviceDTO.getStatus().getKey();
 		this.visibility = serviceDTO.getVisibility().getKey();
+		this.shared = serviceDTO.getShared();
 		
 		// 테이블에 없는 가상 컬럼
 		this.bookmarks = serviceDTO.getBookmarks();
@@ -59,6 +63,7 @@ public class SurveyResponseDTO { // 민감한 회원 정보 및 share 링크 값
 		this.bookmarkId = paginationDTO.getBookmarkId();
 		this.userName = paginationDTO.getUserName();
 		this.userProfileURL = paginationDTO.getUserProfileURL();
+		this.userDeleted = paginationDTO.isUserDeleted();
 		this.title = paginationDTO.getTitle();
 		this.created = paginationDTO.getCreated().toString();
 		if(paginationDTO.getVisibility()!=null) { // 내 설문조사 목록을 조회하는 경우에만 Not Null

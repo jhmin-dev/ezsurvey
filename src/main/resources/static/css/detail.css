@@ -1,0 +1,96 @@
+@charset "UTF-8";
+
+article>div,article>ul {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+	padding: 15px 60px;
+	max-width: 1200px;
+	width: inherit;
+	height: inherit;
+}
+article>ul>li {
+	width: inherit;
+	height: inherit;
+}
+.survey-title {
+	max-width: 540px;
+}
+
+/* 공통 */
+.survey-header>li,.survey-footer>li {
+	padding: 10px;
+}
+.survey-header li hr,.survey-footer li hr {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	border-style: solid;
+	color: var(--light-gray-muted);
+	background-color: var(--light-gray-muted); /* 설정하지 않으면 크롬에서는 테두리가 있는 선이 생김 */
+}
+.survey-header li,.survey-header li.survey-menu label
+,.survey-footer li,.survey-footer li>div {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+label.label-button i.bi {
+	padding: 0 10px;
+	font-size: 1.5rem;
+	color: var(--point-muted);
+}
+label.label-button:hover i.bi {
+	color: var(--point);
+}
+
+/* 상단 정보와 메뉴 */
+.survey-header li label:not(.label-button) {
+	display: block;
+	min-width: 150px;
+}
+.survey-header li label:not(.label-button)+div
+,.survey-header li label:not(.label-button)+a {
+	flex-grow: 1;
+}
+.survey-header li.survey-menu {
+	justify-content: space-between;
+}
+.survey-header li.survey-menu label {
+	flex-wrap: nowrap;
+	padding: 10px 0;
+	cursor: pointer;
+}
+
+/* 하단 정보와 메뉴 */
+.survey-footer li {
+	justify-content: space-between;
+	flex-grow: 1;
+}
+.survey-footer li div {
+	justify-content: flex-start;
+}
+.survey-footer li div.survey-menu {
+	justify-content: flex-end;
+}
+.created-by .profile {
+	width: 48px;
+	height: 48px;
+}
+.survey-created>div>* {
+	margin: 0 10px;
+}
+.deleted-account {
+	font-size: 1.5rem;
+}
+
+/* 본문 */
+.survey-content {
+	padding-bottom: 60px;
+}
+.survey-content div {
+	padding: 0 10px;
+	width: inherit;
+}

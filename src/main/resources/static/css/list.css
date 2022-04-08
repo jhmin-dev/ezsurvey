@@ -117,7 +117,4 @@
 /* 문항 관리: 설문조사 제목 */
 .survey-title {
 	max-width: 540px;
-	color: var(--dark-gray);
-	font-size: 1.5rem;
-	font-weight: 700;
 }
