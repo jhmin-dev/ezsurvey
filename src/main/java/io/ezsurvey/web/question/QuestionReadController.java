@@ -38,6 +38,7 @@ public class QuestionReadController {
 		this.searchField = searchField;
 	}
 	
+	/* 문항 관리 */
 	@RequestMapping("/edit/project/{surveyId}/index")
 	public String index(@PathVariable(name = "surveyId") Long surveyId, Model model, HttpSession session) {
 		// 세션에 저장된 회원 정보 구하기
@@ -54,7 +55,8 @@ public class QuestionReadController {
 		
 		return "/question/index"; // Tiles 설정명 반환		
 	}
-	
+
+	/* 즐겨찾기: 문항 */
 	// BookmarkQuestion에서 검색하기 때문에 sort 기준 프로퍼티명은 question. 또는 user.으로 접근해야 함
 	@RequestMapping("/bookmark/question")
 	public String bookmark(@PageableDefault(page = 0, sort = "question.id", direction = Direction.DESC) Pageable pageable

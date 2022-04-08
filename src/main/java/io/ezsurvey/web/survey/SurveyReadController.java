@@ -40,6 +40,7 @@ public class SurveyReadController {
 		this.searchField = searchField;
 	}
 	
+	/* 설문조사 상세 */
 	// 전체 공개 경로이므로 sessionUser의 null 검사 필수
 	@RequestMapping("/project/{surveyId}")
 	public String detail(@PathVariable(name = "surveyId") Long surveyId, Model model, HttpSession session) {
@@ -61,6 +62,8 @@ public class SurveyReadController {
 		return "/project/detail";
 	}
 	
+	/* 미리보기 */
+	// 전체 공개 경로이므로 sessionUser의 null 검사 필수
 	@RequestMapping(value = {"/project/{surveyId}/preview", "/project/{surveyId}/preview/{shared}"})
 	public String preview(@PathVariable(name = "surveyId") Long surveyId
 			, @PathVariable(name = "shared", required = false) String shared, Model model, HttpSession session) {
@@ -71,13 +74,14 @@ public class SurveyReadController {
 		SurveyAuthUtil.hasPreviewAuthOrThrowException(surveyReadService.getAuthDTOById(surveyId), shared, sessionUser);
 		
 		// 설문조사 정보 가져오기
-		SurveyResponseDTO responseDTO = new SurveyResponseDTO(surveyReadService.getServiceDTOById(surveyId));
+		SurveyResponseDTO responseDTO = new SurveyResponseDTO(surveyReadService.getIndexDTOById(surveyId));
 		
 		model.addAttribute("responseDTO", responseDTO);
 		
 		return "/question/preview";
 	}
 	
+	/* 둘러보기 */
 	@RequestMapping("/project")
 	public String list(@PageableDefault(page = 0, sort = "id", direction = Direction.DESC) Pageable pageable
 			, String field, String word, Model model) {
@@ -96,6 +100,7 @@ public class SurveyReadController {
 		return "/list"; // Tiles 설정명 반환
 	}
 
+	/* 내 설문조사 */
 	// Spring Security에서 인증을 요구하므로 sessionUser의 null 검사 불필요
 	@RequestMapping("/my/project")
 	public String my(@PageableDefault(page = 0, sort = "id", direction = Direction.DESC) Pageable pageable
@@ -119,6 +124,7 @@ public class SurveyReadController {
 		return "/list"; // Tiles 설정명 반환
 	}
 	
+	/* 즐겨찾기: 설문조사 */
 	// Spring Security에서 인증을 요구하므로 sessionUser의 null 검사 불필요
 	// BookmarkSurvey에서 검색하기 때문에 sort 기준 프로퍼티명은 survey. 또는 user.으로 접근해야 함
 	@RequestMapping("/bookmark/project")

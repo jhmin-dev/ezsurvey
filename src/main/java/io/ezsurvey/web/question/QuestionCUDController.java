@@ -22,6 +22,7 @@ public class QuestionCUDController {
 	private final EnumMapper enumMapper; // AppConfig에 등록
 	private final SurveyReadService surveyReadService;
 	
+	/* 문항 추가 */
 	@GetMapping("/edit/project/{surveyId}/make/question")
 	public String make(@PathVariable(name = "surveyId") Long surveyId, Model model, HttpSession session) {
 		// 세션에 저장된 회원 정보 구하기
@@ -42,6 +43,7 @@ public class QuestionCUDController {
 		return "/question/make_edit"; // Tiles 설정명 반환
 	}
 	
+	/* 문항 수정 */
 	@GetMapping("/edit/project/{surveyId}/edit/question/{questionId}")
 	public String edit(@PathVariable(name = "surveyId") Long surveyId, @PathVariable(name = "questionId") Long questionId
 			, Model model, HttpSession session) {

@@ -31,6 +31,7 @@ public class SurveyCUDController { // Spring Security에서 인증을 요구하�
 		return new SurveyRequestDTO();
 	}
 	
+	/* 설문조사 생성 */
 	@GetMapping("/make/project")
 	public String make(Model model) {
 		// 현재 요청 URL 관련 정보 저장
@@ -40,6 +41,7 @@ public class SurveyCUDController { // Spring Security에서 인증을 요구하�
 		return "/project/make_edit"; // Tiles 설정명 반환
 	}
 	
+	/* 설문조사 생성 */
 	@PostMapping("/make/project")
 	public String make(@Valid @ModelAttribute("requestDTO") SurveyRequestDTO requestDTO, BindingResult result
 			, Model model, HttpSession session) { // BindingResult는 검증 대상 바로 다음에 있지 않으면 에러
@@ -57,6 +59,7 @@ public class SurveyCUDController { // Spring Security에서 인증을 요구하�
 		return "redirect:/edit/project/" + surveyId + "/make/question";
 	}
 	
+	/* 설문조사 수정 */
 	@GetMapping("/edit/project/{surveyId}")
 	public String edit(@PathVariable(name = "surveyId") Long surveyId, Model model, HttpSession session) {
 		// 요청 URL로 첫 접속시 URL에 포함된 PK 값으로 설문조사 정보를 조회
@@ -79,6 +82,7 @@ public class SurveyCUDController { // Spring Security에서 인증을 요구하�
 		return "/project/make_edit"; // Tiles 설정명 반환
 	}
 	
+	/* 설문조사 수정 */
 	@PostMapping("/edit/project/{surveyId}")
 	public String edit(@PathVariable(name = "surveyId") Long surveyId
 			, @Valid @ModelAttribute("requestDTO") SurveyRequestDTO requestDTO
