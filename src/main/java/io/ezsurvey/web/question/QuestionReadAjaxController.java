@@ -1,6 +1,5 @@
 package io.ezsurvey.web.question;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.ezsurvey.dto.question.QuestionPaginationDTO;
 import io.ezsurvey.dto.question.QuestionResponseDTO;
 import io.ezsurvey.repository.EnumMapper;
 import io.ezsurvey.service.question.QuestionReadService;

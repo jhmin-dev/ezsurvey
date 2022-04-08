@@ -14,7 +14,7 @@
 			${responseDTO.content}
 		</li>
 		<li>
-			${responseDTO.userName}
+			${responseDTO.userName} <img src="${responseDTO.userProfileURL}" class="profile">
 		</li>
 		<li>
 			<label class="label-button">

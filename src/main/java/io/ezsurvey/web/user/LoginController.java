@@ -1,8 +1,5 @@
 package io.ezsurvey.web.user;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,13 +8,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.ezsurvey.repository.EnumMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@RequiredArgsConstructor // 생성자 방식 의존성 주입
 @Controller
 public class LoginController {
-	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
-	
-	@Autowired
-	private EnumMapper enumMapper; // AppConfig에 등록
+	private final EnumMapper enumMapper; // AppConfig에 등록
 	
 	@RequestMapping("/login")
 	public String login(Model model) {

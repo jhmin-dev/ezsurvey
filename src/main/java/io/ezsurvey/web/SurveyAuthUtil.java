@@ -38,29 +38,27 @@ public class SurveyAuthUtil {
 		// 로그인한 사용자가 설문조사 생성자와 일치하는 경우
 		if(sessionUser!=null && isOwner(authDTO, sessionUser.getUserId())) return;
 		
-		// 전체 공개도, 올바른 shared 값도, 생성자도 아닌 경우
+		// 전체 공개도, 올바른 shared 값도, 생성자도 아닌 경우 예외 발생
 		throw new InvalidSurveyVisibilityException();
 	}
 	
 	public static void hasEditAuthOrThrowException(SurveyAuthDTO authDTO, Long userId) {
-		// 존재하지 않거나 삭제된 설문조사 번호로 접속한 경우
+		// 존재하지 않거나 삭제된 설문조사 번호로 접속한 경우 예외 발생
 		existsOrThrowException(authDTO);
 
-		// 로그인한 사용자가 설문조사 생성자와 불일치하는 경우
+		// 로그인한 사용자가 설문조사 생성자와 불일치하는 경우 예외 발생
 		if(!isOwner(authDTO, userId)) throw new InvalidSurveyOwnerException();
 
-		// 현재 시각이 배포 시작 시각 이후인 경우
+		// 현재 시각이 배포 시작 시각 이후인 경우 예외 발생
 		if(isDistributed(authDTO)) throw new InvalidSurveyStatusException();
 	}
 	
 	private static void existsOrThrowException(SurveyAuthDTO authDTO) {
-		if(isNotFound(authDTO)) { // 잘못된 설문조사 번호로 접속한 경우
-			throw new EntityNotFoundException();
-		}
+		// 잘못된 설문조사 번호로 접속한 경우 예외 발생
+		if(isNotFound(authDTO)) throw new EntityNotFoundException();
 		
-		if(isDeleted(authDTO)) { // 설문조사가 삭제된 경우
-			throw new DeletedSurveyException();
-		}
+		// 설문조사가 삭제된 경우 예외 발생
+		if(isDeleted(authDTO)) throw new DeletedSurveyException();
 	}
 	
 	private static boolean isNotFound(SurveyAuthDTO authDTO) {

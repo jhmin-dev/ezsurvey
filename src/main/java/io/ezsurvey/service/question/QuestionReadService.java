@@ -1,15 +1,12 @@
 package io.ezsurvey.service.question;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.ezsurvey.dto.question.QuestionPaginationDTO;
 import io.ezsurvey.dto.question.QuestionServiceDTO;
-import io.ezsurvey.entity.question.Question;
 import io.ezsurvey.repository.question.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

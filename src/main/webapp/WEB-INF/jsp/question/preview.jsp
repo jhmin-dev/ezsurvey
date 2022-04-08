@@ -7,6 +7,5 @@
 <article>
 ${responseDTO.title}
 ${responseDTO.surveyId}
-${responseDTO.userName}
 </article>
 </main>

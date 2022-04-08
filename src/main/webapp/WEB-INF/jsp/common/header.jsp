@@ -7,7 +7,7 @@
 	<div class="logo">
 		<a href="/">logo</a>
 	</div>
-	<div class="title">
+	<div class="title font-monospace">
 		<a href="/">ezsurvey</a>
 	</div>
 	<div class="hamburger">
