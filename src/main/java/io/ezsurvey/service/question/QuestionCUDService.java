@@ -11,9 +11,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.ezsurvey.dto.question.ChildCopyDTO;
 import io.ezsurvey.dto.question.ItemServiceDTO;
-import io.ezsurvey.dto.question.ParentCopyDTO;
 import io.ezsurvey.dto.question.QuestionServiceDTO;
 import io.ezsurvey.entity.question.Item;
 import io.ezsurvey.entity.question.Question;

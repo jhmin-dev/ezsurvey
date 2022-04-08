@@ -1,15 +1,15 @@
-package io.ezsurvey.dto.question;
+package io.ezsurvey.service.question;
 
 import io.ezsurvey.entity.question.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChildCopyDTO {
-	private Long originalChildId;
+public class ParentCopyDTO {
 	private Question cloneParent;
+	private Long originalParentId;
+	private Long subquestions;
 }
