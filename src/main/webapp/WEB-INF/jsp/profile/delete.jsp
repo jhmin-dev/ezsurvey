@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="/css/user.css">
 <main>
 <div class="title">
-	회원 탈퇴
+	계정 탈퇴
 </div>
 <article>
 <div class="delete-profile">

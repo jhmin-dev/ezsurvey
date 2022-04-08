@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="/css/list.css">
-<main>
+<main data-title="${title} · ${survey.title}">
 <div class="title">
 	${title}
 </div>

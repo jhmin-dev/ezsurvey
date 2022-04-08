@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <main>
 <div class="title">
-	미리보기
+	${title}
 </div>
 <article>
 ${responseDTO.title}

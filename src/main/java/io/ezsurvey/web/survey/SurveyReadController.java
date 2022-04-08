@@ -59,6 +59,9 @@ public class SurveyReadController {
 		}
 		model.addAttribute("responseDTO", responseDTO);
 		
+		// 현재 요청 URL 관련 정보 저장
+		model.addAttribute("title", "설문조사 상세");
+		
 		return "/project/detail";
 	}
 	
@@ -77,6 +80,9 @@ public class SurveyReadController {
 		SurveyResponseDTO responseDTO = new SurveyResponseDTO(surveyReadService.getIndexDTOById(surveyId));
 		
 		model.addAttribute("responseDTO", responseDTO);
+		
+		// 현재 요청 URL 관련 정보 저장
+		model.addAttribute("title", "설문조사 미리보기");
 		
 		return "/question/preview";
 	}

@@ -33,5 +33,9 @@ $(document).ajaxError(function() {
 <tiles:insertAttribute name="footer"/>
 <!-- footer 끝 -->
 </div>
+<script type="text/javascript">
+	const headtitle = document.querySelector('main').dataset.title;
+	document.title = (headtitle || document.querySelector('main>div.title').textContent);
+</script>
 </body>
 </html>

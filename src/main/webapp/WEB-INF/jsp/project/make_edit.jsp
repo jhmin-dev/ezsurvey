@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <link rel="stylesheet" href="/css/survey.css">
-<main>
+<main <c:if test="${link eq 'edit'}">data-title="${title} · ${requestDTO.title}"</c:if>>
 <div class="title">
 	${title}
 </div>
