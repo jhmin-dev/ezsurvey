@@ -15,29 +15,42 @@ import io.ezsurvey.exception.InvalidSurveyVisibilityException;
 
 public class SurveyAuthUtil {
 	public static void hasDetailAuthOrThrowException(SurveyAuthDTO authDTO, SessionUser sessionUser) {
-		existsOrThrowException(authDTO); // 존재하지 않거나 삭제된 설문조사 번호로 접속한 경우
+		// 존재하지 않거나 삭제된 설문조사 번호로 접속한 경우 예외 발생
+		existsOrThrowException(authDTO);
 
-		if(!isPublic(authDTO)) { // 설문조사가 전체 공개가 아니고,
-			if(sessionUser!=null && !isOwner(authDTO, sessionUser.getUserId())) { // 로그인한 사용자가 설문조사 생성자와 불일치하는 경우
-				throw new InvalidSurveyVisibilityException();
-			}
-		}
+		// 전체 공개인 경우
+		if(isPublic(authDTO)) return;	
+		
+		// 로그인한 사용자가 설문조사 생성자와 일치하는 경우
+		if(sessionUser!=null && isOwner(authDTO, sessionUser.getUserId())) return;
+		
+		// 전체 공개도 아니고 생성자도 아닌 경우 예외 발생
+		throw new InvalidSurveyVisibilityException();
 	}
 	
 	public static void hasPreviewAuthOrThrowException(SurveyAuthDTO authDTO, String shared, SessionUser sessionUser) {
+		// 존재하지 않거나 삭제된 설문조사 번호로 접속한 경우 예외 발생
+		existsOrThrowException(authDTO);
 		
+		// 전체 공개이거나 올바른 shared값이 전달된 경우
+		if(isPublic(authDTO) || isValidShared(authDTO, shared)) return;
+		
+		// 로그인한 사용자가 설문조사 생성자와 일치하는 경우
+		if(sessionUser!=null && isOwner(authDTO, sessionUser.getUserId())) return;
+		
+		// 전체 공개도, 올바른 shared 값도, 생성자도 아닌 경우
+		throw new InvalidSurveyVisibilityException();
 	}
 	
 	public static void hasEditAuthOrThrowException(SurveyAuthDTO authDTO, Long userId) {
-		existsOrThrowException(authDTO); // 존재하지 않거나 삭제된 설문조사 번호로 접속한 경우
+		// 존재하지 않거나 삭제된 설문조사 번호로 접속한 경우
+		existsOrThrowException(authDTO);
 
-		if(!isOwner(authDTO, userId)) { // 로그인한 사용자가 설문조사 생성자와 불일치하는 경우
-			throw new InvalidSurveyOwnerException();
-		}
+		// 로그인한 사용자가 설문조사 생성자와 불일치하는 경우
+		if(!isOwner(authDTO, userId)) throw new InvalidSurveyOwnerException();
 
-		if(isDistributed(authDTO)) { // 현재 시각이 배포 시작 시각 이후인 경우
-			throw new InvalidSurveyStatusException();
-		}
+		// 현재 시각이 배포 시작 시각 이후인 경우
+		if(isDistributed(authDTO)) throw new InvalidSurveyStatusException();
 	}
 	
 	private static void existsOrThrowException(SurveyAuthDTO authDTO) {
@@ -76,7 +89,7 @@ public class SurveyAuthUtil {
 		return expires!=null && LocalDateTime.now().isAfter(expires);
 	}
 	
-	private static boolean equalsShared(SurveyAuthDTO authDTO, String shared) {
-		return StringUtils.equals(shared, authDTO.getShared());
-	}
+	private static boolean isValidShared(SurveyAuthDTO authDTO, String shared) {
+		return authDTO.getVisibility()==Visibility.LINK_ONLY && StringUtils.equals(shared, authDTO.getShared());
+	}	
 }

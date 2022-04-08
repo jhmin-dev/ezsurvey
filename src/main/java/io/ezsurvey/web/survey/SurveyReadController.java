@@ -61,6 +61,23 @@ public class SurveyReadController {
 		return "/project/detail";
 	}
 	
+	@RequestMapping(value = {"/project/{surveyId}/preview", "/project/{surveyId}/preview/{shared}"})
+	public String preview(@PathVariable(name = "surveyId") Long surveyId
+			, @PathVariable(name = "shared", required = false) String shared, Model model, HttpSession session) {
+		// 세션에 저장된 회원 정보 구하기
+		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
+		
+		// 설문조사 접근 권한 검사
+		SurveyAuthUtil.hasPreviewAuthOrThrowException(surveyReadService.getAuthDTOById(surveyId), shared, sessionUser);
+		
+		// 설문조사 정보 가져오기
+		SurveyResponseDTO responseDTO = new SurveyResponseDTO(surveyReadService.getServiceDTOById(surveyId));
+		
+		model.addAttribute("responseDTO", responseDTO);
+		
+		return "/question/preview";
+	}
+	
 	@RequestMapping("/project")
 	public String list(@PageableDefault(page = 0, sort = "id", direction = Direction.DESC) Pageable pageable
 			, String field, String word, Model model) {
