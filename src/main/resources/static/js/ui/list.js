@@ -59,8 +59,8 @@ function movePage(page) {
 
 // 지정한 필드와 방향으로 정렬을 적용하는 함수
 function applySort(field, direction) {
-	// sort 파라미터가 이미 있으면, sort 파라미터 중 지정한 필드가 포함된 파라미터를 제거
-	if(params.getAll('sort')) params.remove('sort', params.getAll('sort').find(str => str.includes(field)));
+	// sort 파라미터가 이미 있으면, sort 파라미터를 제거
+	if(params.getAll('sort')) params.delete('sort');
 	// 지정한 필드와 방향으로 sort 파라미터를 추가
 	params.append('sort', field + ',' + direction);
 	
