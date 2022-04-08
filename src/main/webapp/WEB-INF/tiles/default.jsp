@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title><tiles:insertAttribute name="title"/></title>
+<link rel="icon" href="/images/favicon.svg">
 <link rel="stylesheet" href="/css/common.css">
 <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">

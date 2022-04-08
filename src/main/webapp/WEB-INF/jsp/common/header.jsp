@@ -5,7 +5,7 @@
 <div class="header-container-top"></div>
 <div class="header-container">
 	<div class="logo">
-		<a href="/">logo</a>
+		<a href="/">✒️</a>
 	</div>
 	<div class="title font-monospace">
 		<a href="/">ezsurvey</a>
