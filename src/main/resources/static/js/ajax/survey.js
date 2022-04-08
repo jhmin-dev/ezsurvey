@@ -1,6 +1,6 @@
-function deleteSurvey(surveyId) {
+function deleteSurvey() {
 	$.ajax({
-		url:'/ajax/delete/project/' + surveyId,
+		url:'/ajax' + location.pathname.replace('edit', 'delete'),
 		success:function(param) {
 			if(param.result=='logout') {
 				alert('로그인 후 삭제할 수 있습니다!');

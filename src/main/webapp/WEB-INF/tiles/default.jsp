@@ -9,8 +9,6 @@
 <link rel="stylesheet" href="/css/common.css">
 <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-const current_url = window.location.href.replace(window.location.origin,'');
-
 $.ajaxSetup({
 	type:'POST',
 	dataType:'JSON',

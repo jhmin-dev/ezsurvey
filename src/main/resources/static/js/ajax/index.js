@@ -9,7 +9,7 @@ function getMoreQuestions() {
 // 문항 목록을 조회하는 함수
 function getQuestions(lastQuestionId) {
 	$.ajax({
-		url:'/ajax' + current_url,
+		url:'/ajax' + location.pathname,
 		data: {
 			lastQuestionId:lastQuestionId,
 			totalElements:totalElements

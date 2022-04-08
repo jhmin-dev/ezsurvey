@@ -2,7 +2,7 @@
 const bookmark_button = document.querySelector('i.bi.bookmark');
 function toggleBookmark() {
 	$.ajax({
-		url:'/ajax/toggle/bookmark' + current_url,
+		url:'/ajax/toggle/bookmark' + location.pathname,
 		success:function(param) {
 			if(param.result=='logout') {
 				alert('로그인 후 즐겨찾기할 수 있습니다!');
@@ -26,20 +26,20 @@ function deleteBookmarks() {
 	if(bookmarks.length==0) return;
 	
 	$.ajax({
-		url:'/ajax/delete' + current_url,
+		url:'/ajax/delete' + location.pathname,
 		contentType:'application/json;charset=UTF-8', // Ajax로 리스트를 넘기기 위한 옵션
 		data:JSON.stringify(bookmarks),
 		success:function(param) {
 			if(param.result=='logout') {
 				alert('로그인 후 삭제할 수 있습니다!');
-				location.replace(current_url);
+				location.replace(location.pathname);
 			}
 			else if(param.result=='null') {
 				alert('아무것도 선택하지 않았습니다!');
 			}
 			else if(param.result=='success') {
 				alert('선택한 항목 ' + param.affected_rows + '건이 삭제되었습니다.');
-				location.replace(current_url);
+				location.replace(location.pathname);
 			}
 			else {
 				alert('선택한 항목 삭제시 오류가 발생했습니다!');

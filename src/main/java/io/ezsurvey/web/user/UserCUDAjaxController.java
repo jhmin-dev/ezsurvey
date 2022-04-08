@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class UserCUDAjaxController {
 	private final UserCUDService userCUDService;
 	
-	@PostMapping("/ajax/delete/user")
+	@PostMapping("/ajax/delete/profile")
 	public Map<String, String> delete(Long userId, HttpSession session) {
 		Map<String, String> map = new HashMap<String, String>();
 		

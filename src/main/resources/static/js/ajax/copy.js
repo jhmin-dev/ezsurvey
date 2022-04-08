@@ -1,6 +1,6 @@
 function copySurvey() {
 	$.ajax({
-		url:'/ajax/copy' + current_url,
+		url:'/ajax/copy' + location.pathname,
 		contentType:'application/json;charset=UTF-8', // Ajax로 리스트를 넘기기 위한 옵션
 		data:JSON.stringify({
 			title:document.querySelector('.survey-title').textContent.trim(),

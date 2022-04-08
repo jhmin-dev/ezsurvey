@@ -1,6 +1,6 @@
 function deleteUser(userId) {
 	$.ajax({
-		url:'/ajax/delete/user',
+		url:'/ajax' + location.pathname,
 		data:{
 			userId:userId
 		},
@@ -10,7 +10,7 @@ function deleteUser(userId) {
 				location.reload();
 			}
 			else if(param.result=='wrongAccess') {
-				alert('다른 사람의 계정을 탈퇴할 수 없습니다!');
+				alert('유효하지 않은 세션입니다!');
 				location.replace('/logout');
 			}
 			else if(param.result=='success') {

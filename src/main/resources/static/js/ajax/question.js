@@ -15,7 +15,7 @@ function makeQuestion() {
 	formData = getFormData();
 	
 	$.ajax({
-		url:'/ajax' + current_url,
+		url:'/ajax' + location.pathname,
 		contentType:'application/json;charset=UTF-8', // Ajax로 리스트를 넘기기 위한 옵션
 		data:JSON.stringify({
 			question:formData[0],
@@ -82,7 +82,7 @@ function getFormData() {
 // 수정할 문항을 불러오는 함수
 function getQuestionToEdit() {
 	$.ajax({
-		url:'/ajax' + current_url,
+		url:'/ajax' + location.pathname,
 		type:'GET',
 		success:function(param) {
 			console.log(param);
@@ -92,8 +92,8 @@ function getQuestionToEdit() {
 
 // 문항을 삭제하는 함수
 function deleteQuestion() {
-	const project_url = current_url.slice(0,current_url.indexOf('/edit/question'));
-	const question_url = current_url.replace(project_url,'').replace('edit','delete');
+	const project_url = location.pathname.slice(0,location.pathname.indexOf('/edit/question'));
+	const question_url = location.pathname.replace(project_url,'').replace('edit','delete');
 	
 	$.ajax({
 		url:'/ajax' + question_url,
