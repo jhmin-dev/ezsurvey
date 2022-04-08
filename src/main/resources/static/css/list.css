@@ -92,18 +92,24 @@
 .pagination ul li {
 	margin: 0 5px;
 }
-.pagination ul li a {
+.pagination ul li div {
 	display: block;
 	padding: 5px 10px;
+	color: var(--point-muted);
 	background-color: var(--white-subtle);
-	transition: color ease 0.5s;
 	border-radius: 5px;
+	font-weight: 700;
+	transition: color ease 0.5s;
+	cursor: pointer;
 }
-.pagination ul li.disabled a {
+.pagination ul li div:hover {
+	color: var(--point);
+}
+.pagination ul li.disabled div {
 	color: var(--gray);
 	pointer-events: none;
 }
-.pagination ul li.disabled.active a {
+.pagination ul li.disabled.active div {
 	color: var(--white-subtle);
 	background-color: var(--point);
 }

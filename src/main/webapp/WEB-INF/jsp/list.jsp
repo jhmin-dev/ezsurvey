@@ -45,6 +45,9 @@
 	</li>
 	<li class="page-menu">
 		<ul>
+			<li>
+				<input type="button" value="새로고침" onclick="clearParameters();">
+			</li>
 			<c:if test="${type eq 'survey' && link ne 'bookmark'}">
 			<li>
 				<input type="button" class="point-button" value="설문조사 생성하기" onclick="location.href='/make/project';">
@@ -74,24 +77,62 @@
 			<li class="sm">
 				번호
 			</li>
+			<c:if test="${type eq 'survey'}">
 			<li class="lg">
-				<c:if test="${type eq 'survey'}">제목</c:if>
-				<c:if test="${type eq 'question'}">문항</c:if>
+				제목
+				<label class="label-button">
+					<input type="button" onclick="toggleSort(this);" data-field="title" data-direction="DESC">
+					<i class="bi bi-sort-alpha-down-alt"></i>
+				</label>
 			</li>
 			<li>
-				<c:if test="${type eq 'survey'}">문항 수</c:if>
-				<c:if test="${type eq 'question'}">유형</c:if>
+				문항 수
+				<label class="label-button">
+					<input type="button" onclick="toggleSort(this);" data-field="questions" data-direction="DESC">
+					<i class="bi bi-sort-numeric-down-alt"></i>
+				</label>
 			</li>
-			<li <c:if test="${type eq 'survey'}">title="즐겨찾기 수"</c:if>>
-				<c:if test="${type eq 'survey'}">
+			<li title="즐겨찾기 수">
 				<i class="bi bi-bookmarks-fill"></i>
-				</c:if>
-				<c:if test="${type eq 'question'}">응답 범주 수</c:if>
+				<label class="label-button">
+					<input type="button" onclick="toggleSort(this);" data-field="bookmarks" data-direction="DESC">
+					<i class="bi bi-sort-numeric-down-alt"></i>
+				</label>
 			</li>
 			<li>
-				<c:if test="${type eq 'survey'}">생성일</c:if>
-				<c:if test="${type eq 'question'}">하위 문항 수</c:if>
+				생성일
+				<label class="label-button">
+					<input type="button" onclick="toggleSort(this);" data-field="created" data-direction="DESC">
+					<i class="bi bi-sort-numeric-down-alt"></i>
+				</label>
 			</li>
+			</c:if>
+			<c:if test="${type eq 'question'}">
+			<li class="lg">
+				변수명/문항
+				<label class="label-button">
+					<input type="button" onclick="toggleSort(this);" data-field="varlabel" data-direction="DESC">
+					<i class="bi bi-sort-alpha-down-alt"></i>
+				</label>
+			</li>
+			<li>
+				유형
+			</li>
+			<li>
+				응답 범주 수
+				<label class="label-button">
+					<input type="button" onclick="toggleSort(this);" data-field="items" data-direction="DESC">
+					<i class="bi bi-sort-numeric-down-alt"></i>
+				</label>
+			</li>
+			<li>
+				하위 문항 수
+				<label class="label-button">
+					<input type="button" onclick="toggleSort(this);" data-field="subquestions" data-direction="DESC">
+					<i class="bi bi-sort-numeric-down-alt"></i>
+				</label>
+			</li>
+			</c:if>
 			<c:if test="${link eq 'bookmark'}">
 			<li>
 				<label class="label-button">
@@ -108,6 +149,10 @@
 			<c:if test="${link eq 'list'}">
 			<li>
 				생성자
+				<label class="label-button">
+					<input type="button" onclick="toggleSort(this);" data-field="user.name" data-direction="DESC">
+					<i class="bi bi-sort-alpha-down-alt"></i>
+				</label>
 			</li>
 			</c:if>
 		</ul>
@@ -175,21 +220,21 @@
 	<li class="pagination">
 		<ul>
 			<li <c:if test="${startPageBlock==1}">class="disabled"</c:if>>
-				<a href="${requestScope['javax.servlet.forward.request_uri']}?page=${startPageBlock-1}&field=${param.field}&word=${param.word}">
+				<div onclick="movePage(${startPageBlock-1});">
 					이전
-				</a>
+				</div>
 			</li>
 			<c:forEach begin="${startPageBlock}" end="${endPageBlock}" var="i">
 			<li <c:if test="${(i==1 && empty param.page) || i==param.page}">class="active disabled"</c:if>>
-				<a href="${requestScope['javax.servlet.forward.request_uri']}?page=${i}&field=${param.field}&word=${param.word}">
+				<div onclick="movePage(${i});">
 					${i}
-				</a>
+				</div>
 			</li>
 			</c:forEach>
 			<li <c:if test="${endPageBlock==totalPages}">class="disabled"</c:if>>
-				<a href="${requestScope['javax.servlet.forward.request_uri']}?page=${endPageBlock+1}&field=${param.field}&word=${param.word}">
-					다음 ${pageNumber}
-				</a>
+				<div onclick="movePage(${endPageBlock+1});">
+					다음
+				</div>
 			</li>
 		</ul>
 	</li>
@@ -197,6 +242,7 @@
 </ul>
 </c:if>
 <script type="text/javascript" src="/js/StringUtil.js"></script>
+<script type="text/javascript" src="/js/ParamUtil.js"></script>
 <script type="text/javascript" src="/js/ui/list.js"></script>
 <script type="text/javascript" src="/js/ajax/bookmark.js"></script>
 </article>
