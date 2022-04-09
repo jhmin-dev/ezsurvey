@@ -12,11 +12,14 @@ import io.ezsurvey.entity.user.User;
 
 public interface CustomBookmarkSurveyRepository {
 	// 즐겨찾기: 설문조사
-	Page<SurveyPaginationDTO> findByVisibilityAndUser(User u, SearchField field, String word, Pageable pageable);
+	Page<SurveyPaginationDTO> findPaginationDTOByVisibilityAndUser(User u, SearchField field, String word, Pageable pageable);
 	
 	// 1건 조회
 	BookmarkSurvey getBySurveyAndUser(Long surveyId, Long userId);
 	
 	// 선택 항목 삭제
 	Long deleteByIdIn(List<Long> bookmarkIds);
+	
+	// 특정 사용자의 모든 즐겨찾기 삭제
+	Long deleteByUserId(Long userId);
 }

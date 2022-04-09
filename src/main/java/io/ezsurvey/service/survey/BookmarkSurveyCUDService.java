@@ -19,23 +19,21 @@ public class BookmarkSurveyCUDService {
 	private final SurveyRepository surveyRepository;
 	private final UserRepository userRepository;
 	
-	public Long getBookmark(Long surveyId, Long userId) {
-		BookmarkSurvey bookmarkSurvey = bookmarkSurveyRepository.getBySurveyAndUser(surveyId, userId);
-		
-		return bookmarkSurvey==null ? null : bookmarkSurvey.getId();
-	}
-	
-	public Long insertBookmark(Long surveyId, Long userId) {
+	public Long insert(Long surveyId, Long userId) {
 		return bookmarkSurveyRepository.save(BookmarkSurvey.builder()
 				.survey(surveyRepository.getById(surveyId))
 				.user(userRepository.getById(userId)).build()).getId();
 	}
 	
-	public void deleteBookmark(Long bookmarkId) {
+	public void delete(Long bookmarkId) {
 		bookmarkSurveyRepository.deleteById(bookmarkId);
 	}
 	
-	public Long deleteBookmarksByIdIn(List<Long> bookmarkIds) {
+	public Long deleteByIdIn(List<Long> bookmarkIds) {
 		return bookmarkSurveyRepository.deleteByIdIn(bookmarkIds);
+	}
+	
+	public Long deleteByUserId(Long userId) {
+		return bookmarkSurveyRepository.deleteByUserId(userId);
 	}
 }

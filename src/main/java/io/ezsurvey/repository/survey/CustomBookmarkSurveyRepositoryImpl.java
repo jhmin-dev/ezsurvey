@@ -27,7 +27,7 @@ public class CustomBookmarkSurveyRepositoryImpl implements CustomBookmarkSurveyR
 	private final JPAQueryFactory jpaQueryFactory;
 
 	@Override
-	public Page<SurveyPaginationDTO> findByVisibilityAndUser(User u, SearchField field, String word, Pageable pageable) {
+	public Page<SurveyPaginationDTO> findPaginationDTOByVisibilityAndUser(User u, SearchField field, String word, Pageable pageable) {
 		JPAQuery<SurveyPaginationDTO> content = jpaQueryFactory
 				.select(Projections.fields(SurveyPaginationDTO.class
 						, bookmarkSurvey.id.as("bookmarkId"), survey.id.as("surveyId")
@@ -67,6 +67,13 @@ public class CustomBookmarkSurveyRepositoryImpl implements CustomBookmarkSurveyR
 	public Long deleteByIdIn(List<Long> bookmarkIds) {
 		return jpaQueryFactory.delete(bookmarkSurvey)
 				.where(bookmarkSurvey.id.in(bookmarkIds))
+				.execute();
+	}
+	
+	@Override
+	public Long deleteByUserId(Long userId) {
+		return jpaQueryFactory.delete(bookmarkSurvey)
+				.where(bookmarkSurvey.user.id.eq(userId))
 				.execute();
 	}
 }

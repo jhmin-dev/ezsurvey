@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import io.ezsurvey.entity.user.User;
+import lombok.Builder;
 
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"member_id", "question_id"}))
 @Entity
@@ -29,4 +30,10 @@ public class BookmarkQuestion {
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "question_id", foreignKey = @ForeignKey(name = "myquestion_fk_question"))
 	private Question question;
+	
+	@Builder
+	public BookmarkQuestion(User user, Question question) {
+		this.user = user;
+		this.question = question;
+	}
 }
