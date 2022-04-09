@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.springframework.web.util.HtmlUtils;
+
 import io.ezsurvey.entity.EnumBase;
 import io.ezsurvey.entity.survey.Status;
 import io.ezsurvey.entity.survey.Visibility;
@@ -51,7 +53,7 @@ public class SurveyRequestDTO {
 		return SurveyServiceDTO.builder()
 				.surveyId(surveyId)
 				.user(user)
-				.title(title)
+				.title(HtmlUtils.htmlEscape(title))
 				.content(content)
 				.status(EnumBase.findByKey(Status.class, status))
 				.visibility(EnumBase.findByKey(Visibility.class, visibility))

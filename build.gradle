@@ -72,6 +72,9 @@ dependencies {
 	// StringUtils
 	implementation 'org.apache.commons:commons-lang3'
 	
+	// HTML 태그 일괄 제거하기 위해
+	implementation 'org.jsoup:jsoup:1.14.3'
+	
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	// runtimeOnly 'com.oracle.database.jdbc:ojdbc8'

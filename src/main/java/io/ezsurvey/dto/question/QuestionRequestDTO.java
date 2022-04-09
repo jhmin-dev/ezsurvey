@@ -3,6 +3,8 @@ package io.ezsurvey.dto.question;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.springframework.web.util.HtmlUtils;
+
 import io.ezsurvey.entity.EnumBase;
 import io.ezsurvey.entity.question.Category;
 import lombok.Getter;
@@ -46,7 +48,7 @@ public class QuestionRequestDTO {
 				.startFromOne(startFromOne)
 				.branched(branched)
 				.randomized(randomized)
-				.varlabel(varlabel)
+				.varlabel(HtmlUtils.htmlEscape(varlabel))
 				.content(content)
 				.article(article)
 				.picture(picture)

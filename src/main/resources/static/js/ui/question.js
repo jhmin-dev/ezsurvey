@@ -63,6 +63,7 @@ function createFormQuestion() {
 	}));
 	divContent.append(Object.assign(document.createElement('textarea'), {
 		name:'content',
+		className:'summernote',
 		placeholder:contentPlaceholder
 	}));
 	divContent.append(Object.assign(document.createElement('div'), {

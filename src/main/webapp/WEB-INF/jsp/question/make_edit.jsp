@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link rel="stylesheet" href="/summernote-0.8.18-dist/summernote-lite.min.css">
 <link rel="stylesheet" href="/css/question.css">
 <main data-title="${title} · ${survey.title}">
 <div class="title">
@@ -66,8 +67,11 @@
 	</li>
 </ul>
 </article>
+<script type="text/javascript" src="/summernote-0.8.18-dist/summernote-lite.min.js"></script>
+<script type="text/javascript" src="/summernote-0.8.18-dist/summernote-ko-KR.min.js"></script>
 <script type="text/javascript" src="/js/UIUtil.js"></script>
 <script type="text/javascript" src="/js/ui/question.js"></script>
 <script type="text/javascript" src="/js/ajax/question.js"></script>
 <script type="text/javascript" src="/js/onload/question.js"></script>
+<script type="text/javascript" src="/js/onload/summernote.js"></script>
 </main>

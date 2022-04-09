@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,9 +44,9 @@ public class QuestionCUDService {
 		if(maxIdx==null) maxIdx = 0;
 		serviceDTO.setIdx(maxIdx+1);
 		
-		// 사용자가 변수명을 입력하지 않은 경우, content로 자동 설정
+		// 사용자가 변수명을 입력하지 않은 경우, content로 자동 설정; content는 HTML 태그 포함 가능하므로 Jsoup으로 태그를 제외한 내용만 추출
 		if(StringUtils.isBlank(serviceDTO.getVarlabel())) {
-			serviceDTO.setVarlabel(StringUtils.abbreviate(serviceDTO.getContent(), 256));
+			serviceDTO.setVarlabel(StringUtils.abbreviate(Jsoup.parse(serviceDTO.getContent()).text(), 256));
 		}
 		
 		Question question = questionRepository.save(serviceDTO.toEntity());

@@ -41,6 +41,7 @@ function makeQuestion() {
 			}
 			else if(param.result=='success') { // 문항 추가에 성공한 경우
 				initializeMake(true); // form 태그들 초기화
+				initializeSummernote(); // summernote 편집기 초기화
 				
 				postResultDiv.className = 'success'; // 배경색 변경
 				
@@ -66,6 +67,8 @@ function makeQuestion() {
 
 // form 태그들을 FormData 객체로 변환하는 함수
 function getFormData() {
+	trimSummernote(); // summernote에서 불필요한 공백 제거
+	
 	const formDataQuestion = new FormData(document.querySelector('form[name="question"]'));
 	const question = Object.fromEntries(formDataQuestion);
 	

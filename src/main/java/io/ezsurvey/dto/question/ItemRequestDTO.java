@@ -3,6 +3,8 @@ package io.ezsurvey.dto.question;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.web.util.HtmlUtils;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,7 +34,7 @@ public class ItemRequestDTO {
 	public ItemServiceDTO toServiceDTO() {
 		return ItemServiceDTO.builder()
 				.value(value)
-				.vallabel(vallabel)
+				.vallabel(HtmlUtils.htmlEscape(vallabel))
 				.picture(picture)
 				.build();
 	}

@@ -1,30 +1,42 @@
-// summernote 편집기 초기화
-$('.summernote').summernote({
-	toolbar: [
-		// [groupName, [list of button]]
-		['style', ['bold', 'italic', 'underline', 'clear']],
-		['font', ['strikethrough', 'superscript', 'subscript']],
-		['fontsize', ['fontsize']],
-		['color', ['color']],
-		['para', ['ul', 'ol', 'paragraph']],
-		['height', ['height']]
-	],
-	lang: 'ko-KR',
-	callbacks: {
-		// summernote 편집기에서 포커스 해제될 때 불필요한 공백을 제거
-		onBlur: function() {
-			trimSummernote();
-		}
-	}
+// summernote 편집기를 DOM 완성 전에 초기화하면 편집기의 기능이 동작하지 않으므로 주의
+$(function() {
+	initializeSummernote();
 });
 
+// summernote 편집기를 초기화하는 함수
+function initializeSummernote() {
+	$('.summernote').summernote({
+		toolbar: [
+			// [groupName, [list of button]]
+			['style', ['bold', 'italic', 'underline', 'clear']],
+			['font', ['strikethrough', 'superscript', 'subscript']],
+			['fontsize', ['fontsize']],
+			['color', ['color']],
+			['para', ['ul', 'ol', 'paragraph']],
+			['height', ['height']]
+		],
+		lang: 'ko-KR',
+		callbacks: {
+			// summernote 편집기에서 포커스 해제될 때 불필요한 공백을 제거; onBlur 적용시 편집기의 각종 버튼 클릭할 때마다 커서가 처음으로 돌아가는 문제 발생
+			/*
+			onBlur: function() {
+				trimSummernote();
+			}
+			*/
+		},
+		inheritPlaceholder: true
+	}); // end of summernote()	
+}
+
 // sumbit 이벤트
-document.querySelector('form').addEventListener('submit', function(e) {
-	trimSummernote();
-	
-	// 기본 이벤트를 제거하면 Spring의 form:form 태그와 연동된 에러 메시지 UI를 수동으로 처리해야 함
-	// e.preventDefault();
-});
+for(const f of document.querySelectorAll('form')) {
+	f.addEventListener('submit', function(e) {
+		trimSummernote();
+		
+		// 기본 이벤트를 제거하면 Spring의 form:form 태그와 연동된 에러 메시지 UI를 수동으로 처리해야 함
+		// e.preventDefault();
+	});
+}
 
 // summernote 편집기에서 불필요한 공백을 제거하는 함수
 function trimSummernote() {
