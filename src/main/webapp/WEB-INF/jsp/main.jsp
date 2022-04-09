@@ -11,7 +11,7 @@
 	<input type="hidden" name="field" value="title">
 	<ul>
 		<li>
-			<input type="text" name="word">
+			<input type="search" name="word">
 		</li>
 		<li>
 			<label class="label-button">

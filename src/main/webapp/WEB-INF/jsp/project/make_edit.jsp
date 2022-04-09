@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<link rel="stylesheet" href="/summernote-0.8.18-dist/summernote-lite.min.css">
 <link rel="stylesheet" href="/css/survey.css">
 <main <c:if test="${link eq 'edit'}">data-title="${title} · ${requestDTO.title}"</c:if>>
 <div class="title">
@@ -20,7 +21,7 @@
 		</li>
 		<li>
 			<form:label path="content">내용</form:label>
-			<form:textarea path="content"/>
+			<form:textarea path="content" cssClass="summernote"/>
 			<form:errors path="content" cssClass="error notice" element="div"/>
 		</li>
 		<li class="toggle">
@@ -95,7 +96,10 @@
 	</ul>
 </form:form>
 </article>
+<script type="text/javascript" src="/summernote-0.8.18-dist/summernote-lite.min.js"></script>
+<script type="text/javascript" src="/summernote-0.8.18-dist/summernote-ko-KR.min.js"></script>
 <script type="text/javascript" src="/js/UIUtil.js"></script>
 <script type="text/javascript" src="/js/ui/survey.js"></script>
 <script type="text/javascript" src="/js/ajax/survey.js"></script>
+<script type="text/javascript" src="/js/onload/summernote.js"></script>
 </main>

@@ -9,7 +9,7 @@ function clearChildNodes(parents) {
 
 // textarea에서 입력이 일어나면 발생하는 이벤트
 document.addEventListener('input', function(e) { // 문항 태그의 경우 비동기 통신 후 삭제될 수 있어서 동적 이벤트 바인딩 필요
-	if(e.target.tagName.toLowerCase()==='textarea') { // HTML 문서의 태그는 (실제 태그명을 어떻게 작성했든) tagName 값이 항상 대문자이지만, svg처럼 XML 기반인 경우에는 원래 태그명의 대소문자를 보존함
+	if(e.target.tagName.toLowerCase()==='textarea' && !e.target.matches('.summernote')) { // HTML 문서의 태그는 (실제 태그명을 어떻게 작성했든) tagName 값이 항상 대문자이지만, svg처럼 XML 기반인 경우에는 원래 태그명의 대소문자를 보존함
 		resizeTextarea(e.target);
 	}
 });
