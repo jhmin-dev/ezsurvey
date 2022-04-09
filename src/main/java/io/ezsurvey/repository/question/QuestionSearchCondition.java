@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils; // null인 경우 true, false 반�
 import com.querydsl.core.types.dsl.BooleanExpression;
 
 import io.ezsurvey.entity.SearchField;
+import io.ezsurvey.entity.question.Category;
 
 public class QuestionSearchCondition {
 	public static BooleanExpression contains(SearchField field, String word) {
@@ -24,5 +25,9 @@ public class QuestionSearchCondition {
 	
 	private static BooleanExpression containsContent(String word) {
 		return question.content.containsIgnoreCase(word);
+	}
+	
+	public static BooleanExpression eqCategory(Category category) {
+		return category==null ? null : question.category.eq(category);
 	}
 }

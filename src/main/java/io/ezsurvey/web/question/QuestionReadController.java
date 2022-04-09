@@ -20,6 +20,7 @@ import io.ezsurvey.dto.survey.SurveyResponseDTO;
 import io.ezsurvey.dto.user.SessionUser;
 import io.ezsurvey.entity.EnumBase;
 import io.ezsurvey.entity.SearchField;
+import io.ezsurvey.entity.question.Category;
 import io.ezsurvey.repository.EnumMapper;
 import io.ezsurvey.service.question.BookmarkQuestionReadService;
 import io.ezsurvey.service.survey.SurveyReadService;
@@ -68,14 +69,16 @@ public class QuestionReadController {
 	// BookmarkQuestion에서 검색하기 때문에 sort 기준 프로퍼티명은 question. 또는 user.으로 접근해야 함
 	@RequestMapping("/bookmark/question")
 	public String bookmark(@PageableDefault(page = 0, sort = "question.id", direction = Direction.DESC) Pageable pageable
-			, String field, String word, Model model, HttpSession session) {
+			, String category, String field, String word, Model model, HttpSession session) {
 		// 세션에 저장된 회원 정보 구하기
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
 		
 		// 로그인한 사용자가 즐겨찾기한 문항 중 전체 공개인 문항 목록 가져오기
 		Page<QuestionResponseDTO> page = Page.empty();
 		page = bookmarkQuestionReadService.findPaginationDTOByVisibilityAndUser(sessionUser.getUserId()
-				, EnumBase.findByKey(SearchField.class, field), word, pageable)
+				, EnumBase.findByKey(Category.class, category)
+				, EnumBase.findByKey(SearchField.class, field), word
+				, pageable)
 				.map(QuestionResponseDTO::new);
 		
 		// 문항 목록 관련 정보 저장

@@ -31,7 +31,7 @@
 				</li>
 				</c:if>		
 				<li>
-					<input type="text" name="word">
+					<input type="text" name="word" value="${param.word}">
 				</li>
 				<li>
 					<label class="label-button">

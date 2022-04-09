@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.ezsurvey.dto.question.QuestionPaginationDTO;
 import io.ezsurvey.entity.SearchField;
+import io.ezsurvey.entity.question.Category;
 import io.ezsurvey.entity.user.User;
 import io.ezsurvey.repository.question.BookmarkQuestionRepository;
 import io.ezsurvey.repository.user.UserRepository;
@@ -19,10 +20,10 @@ public class BookmarkQuestionReadService {
 	private final BookmarkQuestionRepository bookmarkQuestionRepository;
 	private final UserRepository userRepository;
 	
-	public Page<QuestionPaginationDTO> findPaginationDTOByVisibilityAndUser(Long userId, SearchField field, String word
-			, Pageable pageable) {
+	public Page<QuestionPaginationDTO> findPaginationDTOByVisibilityAndUser(Long userId
+			, Category category, SearchField field, String word, Pageable pageable) {
 		User user = userRepository.getById(userId);
 		
-		return bookmarkQuestionRepository.findPaginationDTOByVisibilityAndUser(user, field, word, pageable);
+		return bookmarkQuestionRepository.findPaginationDTOByVisibilityAndUser(user, category, field, word, pageable);
 	}
 }

@@ -7,11 +7,13 @@ import org.springframework.data.domain.Pageable;
 
 import io.ezsurvey.dto.question.QuestionPaginationDTO;
 import io.ezsurvey.entity.SearchField;
+import io.ezsurvey.entity.question.Category;
 import io.ezsurvey.entity.user.User;
 
 public interface CustomBookmarkQuestionRepository {
 	// 즐겨찾기: 문항
-	Page<QuestionPaginationDTO> findPaginationDTOByVisibilityAndUser(User u, SearchField field, String word, Pageable pageable);
+	Page<QuestionPaginationDTO> findPaginationDTOByVisibilityAndUser(User u
+			, Category category, SearchField field, String word, Pageable pageable);
 	
 	// 선택 항목 삭제
 	Long deleteByIdIn(List<Long> bookmarkIds);

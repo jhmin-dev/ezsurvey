@@ -16,6 +16,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import io.ezsurvey.dto.question.QuestionPaginationDTO;
 import io.ezsurvey.entity.SearchField;
+import io.ezsurvey.entity.question.Category;
 import io.ezsurvey.entity.survey.Visibility;
 import io.ezsurvey.entity.user.User;
 import io.ezsurvey.repository.QuerydslUtil;
@@ -26,7 +27,8 @@ public class CustomBookmarkQuestionRepositoryImpl implements CustomBookmarkQuest
 	private final JPAQueryFactory jpaQueryFactory;
 	
 	@Override
-	public Page<QuestionPaginationDTO> findPaginationDTOByVisibilityAndUser(User u, SearchField field, String word, Pageable pageable) {
+	public Page<QuestionPaginationDTO> findPaginationDTOByVisibilityAndUser(User u
+			, Category category, SearchField field, String word, Pageable pageable) {
 		JPAQuery<QuestionPaginationDTO> content = jpaQueryFactory
 				.select(Projections.fields(QuestionPaginationDTO.class
 						, bookmarkQuestion.id.as("bookmarkId"), question.id.as("questionId"), question.category
@@ -39,6 +41,7 @@ public class CustomBookmarkQuestionRepositoryImpl implements CustomBookmarkQuest
 				.innerJoin(bookmarkQuestion.question.survey, survey)
 				.where(survey.visibility.eq(Visibility.PUBLIC)
 						, bookmarkQuestion.user.eq(u)
+						, QuestionSearchCondition.eqCategory(category)
 						, QuestionSearchCondition.contains(field, word));
 		
 		// 페이징과 정렬 처리
@@ -51,6 +54,7 @@ public class CustomBookmarkQuestionRepositoryImpl implements CustomBookmarkQuest
 				.innerJoin(bookmarkQuestion.question.survey, survey)
 				.where(survey.visibility.eq(Visibility.PUBLIC)
 						, bookmarkQuestion.user.eq(u)
+						, QuestionSearchCondition.eqCategory(category)
 						, QuestionSearchCondition.contains(field, word));
 		
 		// 총 레코드 수가 페이지 크기보다 작거나, 마지막 페이지인 경우 마지막 인자의 함수(쿼리)를 실행하지 않음
