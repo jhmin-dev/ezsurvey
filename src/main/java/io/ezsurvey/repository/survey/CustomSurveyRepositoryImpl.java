@@ -26,7 +26,7 @@ public class CustomSurveyRepositoryImpl implements CustomSurveyRepository {
 	private final JPAQueryFactory jpaQueryFactory;
 	
 	@Override
-	public Page<SurveyPaginationDTO> findByVisibility(SearchField field, String word, Pageable pageable) {
+	public Page<SurveyPaginationDTO> findPaginationDTOByVisibility(SearchField field, String word, Pageable pageable) {
 		JPAQuery<SurveyPaginationDTO> content = jpaQueryFactory
 				.select(Projections.fields(SurveyPaginationDTO.class
 						, survey.id.as("surveyId")
@@ -52,7 +52,7 @@ public class CustomSurveyRepositoryImpl implements CustomSurveyRepository {
 	}
 
 	@Override
-	public Page<SurveyPaginationDTO> findByUser(User u, SearchField field, String word, Pageable pageable) {
+	public Page<SurveyPaginationDTO> findPaginationDTOByUser(User u, SearchField field, String word, Pageable pageable) {
 		JPAQuery<SurveyPaginationDTO> content = jpaQueryFactory
 				.select(Projections.fields(SurveyPaginationDTO.class
 						, survey.id.as("surveyId")

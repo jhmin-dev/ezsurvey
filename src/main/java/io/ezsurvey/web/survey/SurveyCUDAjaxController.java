@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.ezsurvey.dto.survey.SurveyCopyDTO;
 import io.ezsurvey.dto.user.SessionUser;
 import io.ezsurvey.service.survey.BookmarkSurveyCUDService;
+import io.ezsurvey.service.survey.BookmarkSurveyReadService;
 import io.ezsurvey.service.survey.SurveyCUDService;
 import io.ezsurvey.service.survey.SurveyReadService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class SurveyCUDAjaxController {
 	private final BookmarkSurveyCUDService bookmarkSurveyCUDService;
+	private final BookmarkSurveyReadService bookmarkSurveyReadService;
 	private final SurveyCUDService surveyCUDService;
 	private final SurveyReadService surveyReadService;
 	
@@ -60,13 +62,13 @@ public class SurveyCUDAjaxController {
 		}
 		else {
 			Long userId = sessionUser.getUserId();
-			Long bookmarkId = bookmarkSurveyCUDService.getBookmark(surveyId, userId);
+			Long bookmarkId = bookmarkSurveyReadService.getIdBySurveyIdAndUserId(surveyId, userId);
 			if(bookmarkId==null) { // 기존에 즐겨찾기되어 있지 않으면 추가
-				bookmarkSurveyCUDService.insertBookmark(surveyId, userId);
+				bookmarkSurveyCUDService.insert(surveyId, userId);
 				map.put("result", "inserted");
 			}
 			else { // 기존에 즐겨찾기되어 있으면 삭제
-				bookmarkSurveyCUDService.deleteBookmark(bookmarkId);
+				bookmarkSurveyCUDService.delete(bookmarkId);
 				map.put("result", "deleted");
 			}
 		}
@@ -88,7 +90,7 @@ public class SurveyCUDAjaxController {
 			}
 			else {
 				Long userId = sessionUser.getUserId();
-				Long affected_rows = bookmarkSurveyCUDService.deleteBookmarksByIdIn(bookmarkIds);
+				Long affected_rows = bookmarkSurveyCUDService.deleteByIdIn(bookmarkIds);
 	
 				map.put("result", "success");
 				map.put("affected_rows", affected_rows);

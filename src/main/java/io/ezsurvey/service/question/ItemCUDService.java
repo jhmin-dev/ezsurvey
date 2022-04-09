@@ -25,7 +25,7 @@ public class ItemCUDService {
 	private final ItemRepository itemRepository;
 	
 	// 응답 범주 추가
-	public List<Item> insertList(List<ItemServiceDTO> serviceDTOs) {
+	public List<Item> insert(List<ItemServiceDTO> serviceDTOs) {
 		return serviceDTOs.stream().map(item -> itemRepository.save(item.toEntity())).collect(Collectors.toList());
 	}
 	

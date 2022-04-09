@@ -55,7 +55,7 @@ public class SurveyReadController {
 		
 		// 로그인되어 있는 경우 현재 설문조사를 즐겨찾기했는지 확인
 		if(sessionUser!=null) {
-			responseDTO.setHasBookmarked(bookmarkSurveyService.existsBookmark(surveyId, sessionUser.getUserId()));
+			responseDTO.setHasBookmarked(bookmarkSurveyService.existsBySurveyIdAndUserId(surveyId, sessionUser.getUserId()));
 		}
 		model.addAttribute("responseDTO", responseDTO);
 		
@@ -93,7 +93,7 @@ public class SurveyReadController {
 			, String field, String word, Model model) {
 		// 전체 공개인 설문조사 목록 가져오기
 		Page<SurveyResponseDTO> page = Page.empty();
-		page = surveyReadService.findSurveyByVisibility(EnumBase.findByKey(SearchField.class, field), word, pageable)
+		page = surveyReadService.findPaginationDTOByVisibility(EnumBase.findByKey(SearchField.class, field), word, pageable)
 				.map(SurveyResponseDTO::new);
 
 		// 설문조사 목록 관련 정보 저장
@@ -116,7 +116,7 @@ public class SurveyReadController {
 		
 		// 로그인한 사용자가 생성한 설문조사 목록 가져오기
 		Page<SurveyResponseDTO> page = Page.empty();
-		page = surveyReadService.findSurveyByUser(sessionUser.getUserId()
+		page = surveyReadService.findPaginationDTOByUserId(sessionUser.getUserId()
 				, EnumBase.findByKey(SearchField.class, field), word, pageable)
 				.map(SurveyResponseDTO::new);
 		
@@ -141,7 +141,7 @@ public class SurveyReadController {
 		
 		// 로그인한 사용자가 즐겨찾기한 설문조사 중 전체 공개인 설문조사 목록 가져오기
 		Page<SurveyResponseDTO> page = Page.empty();
-		page = bookmarkSurveyService.getByVisibilityAndUser(sessionUser.getUserId()
+		page = bookmarkSurveyService.findPaginationDTOByVisibilityAndUserId(sessionUser.getUserId()
 				, EnumBase.findByKey(SearchField.class, field), word, pageable)
 				.map(SurveyResponseDTO::new);
 		

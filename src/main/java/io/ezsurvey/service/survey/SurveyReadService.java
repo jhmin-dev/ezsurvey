@@ -22,14 +22,14 @@ public class SurveyReadService {
 	private final SurveyRepository surveyRepository;
 	private final UserRepository userRepository;
 
-	public Page<SurveyPaginationDTO> findSurveyByVisibility(SearchField field, String word, Pageable pageable) {
-		return surveyRepository.findByVisibility(field, word, pageable);
+	public Page<SurveyPaginationDTO> findPaginationDTOByVisibility(SearchField field, String word, Pageable pageable) {
+		return surveyRepository.findPaginationDTOByVisibility(field, word, pageable);
 	}
 
-	public Page<SurveyPaginationDTO> findSurveyByUser(Long userId, SearchField field, String word, Pageable pageable) {
+	public Page<SurveyPaginationDTO> findPaginationDTOByUserId(Long userId, SearchField field, String word, Pageable pageable) {
 		User user = userRepository.getById(userId);
 		
-		return surveyRepository.findByUser(user, field, word, pageable);
+		return surveyRepository.findPaginationDTOByUser(user, field, word, pageable);
 	}
 
 	public SurveyServiceDTO getServiceDTOById(Long surveyId) {

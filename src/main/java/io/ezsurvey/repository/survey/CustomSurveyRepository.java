@@ -12,10 +12,10 @@ import io.ezsurvey.entity.user.User;
 
 public interface CustomSurveyRepository {
 	// 둘러보기
-	Page<SurveyPaginationDTO> findByVisibility(SearchField field, String word, Pageable pageable);
+	Page<SurveyPaginationDTO> findPaginationDTOByVisibility(SearchField field, String word, Pageable pageable);
 	
 	// 내 설문조사
-	Page<SurveyPaginationDTO> findByUser(User u, SearchField field, String word, Pageable pageable);
+	Page<SurveyPaginationDTO> findPaginationDTOByUser(User u, SearchField field, String word, Pageable pageable);
 	
 	// 설문조사 상세
 	SurveyServiceDTO getServiceDTOById(Long surveyId);

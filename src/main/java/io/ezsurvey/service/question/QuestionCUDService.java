@@ -30,7 +30,6 @@ public class QuestionCUDService {
 	private EntityManager entityManager;
 	
 	private final ItemCUDService itemCUDService;
-	private final ItemReadService itemReadService;
 	private final QuestionRepository questionRepository;
 	private final SurveyRepository surveyRepository;
 	
@@ -40,7 +39,7 @@ public class QuestionCUDService {
 		
 		Question question = questionRepository.save(serviceDTO.toEntity());
 		
-		List<Item> items = itemCUDService.insertList(itemServiceDTOs.stream()
+		List<Item> items = itemCUDService.insert(itemServiceDTOs.stream()
 				.map(item -> item.updateQuestion(question)).collect(Collectors.toList()));
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -68,7 +67,7 @@ public class QuestionCUDService {
 				.map(originalId -> {
 					Question clone = questionRepository.findById(originalId).get();
 					Long subquestions = clone.getSubquestions(); // PK 새로 할당하기 전 원본의 자식 문항 수
-					copyOneBySurvey(cloneSurvey, clone, null);
+					copy(cloneSurvey, clone, null);
 
 					return new ParentCopyDTO(clone, originalId, subquestions);
 				}) // 부모 문항들을 모두 복제
@@ -82,12 +81,12 @@ public class QuestionCUDService {
 				}) // ParentCopyDTO의 스트림을 ChildCopyDTO의 스트림으로 변환(1:N)
 				.forEach(childCopyDTO -> {
 					Question cloneChild = questionRepository.findById(childCopyDTO.getOriginalChildId()).get();
-					copyOneBySurvey(cloneSurvey, cloneChild, childCopyDTO.getCloneParent());
+					copy(cloneSurvey, cloneChild, childCopyDTO.getCloneParent());
 				}); // 자식 문항들을 모두 복제
 	}
 	
-	// 설문조사 단위로 문항 복제
-	private void copyOneBySurvey(Survey survey, Question clone, Question parent) {
+	// 개별 문항 복제
+	private void copy(Survey survey, Question clone, Question parent) {
 		// 원본 문항의 PK와 응답 범주 수
 		Long originalId = clone.getId();
 		Long items = clone.getItems();
