@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import io.ezsurvey.dto.EnumDTO;
 import io.ezsurvey.dto.question.QuestionResponseDTO;
@@ -44,6 +45,17 @@ public class QuestionReadController {
 		this.surveyReadService = surveyReadService;
 		this.enumMapper = enumMapper;
 		this.searchField = searchField;
+	}
+	
+	/* 미리보기 */
+	// 즐겨찾기: 문항에서 접속 가능한 요청 URL
+	// 문항 번호를 PathVariable이 아닌 일회용 FlashAttribute로 변경 후 리다이렉트
+	@RequestMapping("/project/{surveyId}/preview/question/{questionId}")
+	public String preview(@PathVariable(name = "surveyId") Long surveyId
+			, @PathVariable(name = "questionId") Long questionId, RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute("questionId", questionId);
+		
+		return "redirect:/project/" + surveyId + "/preview";
 	}
 	
 	/* 문항 관리 */

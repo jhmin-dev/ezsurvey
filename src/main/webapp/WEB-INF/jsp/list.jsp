@@ -172,7 +172,11 @@
 					${element.title}
 				</a>
 				</c:if>
-				<c:if test="${type eq 'question'}">${element.varlabel}</c:if>
+				<c:if test="${type eq 'question'}">
+				<a href="/project/${element.surveyId}/preview/question/${element.questionId}">
+					${element.varlabel}
+				</a>
+				</c:if>
 			</li>
 			<c:if test="${type eq 'survey'}">
 			<li>

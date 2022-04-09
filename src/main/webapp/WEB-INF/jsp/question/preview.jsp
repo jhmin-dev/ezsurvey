@@ -7,5 +7,6 @@
 <article>
 ${responseDTO.title}
 ${responseDTO.surveyId}
+파라미터 테스트 ${questionId}
 </article>
 </main>

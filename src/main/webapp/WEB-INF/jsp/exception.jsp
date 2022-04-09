@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" href="/css/exception.css">
-<main>
+<main data-title="오류가 발생했습니다!">
 <div class="title">
 <c:choose>
 <c:when test="${!empty errorCode}">
@@ -12,7 +12,7 @@ ${errorCode.status} ${errorCode}
 ${status} ${error}
 </c:when>
 <c:otherwise>
-오류가 발생했어요!
+ERROR
 </c:otherwise>
 </c:choose>
 </div>

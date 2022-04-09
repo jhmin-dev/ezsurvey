@@ -34,14 +34,13 @@ public class QuestionResponseDTO {
 	public QuestionResponseDTO(QuestionPaginationDTO paginationDTO) {
 		this.questionId = paginationDTO.getQuestionId();
 		this.bookmarkId = paginationDTO.getBookmarkId();
+		this.surveyId = paginationDTO.getSurveyId();
 		this.category = paginationDTO.getCategory().getKey();
-		this.parentId = paginationDTO.getParentId();
 		this.branched = paginationDTO.getBranched();
 		this.randomized = paginationDTO.getRandomized();
 		this.idx = paginationDTO.getIdx();
 		this.subidx = paginationDTO.getSubidx();
 		this.varlabel = paginationDTO.getVarlabel();
-		this.content = paginationDTO.getContent();
 		
 		// 테이블에 없는 가상 컬럼
 		this.bookmarks = paginationDTO.getBookmarks();

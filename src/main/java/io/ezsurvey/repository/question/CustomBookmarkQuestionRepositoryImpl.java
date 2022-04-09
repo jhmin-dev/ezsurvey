@@ -31,10 +31,11 @@ public class CustomBookmarkQuestionRepositoryImpl implements CustomBookmarkQuest
 			, Category category, SearchField field, String word, Pageable pageable) {
 		JPAQuery<QuestionPaginationDTO> content = jpaQueryFactory
 				.select(Projections.fields(QuestionPaginationDTO.class
-						, bookmarkQuestion.id.as("bookmarkId"), question.id.as("questionId"), question.category
+						, bookmarkQuestion.id.as("bookmarkId"), survey.id.as("surveyId")
+						, question.id.as("questionId"), question.category
 						, question.branched, question.randomized
 						, question.idx, question.subidx
-						, question.varlabel, question.content
+						, question.varlabel
 						, question.bookmarks, question.items, question.subquestions))
 				.from(bookmarkQuestion)
 				.innerJoin(bookmarkQuestion.question, question) // where절에서 question과 survey의 필드로 검색하기 때문에 innerJoin 필요

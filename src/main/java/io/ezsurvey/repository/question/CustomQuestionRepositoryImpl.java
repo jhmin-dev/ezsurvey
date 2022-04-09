@@ -25,7 +25,7 @@ public class CustomQuestionRepositoryImpl implements CustomQuestionRepository {
 				, question.id.as("questionId"), question.category
 				, question.branched, question.randomized
 				, question.idx, question.subidx
-				, question.varlabel, question.content
+				, question.varlabel
 				, question.bookmarks, question.items, question.subquestions))
 				.from(question)
 				.where(question.survey.id.eq(surveyId), question.parent.id.isNull() // 자식 문항이 아닌 문항들만 조회
