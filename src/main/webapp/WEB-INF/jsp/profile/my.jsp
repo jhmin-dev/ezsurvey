@@ -3,17 +3,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <main>
 <div class="title">
-	설정
+	내 정보 보기
 </div>
 <article>
 <div class="modal">
-	<div class="modal-content grid choose">
+	<div class="modal-content grid plain">
 		<div>
 			<i class="bi bi-bell-fill"></i>
 			<span>준비 중인 기능입니다.</span>
 		</div>
 		<button type="submit">확인</button>
-		<button type="button" onclick="location.href = '/delete/profile'">계정 탈퇴</button>
 	</div>
 </div>
 </article>

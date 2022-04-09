@@ -39,3 +39,43 @@ document.addEventListener('click', function(e) {
 		toggle_switch.classList.toggle('active');
 	}
 });
+
+// 모달 여는 함수
+function openModal() {
+	const modal = document.querySelector('.modal');
+	if(!modal) return;
+	
+	modal.classList.add('show'); // 모달 열기
+	
+	const modalButton = modal.querySelector('[type=submit]');
+	if(modalButton) modalButton.focus(); // 확인 버튼에 포커스; 엔터 키로 모달 닫힘
+}
+
+// 모달 닫는 함수
+function closeModal(e, url) {
+	const modal = document.querySelector('.modal');
+	if(!modal) return;
+	
+	const modalButton = modal.querySelector('[type=submit]');
+	if(e.target===modal || e.target===modalButton) { // 모달 배경 영역 또는 확인 버튼을 클릭하면
+		modal.classList.remove('show'); // 모달 닫기
+		if(url) location.href = url // 인자로 주소 전달시 해당 주소로 이동
+	}
+}
+
+// 모달 배경 크기 자동 조절하는 함수
+function resizeModal() {
+	const modal = document.querySelector('.modal');
+	if(!modal) return;
+	
+	modal.style.width = document.body.scrollWidth + 'px'; // 모달 배경 영역의 너비를 현재 body 태그 너비로 변경
+	modal.style.height = document.body.scrollHeight + 'px'; // 모달 배경 영역의 높이를 현재 body 태그 높이로 변경
+}
+
+// 페이지 최초 진입시와 브라우저 크기 변경시에 발생하는 이벤트
+window.addEventListener('load', function() {
+	resizeModal();
+});
+window.addEventListener('resize', function() {
+	resizeModal();
+});
