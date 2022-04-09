@@ -15,7 +15,10 @@
 
 ## 배포 환경
 
-- Ubuntu 20.04.4 LTS on Oracle Cloud VM
+- Oracle Cloud Always Free Resources
+	+ [VM.Standard.E2.1.Micro](https://docs.oracle.com/en-us/iaas/Content/Compute/References/computeshapes.htm#vmshapes__vm-standard)
+	+ [Autonomous Data Warehouse](https://docs.oracle.com/en-us/iaas/Content/Database/Concepts/adboverview.htm#workloads)
+- Ubuntu 20.04.4 LTS
 - Apache Tomcat 9.0.31
 - Redis server 5.0.7
-- Oracle Cloud Autonomous Database (Oracle Database 19c)
+- Oracle Database 19c

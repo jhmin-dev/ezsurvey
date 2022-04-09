@@ -76,7 +76,7 @@
 	<li><hr></li>
 	<li>
 		<div class="survey-bookmark">
-			<label class="label-button">
+			<label class="label-button  <c:if test="${empty user}">disabled</c:if>">
 				<input type="button" onclick="toggleBookmark();">
 				<i class="bi bi-bookmark bookmark" data-has-bookmarked="${responseDTO.hasBookmarked}"></i>
 			</label>	

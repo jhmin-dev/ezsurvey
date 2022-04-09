@@ -4,11 +4,13 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import io.ezsurvey.entity.question.BookmarkQuestion;
 import io.ezsurvey.entity.question.Category;
 import io.ezsurvey.entity.question.Question;
 import io.ezsurvey.entity.survey.Status;
 import io.ezsurvey.entity.survey.Survey;
 import io.ezsurvey.entity.survey.Visibility;
+import io.ezsurvey.repository.question.BookmarkQuestionRepository;
 import io.ezsurvey.repository.question.QuestionRepository;
 import io.ezsurvey.repository.survey.SurveyRepository;
 import io.ezsurvey.repository.user.UserRepository;
@@ -20,6 +22,7 @@ public class DataLoader implements ApplicationRunner {
 	private final UserRepository userRepository;
 	private final SurveyRepository surveyRepository;
 	private final QuestionRepository questionRepository;
+	private final BookmarkQuestionRepository bookmarkQuestionRepository;
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
@@ -33,6 +36,17 @@ public class DataLoader implements ApplicationRunner {
 					.content("하위 문항을 실험 중입니다" + i)
 					.build();
 			questionRepository.save(question);
+		}
+		*/
+		
+		// 문항 즐겨찾기 실험용
+		/*
+		for (long i=24;i<33;i++) {
+			BookmarkQuestion bq = BookmarkQuestion.builder()
+					.user(userRepository.getById(22L))
+					.question(questionRepository.getById(i))
+					.build();
+			bookmarkQuestionRepository.save(bq);
 		}
 		*/
 		
