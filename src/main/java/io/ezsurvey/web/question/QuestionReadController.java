@@ -15,9 +15,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.ezsurvey.dto.EnumDTO;
+import io.ezsurvey.dto.question.QuestionResponseDTO;
 import io.ezsurvey.dto.survey.SurveyResponseDTO;
 import io.ezsurvey.dto.user.SessionUser;
+import io.ezsurvey.entity.EnumBase;
+import io.ezsurvey.entity.SearchField;
 import io.ezsurvey.repository.EnumMapper;
+import io.ezsurvey.service.question.BookmarkQuestionReadService;
 import io.ezsurvey.service.survey.SurveyReadService;
 import io.ezsurvey.web.PagingUtil;
 import io.ezsurvey.web.SurveyAuthUtil;
@@ -26,13 +30,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class QuestionReadController {
+	private final BookmarkQuestionReadService bookmarkQuestionReadService;
 	private final SurveyReadService surveyReadService;
 	private final EnumMapper enumMapper; // AppConfig에 등록
 	private final List<EnumDTO> searchField;
 	
 	// 생성자 방식 의존성 주입
-	public QuestionReadController(SurveyReadService surveyReadService, EnumMapper enumMapper
+	public QuestionReadController(BookmarkQuestionReadService bookmarkQuestionReadService
+			, SurveyReadService surveyReadService, EnumMapper enumMapper
 			, @Qualifier("searchFieldQuestion") List<EnumDTO> searchField) {
+		this.bookmarkQuestionReadService = bookmarkQuestionReadService;
 		this.surveyReadService = surveyReadService;
 		this.enumMapper = enumMapper;
 		this.searchField = searchField;
@@ -57,6 +64,7 @@ public class QuestionReadController {
 	}
 
 	/* 즐겨찾기: 문항 */
+	// Spring Security에서 인증을 요구하므로 sessionUser의 null 검사 불필요
 	// BookmarkQuestion에서 검색하기 때문에 sort 기준 프로퍼티명은 question. 또는 user.으로 접근해야 함
 	@RequestMapping("/bookmark/question")
 	public String bookmark(@PageableDefault(page = 0, sort = "question.id", direction = Direction.DESC) Pageable pageable
@@ -65,8 +73,10 @@ public class QuestionReadController {
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
 		
 		// 로그인한 사용자가 즐겨찾기한 문항 중 전체 공개인 문항 목록 가져오기
-		Page<Object> page = Page.empty();
-		
+		Page<QuestionResponseDTO> page = Page.empty();
+		page = bookmarkQuestionReadService.findPaginationDTOByVisibilityAndUser(sessionUser.getUserId()
+				, EnumBase.findByKey(SearchField.class, field), word, pageable)
+				.map(QuestionResponseDTO::new);
 		
 		// 문항 목록 관련 정보 저장
 		setQuestionAttributes(model, page);
@@ -78,7 +88,7 @@ public class QuestionReadController {
 		return "/list"; // Tiles 설정명 반환
 	}
 	
-	private void setQuestionAttributes(Model model, Page<Object> page) {
+	private void setQuestionAttributes(Model model, Page<QuestionResponseDTO> page) {
 		model.addAttribute("page", page);
 		PagingUtil.setPageAttributes(model, page, 5);
 		model.addAttribute("searchField", searchField);

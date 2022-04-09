@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class QuestionPaginationDTO {
 	private Long questionId;
+	private Long bookmarkId;
 	private Category category;
 	private Long parentId;
 	private Boolean branched;

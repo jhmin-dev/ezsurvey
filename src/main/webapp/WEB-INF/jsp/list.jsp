@@ -86,7 +86,7 @@
 				</label>
 			</li>
 			<li>
-				문항 수
+				문항
 				<label class="label-button">
 					<input type="button" onclick="toggleSort(this);" data-field="questions" data-direction="DESC">
 					<i class="bi bi-sort-numeric-down-alt"></i>
@@ -119,14 +119,14 @@
 				유형
 			</li>
 			<li>
-				응답 범주 수
+				응답 범주
 				<label class="label-button">
 					<input type="button" onclick="toggleSort(this);" data-field="items" data-direction="DESC">
 					<i class="bi bi-sort-numeric-down-alt"></i>
 				</label>
 			</li>
 			<li>
-				하위 문항 수
+				하위 문항
 				<label class="label-button">
 					<input type="button" onclick="toggleSort(this);" data-field="subquestions" data-direction="DESC">
 					<i class="bi bi-sort-numeric-down-alt"></i>
@@ -172,12 +172,18 @@
 					${element.title}
 				</a>
 				</c:if>
-				<c:if test="${type eq 'question'}">${element.content}</c:if>
+				<c:if test="${type eq 'question'}">${element.varlabel}</c:if>
 			</li>
+			<c:if test="${type eq 'survey'}">
 			<li>
-				<c:if test="${type eq 'survey'}">${element.questions}</c:if>
-				<c:if test="${type eq 'question'}">${element.category}</c:if>
+				${element.questions}
 			</li>
+			</c:if>
+			<c:if test="${type eq 'question'}">
+			<li data-category="${element.category}">
+			
+			</li>	
+			</c:if>
 			<li>
 				<c:if test="${type eq 'survey'}">${element.bookmarks}</c:if>
 				<c:if test="${type eq 'question'}">${element.items}</c:if>

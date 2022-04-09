@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +37,16 @@ public class QuestionCUDService {
 	// 문항 추가
 	public Map<String, Object> insert(QuestionServiceDTO serviceDTO, List<ItemServiceDTO> itemServiceDTOs, Long surveyId) {
 		serviceDTO.setSurvey(surveyRepository.getById(surveyId));
+		
+		// 현재 설문조사 내 idx 최댓값을 구하고, 현재 추가하려는 문항의 idx를 그보다 1 큰 값으로 설정
+		Integer maxIdx = questionRepository.getMaxIdxBySurveyId(surveyId);
+		if(maxIdx==null) maxIdx = 0;
+		serviceDTO.setIdx(maxIdx+1);
+		
+		// 사용자가 변수명을 입력하지 않은 경우, content로 자동 설정
+		if(StringUtils.isBlank(serviceDTO.getVarlabel())) {
+			serviceDTO.setVarlabel(StringUtils.abbreviate(serviceDTO.getContent(), 256));
+		}
 		
 		Question question = questionRepository.save(serviceDTO.toEntity());
 		

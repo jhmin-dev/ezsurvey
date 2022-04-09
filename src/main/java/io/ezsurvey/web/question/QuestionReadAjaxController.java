@@ -29,20 +29,20 @@ public class QuestionReadAjaxController {
 		int pageSize = 10;
 		List<QuestionResponseDTO> list = questionReadService.findPaginationDTOBySurveyId(surveyId, lastQuestionId, pageSize)
 				.stream().map(QuestionResponseDTO::new).collect(Collectors.toList());
-		map.put("list", list);
 		
+		// 더보기 가능 여부 저장
+		boolean hasMore = false;
+		if(list.size()>pageSize) { // 반환된 목록이 지정한 페이지 크기보다 큰 경우(메서드는 pageSize+1건만큼 조회하여 반환)
+			hasMore = true;
+			list.remove(pageSize); // 추가로 읽어 온 마지막 요소를 제거
+		}
+		map.put("list", list);
+		map.put("hasMore", hasMore);
+		
+		// 마지막 문항 번호 저장
 		if(list.size()>0) { // 목록이 비어 있지 않으면
-			Long newLastQuestionId = list.get(list.size()-1).getQuestionId(); // 오름차순 정렬이므로 가장 마지막 요소의 문항 번호가 최댓값
+			Long newLastQuestionId = list.get(list.size()-1).getQuestionId();
 			map.put("last", newLastQuestionId);
-			
-			boolean hasMore = false;
-			if(lastQuestionId!=null) { // 두 번째 페이지부터는 항상 쿼리로 더보기할 문항이 있는지 확인
-				hasMore = questionReadService.existsBySuveyAndId(surveyId, newLastQuestionId);
-			}
-			else if(totalElements>pageSize) { // 첫 번째 페이지는 총 문항 수를 이용하여 더보기할 문항이 있는지 판단
-				hasMore = true;
-			}
-			map.put("hasMore", hasMore);
 		}
 		
 		map.put("category", enumMapper.get("Category"));

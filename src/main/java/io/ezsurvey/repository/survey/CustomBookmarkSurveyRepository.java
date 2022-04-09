@@ -15,7 +15,7 @@ public interface CustomBookmarkSurveyRepository {
 	Page<SurveyPaginationDTO> findPaginationDTOByVisibilityAndUser(User u, SearchField field, String word, Pageable pageable);
 	
 	// 1건 조회
-	BookmarkSurvey getBySurveyAndUser(Long surveyId, Long userId);
+	BookmarkSurvey getBySurveyIdAndUserId(Long surveyId, Long userId);
 	
 	// 선택 항목 삭제
 	Long deleteByIdIn(List<Long> bookmarkIds);

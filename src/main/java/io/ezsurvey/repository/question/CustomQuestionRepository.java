@@ -20,4 +20,7 @@ public interface CustomQuestionRepository {
 	
 	// 문항 일괄 삭제
 	Long deleteByIdIn(List<Long> questionIds);
+	
+	// 설문조사 내 idx의 최댓값 구하기
+	Integer getMaxIdxBySurveyId(Long surveyId);
 }

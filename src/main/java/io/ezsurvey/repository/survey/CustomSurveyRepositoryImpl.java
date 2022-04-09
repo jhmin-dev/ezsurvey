@@ -48,7 +48,7 @@ public class CustomSurveyRepositoryImpl implements CustomSurveyRepository {
 		
 		// 총 레코드 수가 페이지 크기보다 작거나, 마지막 페이지인 경우 마지막 인자의 함수(쿼리)를 실행하지 않음
 		return PageableExecutionUtils.getPage(content.fetch(), pageable
-				, () -> count.fetch().get(0));
+				, () -> count.fetchOne());
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class CustomSurveyRepositoryImpl implements CustomSurveyRepository {
 		
 		// 총 레코드 수가 페이지 크기보다 작거나, 마지막 페이지인 경우 마지막 인자의 함수(쿼리)를 실행하지 않음
 		return PageableExecutionUtils.getPage(content.fetch(), pageable
-				, () -> count.fetch().get(0));
+				, () -> count.fetchOne());
 	}
 
 	@Override

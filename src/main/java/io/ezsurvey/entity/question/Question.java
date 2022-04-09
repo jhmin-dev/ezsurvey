@@ -89,6 +89,7 @@ public class Question {
 	@Builder
 	public Question(Survey survey, Category category, Boolean startFromOne
 			, Question parent, Boolean branched, Boolean randomized
+			, Integer idx, Integer subidx
 			, String varlabel, String content, String article, String picture) {
 		this.survey = survey;
 		this.category = category;
@@ -96,6 +97,8 @@ public class Question {
 		this.parent = parent;
 		this.branched = branched;
 		this.randomized = randomized;
+		this.idx = idx;
+		this.subidx = subidx;
 		this.varlabel = varlabel;
 		this.content = content;
 		this.article = article;

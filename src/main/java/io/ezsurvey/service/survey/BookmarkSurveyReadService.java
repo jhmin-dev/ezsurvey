@@ -28,7 +28,7 @@ public class BookmarkSurveyReadService {
 	}
 
 	public Long getIdBySurveyIdAndUserId(Long surveyId, Long userId) {
-		BookmarkSurvey bookmarkSurvey = bookmarkSurveyRepository.getBySurveyAndUser(surveyId, userId);
+		BookmarkSurvey bookmarkSurvey = bookmarkSurveyRepository.getBySurveyIdAndUserId(surveyId, userId);
 		
 		return bookmarkSurvey==null ? null : bookmarkSurvey.getId();
 	}

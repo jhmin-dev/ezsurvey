@@ -42,6 +42,8 @@ public class QuestionServiceDTO {
 				.parent(parent)
 				.branched(branched)
 				.randomized(randomized)
+				.idx(idx)
+				.subidx(subidx)
 				.varlabel(varlabel)
 				.content(content)
 				.article(article)

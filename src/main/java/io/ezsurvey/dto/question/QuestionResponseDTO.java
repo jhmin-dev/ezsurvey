@@ -11,6 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class QuestionResponseDTO {
 	private Long questionId;
+	private Long bookmarkId;
 	private Long surveyId;
 	private String category;
 	private Boolean startFromOne;
@@ -32,6 +33,7 @@ public class QuestionResponseDTO {
 	// PaginationDTO to ResponseDTO
 	public QuestionResponseDTO(QuestionPaginationDTO paginationDTO) {
 		this.questionId = paginationDTO.getQuestionId();
+		this.bookmarkId = paginationDTO.getBookmarkId();
 		this.category = paginationDTO.getCategory().getKey();
 		this.parentId = paginationDTO.getParentId();
 		this.branched = paginationDTO.getBranched();

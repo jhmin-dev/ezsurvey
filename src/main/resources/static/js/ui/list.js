@@ -31,6 +31,18 @@ if(link=='my') {
 	}
 }
 
+// 목록의 문항 유형을 한국어로 표시
+if(type=='question') {
+	let categories = {};
+	Array.apply(null, document.querySelector('select[name="category"]').options)
+		.filter(o => (o.value!=''))
+		.map(o => (categories[o.value] = o.label));
+	
+	for(const c of document.querySelectorAll('li[data-category]')) {
+		c.textContent = categories[c.dataset.category];
+	}
+}
+
 // 필드 선택시 새로고침
 const search = document.getElementById('search');
 const field = document.querySelector('select[name="field"]');

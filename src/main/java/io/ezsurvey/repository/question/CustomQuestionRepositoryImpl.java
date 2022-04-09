@@ -30,8 +30,8 @@ public class CustomQuestionRepositoryImpl implements CustomQuestionRepository {
 				.from(question)
 				.where(question.survey.id.eq(surveyId), question.parent.id.isNull() // 자식 문항이 아닌 문항들만 조회
 						, gtQuestionId(lastQuestionId))
-				.orderBy(question.id.asc())
-				.limit(pageSize)
+				.orderBy(question.idx.asc()) // idx 기준으로 정렬
+				.limit(pageSize+1) // 더보기 가능한지 확인하기 위해 지정한 페이지 크기 + 1건을 조회
 				.fetch();
 	}
 
@@ -70,6 +70,14 @@ public class CustomQuestionRepositoryImpl implements CustomQuestionRepository {
 		return jpaQueryFactory.delete(question)
 				.where(question.id.in(questionIds))
 				.execute();
+	}
+	
+	@Override
+	public Integer getMaxIdxBySurveyId(Long surveyId) {
+		return jpaQueryFactory.select(question.idx.max())
+				.from(question)
+				.where(question.survey.id.eq(surveyId))
+				.fetchOne();
 	}
 	
 	private BooleanExpression gtQuestionId(Long questionId) {
