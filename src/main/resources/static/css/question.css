@@ -1,8 +1,10 @@
 @charset "UTF-8";
 /* 공통 */
 .post-result,ul.question-type,ul.question-main,ul.question-menu {
-	padding: 15px 0;
+	margin: 0 auto;
+	padding: 15px 60px;
 	width: inherit;
+	max-width: 900px;
 }
 label {
 	display: block;

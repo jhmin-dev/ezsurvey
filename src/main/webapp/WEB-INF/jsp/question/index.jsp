@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" href="/css/list.css">
 <main data-title="${title} · ${survey.title}">
 <div class="title">
@@ -8,7 +9,9 @@
 <article data-survey="${survey.surveyId}">
 <ul class="list-top">
 	<li>
-		<div class="survey-title">《${survey.title}》</div>
+		<div class="survey-title">
+			《${survey.title}》
+		</div>
 	</li>
 	<li class="page-menu">
 		<ul>
@@ -16,7 +19,7 @@
 				<input type="button" value="새로고침" onclick="getQuestions();">
 			</li>
 			<li>
-				<input type="button" class="reverse-button" value="문항 순서 변경하기" onclick="">
+				<input type="button" class="reverse-button" value="문항 순서 변경하기" onclick="" disabled>
 			</li>
 			<li>
 				<input type="button" class="point-button" value="문항 추가하기" onclick="location.href = '/edit/project/${survey.surveyId}/make/question';">

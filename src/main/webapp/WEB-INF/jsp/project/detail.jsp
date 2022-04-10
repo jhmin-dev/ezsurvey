@@ -87,6 +87,7 @@
 		<div class="survey-menu">
 			<button type="button" class="reverse-button" onclick="copySurvey();" <c:if test="${empty user}">disabled</c:if>>복제하기</button>
 			<button type="button" onclick="location.href = '/project/${responseDTO.surveyId}/preview';">미리보기</button>
+			<button type="button" onclick="location.href = '/project';">목록으로</button>
 		</div>
 	</li>
 	<li class="no-padding"><hr></li>

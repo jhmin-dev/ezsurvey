@@ -5,6 +5,8 @@ const list_none = document.querySelector('.list-none');
 
 // 목록을 화면에 출력하는 함수
 function render(data) {
+	if(data.list.length==0) return;
+	
 	// 문서 조각 생성
 	const fragment = document.createDocumentFragment();
 	
@@ -61,4 +63,7 @@ function render(data) {
 	// 목록 노출
 	list_none.classList.add('display-none');
 	list_main.classList.remove('display-none');
+	
+	// 버튼 활성화
+	document.querySelector('.page-menu .reverse-button').disabled = false;
 }

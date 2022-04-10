@@ -2,8 +2,10 @@
 
 /* 레이아웃 */
 .list-top,.list-total,.list-main,.pagination {
+	margin: 0 auto;
 	padding: 15px 0;
 	width: inherit;
+	max-width: 1200px;
 }
 .list-none {
 	margin: 60px auto;
@@ -12,6 +14,15 @@
 .list-total {
 	justify-self: start;
 	padding: 0;
+}
+@media screen and (max-width:576px) {
+	.page-label li,.page li {
+		display: none;
+	}
+	.page-label li.lg,.page-label li.sm
+	,.page li.lg,.page li.sm {
+		display: block;
+	}
 }
 
 /* 검색 바와 버튼 */
@@ -106,9 +117,4 @@
 .pagination ul li.disabled.active div {
 	color: var(--white-subtle);
 	background-color: var(--point);
-}
-
-/* 문항 관리: 설문조사 제목 */
-.survey-title {
-	max-width: 540px;
 }

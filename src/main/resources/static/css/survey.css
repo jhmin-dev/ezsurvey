@@ -3,6 +3,7 @@
 /* 레이아웃 */
 form#make,form#edit {
 	width: inherit;
+	max-width: 900px;
 }
 form ul {
 	display: flex;

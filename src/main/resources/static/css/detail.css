@@ -3,6 +3,7 @@
 article>div,article>ul {
 	padding: 15px 0;
 	width: inherit;
+	max-width: 900px;
 }
 article>ul>li {
 	
