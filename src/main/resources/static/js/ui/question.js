@@ -14,41 +14,66 @@ const vallabelScalePlaceholders = ['매우 그렇다', '전혀 그렇지 않다'
 
 function initialize(link) {
 	if(link=='make') initializeMake();
-	else if(link=='edit') getQuestionToEdit();
+	else if(link=='edit') {
+		getQuestionToEdit();
+	}
 }
 
 // 문항 추가하는 경우의 초기화 함수
 function initializeMake(hasChildNodes) {
 	if(hasChildNodes) clearChildNodes([content, itemContainer]);
 	content.append(createFormQuestion());
-	setInputCategory();
+	resizeFormItems(setInputCategory());
+	if(hasChildNodes) initializeSummernote(); // summernote 편집기 초기화
+}
+
+// 문항 수정하는 경우의 초기화 함수
+function initializeEdit(data) {
+	// 문항 태그 만들기
+	// 주의: content의 경우 같은 이름 변수가 이미 있어서 구조 분해 할당시 append 불가능해짐
+	const {category, startFromOne, varlabel} = data.question;
+	const formQuestion = createFormQuestion(category, startFromOne, varlabel, data.question.content);
+	content.append(formQuestion);
+	initializeSummernote(); // summernote 편집기 초기화
+	
+	// 문항 유형 및 응답 범주 수 초기화
+	selectCategory.value = category;
+	setInputCategory(data.itemList.length);
+	
+	// 응답 범주 태그 만들기
+	data.itemList.forEach(function(element) {
+		const {itemId, value, vallabel} = element;
+		itemContainer.append(createFormItem(value, itemId, vallabel));
+	}); // end of forEach
 }
 
 // 문항 form 태그를 생성하는 함수
-function createFormQuestion() {
+function createFormQuestion(category, startFromOne, varlabel, content) {
 	const formQuestion = Object.assign(document.createElement('form'), {name:'question'});
 	
 	let fragmentHidden = document.createDocumentFragment();
 	fragmentHidden.append(Object.assign(document.createElement('input'), {
 		name:'category',
-		type:'hidden'
+		type:'hidden',
+		value:category||''
 	}));
 	fragmentHidden.append(Object.assign(document.createElement('input'), {
 		name:'startFromOne',
 		type:'hidden',
-		value:'true'
+		value:startFromOne||'true'
 	}));
 	formQuestion.append(fragmentHidden);
 	
 	let divVarlabel = document.createElement('div');
 	divVarlabel.append(Object.assign(document.createElement('label'), {
 		htmlFor:'varlabel',
-		textContent:'변수명',
+		textContent:'변수명'
 	}));
 	divVarlabel.append(Object.assign(document.createElement('input'), {
 		name:'varlabel',
 		type:'text',
-		placeholder:varlabelPlaceholder
+		placeholder:varlabelPlaceholder,
+		value:varlabel||''
 	}));
 	divVarlabel.append(Object.assign(document.createElement('div'), {
 		textContent:'변수명은 생략 가능하며, 최대 256자까지만 입력 가능합니다.',
@@ -64,7 +89,8 @@ function createFormQuestion() {
 	divContent.append(Object.assign(document.createElement('textarea'), {
 		name:'content',
 		className:'summernote',
-		placeholder:contentPlaceholder
+		placeholder:contentPlaceholder,
+		value:content||''
 	}));
 	divContent.append(Object.assign(document.createElement('div'), {
 		textContent:'문항 번호는 자동으로 부여됩니다.',
@@ -76,7 +102,7 @@ function createFormQuestion() {
 }
 
 // 응답 범주 form 태그를 생성하는 함수
-function createFormItem(i) {
+function createFormItem(i, itemId, vallabel) {
 	const formItem = Object.assign(document.createElement('form'), {name:'item'});
 	
 	// 응답 범주 값
@@ -90,8 +116,18 @@ function createFormItem(i) {
 	// 응답 범주 라벨
 	formItem.append(Object.assign(document.createElement('input'), {
 		name:'vallabel',
-		type:'text'
+		type:'text',
+		value:vallabel||''
 	}));
+	
+	// 응답 범주 PK
+	if(itemId) {
+		formItem.append(Object.assign(document.createElement('input'), {
+			name:'itemId',
+			type:'hidden',
+			value:itemId
+		}));		
+	}
 		
 	return formItem;
 }
@@ -110,19 +146,19 @@ function createFormFakeItem() {
 }
 
 // 문항 유형 input 태그의 값을 문항 유형 select 태그에서 선택된 값으로 변경하고, 유형에 맞게 응답 범주 수 input 태그 값과 응답 범주 form 태그 수를 변경하는 함수
-function setInputCategory() {
+function setInputCategory(items) {
 	const inputCategory = document.querySelector('form[name="question"] input[name="category"]');
 	inputCategory.value = selectCategory.options[selectCategory.selectedIndex].value;
 	itemContainer.className = 'item-container'; // item-container 외의 다른 클래스를 모두 제거
 	itemContainer.classList.add(inputCategory.value.replace('_','-')); // 선택된 문항 유형명을 클래스로 추가
 	
 	if(inputCategory.value=='multiple_choice') { // 선다형 기본값
-		inputItems.value = 4;
+		inputItems.value = items || 4;
 		inputItems.min = 1;
 		inputItems.disabled = false;
 	}
 	else if(inputCategory.value=='likert_scale') { // 척도형 기본값
-		inputItems.value = 7;
+		inputItems.value = items || 7;
 		inputItems.min = 4;
 		inputItems.disabled = false;
 	}
@@ -132,7 +168,7 @@ function setInputCategory() {
 		inputItems.disabled = true;
 	}
 	
-	resizeFormItems(inputItems.value);
+	return inputItems.value;
 }
 
 // 응답 범주 form 태그의 수를 변경하는 함수

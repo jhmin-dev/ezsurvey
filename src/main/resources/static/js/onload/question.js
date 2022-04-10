@@ -3,7 +3,7 @@ initialize(link);
 
 // 문항 유형 select 태그 값이 변하면 발생하는 이벤트
 selectCategory.addEventListener('change', function() {
-	setInputCategory();
+	resizeFormItems(setInputCategory());
 });
 
 // 응답 범주 수 input 태그 값이 변하면 발생하는 이벤트

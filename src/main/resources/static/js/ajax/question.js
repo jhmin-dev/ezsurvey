@@ -41,7 +41,6 @@ function makeQuestion() {
 			}
 			else if(param.result=='success') { // 문항 추가에 성공한 경우
 				initializeMake(true); // form 태그들 초기화
-				initializeSummernote(); // summernote 편집기 초기화
 				
 				postResultDiv.className = 'success'; // 배경색 변경
 				
@@ -88,7 +87,7 @@ function getQuestionToEdit() {
 		url:'/ajax' + location.pathname,
 		type:'GET',
 		success:function(param) {
-			console.log(param);
+			initializeEdit(param); // form 태그 초기화
 		}
 	}); // end of ajax
 }
