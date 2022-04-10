@@ -32,7 +32,7 @@
 </div>
 <ul class="list-main display-none">
 	<!-- 목록 헤더 시작 -->
-	<li class="page-label">
+	<li class="page-label noselect">
 		<ul class="${type}">
 			<li class="sm">
 				번호

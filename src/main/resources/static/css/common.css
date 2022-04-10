@@ -80,7 +80,7 @@ label {
 }
 
 /* 공통: selection */
-.noselect {
+.noselect,[type="button"],[type="submit"],select,.modal {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */

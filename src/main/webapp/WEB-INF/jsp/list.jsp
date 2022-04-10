@@ -72,7 +72,7 @@
 <c:if test="${totalElements>0}">
 <ul class="list-main">
 	<!-- 목록 헤더 시작 -->
-	<li class="page-label">
+	<li class="page-label noselect">
 		<ul class="${type}">
 			<li class="sm">
 				번호
@@ -220,7 +220,7 @@
 	</li>
 	<!-- 목록 끝 -->
 	<!-- 페이지네이션 시작 -->
-	<li class="pagination">
+	<li class="pagination noselect">
 		<ul>
 			<li <c:if test="${startPageBlock==1}">class="disabled"</c:if>>
 				<div onclick="movePage(${startPageBlock-1});">
