@@ -55,7 +55,6 @@
 		</c:if>
 		<c:if test="${link eq 'edit'}">
 		<button type="button" class="point-button" onclick="">수정하기</button>
-		<button type="button" onclick="deleteQuestion()">삭제하기</button>
 		</c:if>
 	</li>
 	<li>
@@ -63,6 +62,9 @@
 			<c:if test="${link eq 'make'}">완료하기</c:if>
 			<c:if test="${link eq 'edit'}">문항 관리</c:if>
 		</button>
+		<c:if test="${link eq 'edit'}">
+		<button type="button" onclick="deleteQuestion()">삭제하기</button>
+		</c:if>
 		<button type="button" onclick="history.go(-1);">이전으로</button>
 	</li>
 </ul>

@@ -16,7 +16,7 @@
 				<input type="button" value="새로고침" onclick="getQuestions();">
 			</li>
 			<li>
-				<input type="button" value="문항 순서 변경하기" onclick="">
+				<input type="button" class="reverse-button" value="문항 순서 변경하기" onclick="">
 			</li>
 			<li>
 				<input type="button" class="point-button" value="문항 추가하기" onclick="location.href = '/edit/project/${survey.surveyId}/make/question';">

@@ -3,6 +3,9 @@
 * {
 	box-sizing: border-box;
 }
+body {
+	width: 100%;
+}
 body,ul,form {
 	margin: 0;
 	padding: 0;
@@ -14,6 +17,8 @@ body,ul,form {
 		"header header header"
 		"left main right"
 		"footer footer footer";
+	
+	width: inherit;
 }
 
 /* 상단 바 */
@@ -60,18 +65,20 @@ main {
 	grid-auto-rows: auto;
 	place-content: start stretch; /* determines the spacing between grid lines */
 	place-items: center; /* determines how the items as a whole are aligned within the container */
-	
+
 	padding: 60px 0;
+	width: inherit;
 	min-height: 600px;
 }
-main > .title,main > article {
-	width: 100%;
-}
-main > .title {
+main>.title,main>article {
 	padding: 0 60px;
+	width: inherit;
+	max-width: 1200px;
+}
+main>.title {
 	margin-bottom: 30px;
 }
-main > article {	
+main>article {	
 	/* Grid 컨테이너 */
 	display: grid;
 	grid-auto-rows: auto;
@@ -89,16 +96,19 @@ footer {
 
 /* 반응형 */
 @media screen and (min-width:993px) {
+	/* 너비 993px 이상에서는 햄버거 메뉴 버튼 숨김 */
 	header .hamburger {
 		display: none;
 	}
 }
 @media screen and (max-width:992px) {
+	/* 너비 992px 이하에서는 메인 메뉴를 숨김 */
 	nav.main-menu {
 		display: none;
 	}
 }
 @media screen and (max-width:576px) {
+	/* 너비 576px 이하에서는 사이트 제목을 숨김 */
 	header .title {
 		display: none;
 	}

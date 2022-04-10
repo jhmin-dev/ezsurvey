@@ -1,27 +1,19 @@
 @charset "UTF-8";
 
 article>div,article>ul {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	margin: 0 auto;
-	padding: 15px 60px;
-	max-width: 1200px;
+	padding: 15px 0;
 	width: inherit;
-	height: inherit;
 }
 article>ul>li {
-	width: inherit;
-	height: inherit;
-}
-.survey-title {
-	max-width: 540px;
+	
 }
 
 /* 공통 */
 .survey-header>li,.survey-footer>li {
-	padding: 10px;
+	padding: 10px 0;
+}
+.survey-header>li.no-padding,.survey-footer>li.no-padding {
+	padding: 0;
 }
 .survey-header li hr,.survey-footer li hr {
 	margin: 0;
@@ -39,11 +31,17 @@ article>ul>li {
 }
 label.label-button i.bi {
 	padding: 0 10px;
-	font-size: 1.5rem;
+	font-size: 1.75rem;
 	color: var(--point-muted);
 }
 label.label-button:hover i.bi {
 	color: var(--point);
+}
+.survey-menu label.label-button {
+	margin: 0 20px;
+}
+.survey-menu button {
+	margin-left: 20px;
 }
 
 /* 상단 정보와 메뉴 */
@@ -60,7 +58,6 @@ label.label-button:hover i.bi {
 }
 .survey-header li.survey-menu label {
 	flex-wrap: nowrap;
-	padding: 10px 0;
 	cursor: pointer;
 }
 
@@ -78,6 +75,10 @@ label.label-button:hover i.bi {
 .created-by .profile {
 	width: 48px;
 	height: 48px;
+}
+.created-by div {
+	font-size: 1.25rem;
+	font-weight: 700;
 }
 .survey-created>div>* {
 	margin: 0 10px;

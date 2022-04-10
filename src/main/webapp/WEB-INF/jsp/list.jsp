@@ -55,7 +55,7 @@
 			</c:if>
 			<c:if test="${link eq 'bookmark'}">
 			<li>
-				<input type="button" value="선택 항목 삭제하기" onclick="deleteBookmarks();">
+				<input type="button" class="reverse-button" value="선택 항목 삭제하기" onclick="deleteBookmarks();">
 			</li>
 			</c:if>
 		</ul>

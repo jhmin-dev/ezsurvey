@@ -70,15 +70,13 @@ body,.header-container,header.mobile,footer {
 	background-color: var(--light-gray-muted);
 	border-color: var(--light-gray-muted);
 }
-[type="button"]:disabled {
-	color: var(--gray);
-}
+
 [type="button"].point-button { /* 전경색이 밝은 계열이면 hover시 진한 배경 */
 	color: var(--white);
 	background-color: var(--point-muted);
 	border-color: var(--point-muted);
 }
-[type="button"]:not(disabled).point-button:hover {
+[type="button"]:not(:disabled).point-button:hover {
 	background-color: var(--point);
 	border-color: var(--point);
 }
@@ -87,8 +85,21 @@ body,.header-container,header.mobile,footer {
 	background-color: transparent;
 	border-color: var(--point-muted);
 }
-[type="button"]:not(disabled).reverse-button:hover {
+[type="button"]:not(:disabled).reverse-button:hover {
 	color: var(--point);
 	background-color: transparent;
 	border-color: var(--point);
+}
+/* 비활성화시 */
+[type="button"]:disabled {
+	color: var(--gray);
+}
+[type="button"]:disabled.point-button {
+	background-color: var(--light-gray);
+	border-color: var(--light-gray);
+}
+[type="button"]:disabled.reverse-button {
+	color: var(--light-gray);
+	background-color: transparent;
+	border-color: var(--light-gray);
 }

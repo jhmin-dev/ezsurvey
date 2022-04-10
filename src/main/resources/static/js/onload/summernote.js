@@ -9,21 +9,19 @@ function initializeSummernote() {
 		toolbar: [
 			// [groupName, [list of button]]
 			['style', ['bold', 'italic', 'underline', 'clear']],
-			['font', ['strikethrough', 'superscript', 'subscript']],
 			['fontsize', ['fontsize']],
-			['color', ['color']],
+			['color', ['forecolor', 'backcolor']],
 			['para', ['ul', 'ol', 'paragraph']],
-			['height', ['height']]
+			['font', ['superscript', 'subscript']],
+			['embed', ['link']],
+			['misc', ['undo', 'redo']]
 		],
-		lang: 'ko-KR',
-		callbacks: {
-			// summernote 편집기에서 포커스 해제될 때 불필요한 공백을 제거; onBlur 적용시 편집기의 각종 버튼 클릭할 때마다 커서가 처음으로 돌아가는 문제 발생
-			/*
-			onBlur: function() {
-				trimSummernote();
-			}
-			*/
+		popover: {
+			link: [
+				['link', ['linkDialogShow', 'unlink']]
+			]
 		},
+		lang: 'ko-KR',
 		inheritPlaceholder: true
 	}); // end of summernote()	
 }

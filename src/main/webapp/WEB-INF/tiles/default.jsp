@@ -7,7 +7,16 @@
 <meta charset="UTF-8">
 <title><tiles:insertAttribute name="title"/></title>
 <link rel="icon" href="/images/favicon.svg">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <link rel="stylesheet" href="/css/common.css">
+</head>
+<body>
+<div class="page-container">
+<!-- header 시작 -->
+<tiles:insertAttribute name="header"/>
+<!-- header 끝 -->
+<!-- body 시작 -->
 <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 $.ajaxSetup({
@@ -19,13 +28,6 @@ $(document).ajaxError(function() {
 	alert('서버 오류가 발생했습니다!');
 }); // ajax global event handler
 </script>
-</head>
-<body>
-<div class="page-container">
-<!-- header 시작 -->
-<tiles:insertAttribute name="header"/>
-<!-- header 끝 -->
-<!-- body 시작 -->
 <aside class="left"></aside>
 <tiles:insertAttribute name="body"/>
 <aside class="right"></aside>

@@ -39,5 +39,6 @@
 	flex-direction: row;
 }
 .delete-button li button {
+	margin: 0 10px;
 	flex-grow: 1;
 }
