@@ -24,7 +24,7 @@ document.addEventListener('click', function(e) {
 			setHamburgerOn(300);
 		}	
 	}
-	else if(!hamburgerMenu.contains(e.target)) { // 햄버거 메뉴 버튼과 햄버거 메뉴 외의 영역을 클릭하면
+	else if(!hamburgerMenu.contains(e.target) && !hamburgerMenu.classList.contains('display-none')) { // 햄버거 메뉴 버튼과 햄버거 메뉴 외의 영역을 클릭하면
 		setHamburgerOff(300);
 	}
 });

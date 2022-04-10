@@ -79,6 +79,29 @@ label {
 	font-weight: 700;
 }
 
+/* 공통: selection */
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+:not(img)::selection {
+	color: var(--white);
+	background-color: var(--point-muted);
+}
+img::selection {
+	color: var(--white);
+	background-color: var(--point-transparent);
+}
+footer ::selection {
+	color: var(--black-subtle);
+	background-color: transparent;
+}
+
 /* 공통: 텍스트 버튼 */
 [type="submit"],[type="button"] {
 	font-size: 1.125rem;
