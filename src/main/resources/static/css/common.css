@@ -244,23 +244,6 @@ header .title {
 	box-shadow: 0 0 4px var(--white);
 	transition: all ease 0.5s;
 }
-/* 아이콘 메뉴: 햄버거 버튼 */
-.hamburger-button {
-	/* Grid 컨테이너 */
-	display: grid;
-	grid-template-rows: repeat(3, 1fr);
-	align-content: space-evenly;
-	
-	height: 32px;
-}
-.hamburger-button div {
-	/* Grid 아이템 */
-	align-self: center;
-	
-	width: 32px;
-	height: 4px;
-	background-color: var(--white);
-}
 /* 아이콘 메뉴: 플러스 버튼 */
 .plus-button {
 	position: relative;
@@ -285,6 +268,45 @@ header .title {
 	width: 4px;
 	height: 28px;
 }
+/* 아이콘 메뉴: 햄버거 버튼 */
+.hamburger {
+	margin: auto;
+	width: 32px;
+	height: 44px;
+}
+.hamburger-button {
+	cursor: pointer;
+}
+.hamburger-button div {
+	margin: 8px 0;
+	width: 32px;
+	height: 4px;
+	background-color: var(--white);
+	transition: transform 0.5s ease, width 0.5s ease;
+}
+.hamburger-button:hover div {
+	box-shadow: 0 0 4px var(--white);
+}
+.hamburger-button.clicked:hover div:last-child {
+	box-shadow: unset;
+}
+
+/* 아이콘 메뉴: 햄버거 버튼 클릭시 */
+.hamburger-button.clicked div {
+	width: 36px;
+}
+.hamburger-button.clicked div:first-child {
+	transform-origin: top left;
+	transform: translate(4px, 0px) rotateZ(45deg);
+}
+.hamburger-button.clicked div:last-child {
+	transform-origin: bottom right;
+	transform: translate(-9px, 0px) rotateZ(45deg);
+}
+.hamburger-button.clicked div:nth-child(2) {
+	transform-origin: bottom left;
+	transform: translate(4px, 12px) rotateZ(-45deg);
+}
 
 /* 메인 메뉴 */
 nav.main-menu ul {
@@ -292,7 +314,7 @@ nav.main-menu ul {
 	flex-direction: row;
 }
 nav.main-menu ul li {height: 60px;}
-nav.main-menu ul li a,nav ul li > div {
+nav.main-menu ul li a,nav ul li > div:not(.hamburger) {
 	padding: 15px 30px;
 	display: block;
 	height: inherit;
@@ -365,6 +387,37 @@ nav.dropdown-menu ul li:not(.not-link):hover {
 }
 nav.dropdown-menu ul li.sub a {
 	padding-left: 10px;
+}
+
+/* 햄버거 메뉴 */
+nav.hamburger-menu ul {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	position: fixed;
+	z-index: 11;
+	top: 0;
+	right: 0;
+	height: 100%;
+	font-size: 1.5rem;
+	font-weight: 700;
+	text-align: left;
+}
+nav.hamburger-menu ul li {
+	height: 60px;
+	transition: background-color ease 0.5s;
+}
+nav.hamburger-menu ul li:not(.not-link):hover {
+	background-color: var(--point);
+}
+nav.hamburger-menu ul li.not-link {
+	padding: 15px 60px;
+}
+nav.hamburger-menu ul li a {
+	display: block;
+	padding: 15px 60px;
+	width: inherit;
+	height: inherit;
 }
 
 /* 하단 바 */

@@ -10,38 +10,21 @@
 	<div class="title font-monospace">
 		<a href="/">ezsurvey</a>
 	</div>
-	<div class="hamburger">
-		<div class="hamburger-button icon-menu">
-			<div></div>
-			<div></div>
-			<div></div>
-		</div>
-	</div>
 	<nav class="main-menu">
 		<ul>
-			<c:if test="${empty user}">
 			<li>
-				<a href="/login">
-					로그인/회원 가입
-				</a>
-			</li>
-			</c:if>
-			<c:if test="${!empty user}">
-			<li>
-				<a href="/logout">
-					로그아웃
-				</a>
-			</li>
-			</c:if>
-			<li>
-				<a href="/project">
-					둘러보기
-				</a>
+				<c:if test="${empty user}">
+				<a href="/login">로그인/회원 가입</a>
+				</c:if>
+				<c:if test="${!empty user}">
+				<a href="/logout">로그아웃</a>
+				</c:if>
 			</li>
 			<li>
-				<a href="/my/project">
-					내 설문조사
-				</a>
+				<a href="/project">둘러보기</a>
+			</li>
+			<li>
+				<a href="/my/project">내 설문조사</a>
 			</li>
 			<c:if test="${!empty user}">
 			<li>
@@ -60,6 +43,13 @@
 			</c:if>	
 		</ul>
 	</nav>
+	<div class="hamburger">
+		<div class="hamburger-button">
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+	</div>
 </div>
 <nav class="dropdown-menu display-none">
 	<c:if test="${!empty user}">
@@ -90,6 +80,44 @@
 		</li>
 	</ul>
 	</c:if>
+</nav>
+<nav class="hamburger-menu display-none">
+	<ul>
+		<li class="not-link">
+		
+		</li>
+		<li>
+			<c:if test="${empty user}">
+			<a href="/login">로그인/회원 가입</a>
+			</c:if>
+			<c:if test="${!empty user}">
+			<a href="/logout">로그아웃</a>
+			</c:if>
+		</li>
+		<li>
+			<a href="/project">둘러보기</a>
+		</li>
+		<li>
+			<a href="/my/project">내 설문조사</a>
+		</li>
+		<c:if test="${!empty user}">
+		<li>
+			<a class="not-hover" href="/make/project">설문조사 생성하기</a>
+		</li>
+		<li>
+			<a href="/bookmark/project">즐겨찾기: 설문조사</a>
+		</li>
+		<li>
+			<a href="/bookmark/question">즐겨찾기: 문항</a>
+		</li>
+		<li>
+			<a href="/my/profile">내 정보 보기</a>
+		</li>
+		<li>
+			<a href="/settings/profile">설정</a>
+		</li>
+		</c:if>
+	</ul>
 </nav>
 <script type="text/javascript" src="/js/ui/menu.js"></script>
 </header>

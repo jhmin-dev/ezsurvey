@@ -8,6 +8,7 @@
 	--black: #24292f;
 	--black-muted: #57606a;
 	--black-subtle: #6e7781;
+	--black-transparent: #000000E6; /* 90% */
 	
 	--white: #ffffff;
 	--white-subtle: #f6f8fa;
@@ -31,13 +32,17 @@
 }
 
 /* 공통: 영역별 전경색/배경색 */
-body,.header-container,header.mobile,footer {
+body,.header-container,footer {
 	color: var(--white);
 	background-color: var(--black);
 }
 .page-container,nav.dropdown-menu ul {
 	color: var(--black);
 	background-color: var(--white);
+}
+nav.hamburger-menu ul {
+	color: var(--white);
+	background-color: var(--black-transparent);
 }
 
 /* 공통: 자주 사용되는 문구 색상 */

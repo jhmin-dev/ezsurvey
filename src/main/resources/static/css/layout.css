@@ -106,10 +106,24 @@ footer {
 	nav.main-menu {
 		display: none;
 	}
+	/* 너비 992px 이하에서는 햄버거 메뉴가 전체 너비의 40% */
+	nav.hamburger-menu ul {
+		width: 40%;
+	}
+}
+@media screen and (max-width:768px) {
+	/* 너비 768px 이하에서는 햄버거 메뉴가 전체 너비의 60% */
+	nav.hamburger-menu ul {
+		width: 60%;
+	}
 }
 @media screen and (max-width:576px) {
 	/* 너비 576px 이하에서는 사이트 제목을 숨김 */
 	header .title {
 		display: none;
+	}
+	/* 너비 576px 이하에서는 햄버거 메뉴가 전체 너비의 100% */
+	nav.hamburger-menu ul {
+		width: 100%;
 	}
 }
