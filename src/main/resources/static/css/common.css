@@ -252,6 +252,9 @@ header {
 	font-size: 1.5rem;
 	font-weight: 700;
 }
+header .header-container a:focus { /* 탭 키로 선택시 외곽선 방지 */
+	outline: none;
+}
 /* 상단 바: 제목 */
 header .title {
 	font-size: 2rem;
