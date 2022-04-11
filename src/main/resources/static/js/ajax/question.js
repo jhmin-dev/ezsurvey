@@ -12,7 +12,7 @@ const postResultText = postResult.querySelector('span');
 // 문항을 추가하는 함수
 const survey = document.querySelector('article').dataset.survey;
 function makeQuestion() {
-	formData = getFormData();
+	const formData = getFormData();
 	
 	$.ajax({
 		url:'/ajax' + location.pathname,
@@ -88,6 +88,52 @@ function getQuestionToEdit() {
 		type:'GET',
 		success:function(param) {
 			initializeEdit(param); // form 태그 초기화
+		}
+	}); // end of ajax
+}
+
+// 문항을 수정하는 함수
+function editQuestion() {
+	const formData = getFormData();
+
+	$.ajax({
+		url:'/ajax' + location.pathname,
+		contentType:'application/json;charset=UTF-8', // Ajax로 리스트를 넘기기 위한 옵션
+		data:JSON.stringify({
+			question:formData[0],
+			itemList:formData[1]
+		}), // @RequestBody로 받을 때 Unrecognized token으로 인한 JsonParseException을 피하려면 {} 형태로 보내는 data 전체에 JSON.stringify() 적용
+		success:function(param) {
+			postResultText.textContent = ''; // 기존 메시지 제거
+			
+			if(param.result=='hasErrors') { // 문항 추가에 실패한 경우
+				postResultDiv.className = 'failure'; // 배경색 변경
+				
+				postResultIcon.classList.remove('bi-check-circle-fill');
+				postResultIcon.classList.add('bi-exclamation-triangle-fill');
+				
+				const errorsKeys = Object.keys(param.errors);
+				let i=0, messages = '';
+				for(key of errorsKeys) {
+					if(i!=0) messages += '\n'; // 오류 메시지 2건 이상인 경우 줄바꿈 처리
+					messages += param.errors[key];
+					i++;
+				}
+				postResultText.textContent = messages;
+				
+				postResult.classList.remove('display-none'); // 결과 메시지 노출
+			}
+			else if(param.result=='success') { // 문항 수정에 성공한 경우
+				alert('성공적으로 문항을 수정했습니다.');
+				postResult.classList.add('display-none'); // 결과 메시지 숨김
+			}
+			else { // 비정상적 응답인 경우
+				postResult.classList.add('display-none'); // 결과 메시지 숨김
+				alert('문항 수정시 오류가 발생했습니다!');
+			}
+		}, // end of success
+		error:function() { // Global Handler 이전에 수행됨
+			postResult.classList.add('display-none'); // 결과 메시지 숨김
 		}
 	}); // end of ajax
 }

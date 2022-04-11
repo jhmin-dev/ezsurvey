@@ -33,6 +33,7 @@ public class ItemRequestDTO {
 	// RequestDTO to ServiceDTO
 	public ItemServiceDTO toServiceDTO() {
 		return ItemServiceDTO.builder()
+				.itemId(itemId)
 				.value(value)
 				.vallabel(HtmlUtils.htmlEscape(vallabel))
 				.picture(picture)

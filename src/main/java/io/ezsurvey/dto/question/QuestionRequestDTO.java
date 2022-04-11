@@ -44,6 +44,7 @@ public class QuestionRequestDTO {
 	// RequestDTO to ServiceDTO
 	public QuestionServiceDTO toServiceDTO() {
 		return QuestionServiceDTO.builder()
+				.questionId(questionId)
 				.category(EnumBase.findByKey(Category.class, category))
 				.startFromOne(startFromOne)
 				.branched(branched)

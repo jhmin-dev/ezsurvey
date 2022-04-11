@@ -106,6 +106,40 @@ public class QuestionCUDAjaxController {
 			, @Valid @RequestBody RequestDTOWrapper wrapper, BindingResult bindingResult) {
 		Map<String, Object> map = new HashMap<>();
 		
+		if(bindingResult.getAllErrors().size()>0) { // 유효성 검증 결과 오류가 있으면
+			Map<String, String> errors = new HashMap<>();
+			
+			for(ObjectError oe : bindingResult.getAllErrors()) {
+				String[] codes = oe.getCodes(); // 현재 에러에 대응하는 오류 코드들
+				String errorMessage = null;
+				
+				// validation.properties에 오류 코드가 정의되어 있으면 해당 메시지를 사용하고, 그렇지 않으면 Spring의 기본 메시지를 사용
+				try {
+					errorMessage = resource.getString(codes[0]);
+				}
+				catch(MissingResourceException mre) { // 응답 범주에서 발생한 오류의 경우 codes[0]은 인덱스를 포함하고, codes[1]은 포함하지 않음
+					try {
+						errorMessage = resource.getString(codes[1]);
+					}
+					catch(MissingResourceException mre2) {
+						errorMessage = oe.getDefaultMessage();
+					}
+				} // end of try~catch
+				
+				errors.put(codes[0], errorMessage);
+			} // end of for
+			
+			map.put("errors", errors); // 프론트에서 필드별 오류 메시지를 처리하기 위해 저장
+			map.put("result", "hasErrors");
+		}
+		else {
+			// 문항 수정
+			questionCUDService.update(wrapper.getQuestion().toServiceDTO()
+					, wrapper.getItemList().stream().map(ItemRequestDTO::toServiceDTO).collect(Collectors.toList()));
+			
+			map.put("result", "success");
+		}
+		
 		return map;
 	}
 	

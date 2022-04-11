@@ -31,8 +31,8 @@ function initializeMake(hasChildNodes) {
 function initializeEdit(data) {
 	// 문항 태그 만들기
 	// 주의: content의 경우 같은 이름 변수가 이미 있어서 구조 분해 할당시 append 불가능해짐
-	const {category, startFromOne, varlabel} = data.question;
-	const formQuestion = createFormQuestion(category, startFromOne, varlabel, data.question.content);
+	const {category, startFromOne, varlabel, questionId} = data.question;
+	const formQuestion = createFormQuestion(category, startFromOne, varlabel, data.question.content, questionId);
 	content.append(formQuestion);
 	initializeSummernote(); // summernote 편집기 초기화
 	
@@ -43,12 +43,14 @@ function initializeEdit(data) {
 	// 응답 범주 태그 만들기
 	data.itemList.forEach(function(element) {
 		const {itemId, value, vallabel} = element;
-		itemContainer.append(createFormItem(value, itemId, vallabel));
+		itemContainer.append(createFormItem(value, vallabel, itemId));
 	}); // end of forEach
+	
+	itemContainerLabel.classList.remove('display-none');
 }
 
 // 문항 form 태그를 생성하는 함수
-function createFormQuestion(category, startFromOne, varlabel, content) {
+function createFormQuestion(category, startFromOne, varlabel, content, questionId) {
 	const formQuestion = Object.assign(document.createElement('form'), {name:'question'});
 	
 	let fragmentHidden = document.createDocumentFragment();
@@ -62,6 +64,13 @@ function createFormQuestion(category, startFromOne, varlabel, content) {
 		type:'hidden',
 		value:startFromOne||'true'
 	}));
+	if(questionId) {
+		fragmentHidden.append(Object.assign(document.createElement('input'), {
+			name:'questionId',
+			type:'hidden',
+			value:questionId
+		}));		
+	}
 	formQuestion.append(fragmentHidden);
 	
 	let divVarlabel = document.createElement('div');
@@ -102,7 +111,7 @@ function createFormQuestion(category, startFromOne, varlabel, content) {
 }
 
 // 응답 범주 form 태그를 생성하는 함수
-function createFormItem(i, itemId, vallabel) {
+function createFormItem(i, vallabel, itemId) {
 	const formItem = Object.assign(document.createElement('form'), {name:'item'});
 	
 	// 응답 범주 값
@@ -177,7 +186,21 @@ function resizeFormItems(goal) {
 	const current = formItems.length
 	const diff = goal - current;
 	
+	const isLikertScale = document.querySelector('input[name=category]').value=='likert_scale';
+	const isMultipleChoice = document.querySelector('input[name=category]').value=='multiple_choice';
+
+	let lastVallabel;
+	if(isLikertScale && current>0) {
+		lastVallabel = formItems[formItems.length-1].querySelector('input[name=vallabel]').value;
+	}
+	
 	if(diff>0) { // 응답 범주 수를 증가시킨 경우
+		if(isLikertScale) {
+			for(let i=1;i<formItems.length;i++) {
+				formItems[i].querySelector('input[name=vallabel]').value = '';
+			}
+		}
+	
 		let fragmentItems = document.createDocumentFragment();
 		for(let i=1;i<=diff;i++) {
 			fragmentItems.append(createFormItem(current + i));
@@ -188,6 +211,18 @@ function resizeFormItems(goal) {
 		for(let i=1;i<=Math.abs(diff);i++) {
 			let last = formItems[current-i];
 			itemContainer.removeChild(last);
+		}
+	}
+	
+	const newFormItems = document.querySelectorAll('form[name="item"]'); 
+	if(isLikertScale) {
+		newFormItems[0].querySelector('input[name=vallabel]').placeholder = vallabelScalePlaceholders[0];
+		newFormItems[goal-1].querySelector('input[name=vallabel]').placeholder = vallabelScalePlaceholders[1];
+		newFormItems[goal-1].querySelector('input[name=vallabel]').value = lastVallabel || '';
+	}
+	else if(isMultipleChoice) {
+		for(let i=0;i<Math.min(vallabelChoicePlaceholders.length, newFormItems.length);i++) {
+			newFormItems[i].querySelector('input[name=vallabel]').placeholder = vallabelChoicePlaceholders[i];
 		}
 	}
 	

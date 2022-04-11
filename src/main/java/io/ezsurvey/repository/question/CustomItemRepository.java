@@ -16,4 +16,7 @@ public interface CustomItemRepository {
 	
 	// 특정 문항의 응답 범주를 일괄 삭제; Spring Data JPA에서 자동 생성하는 쿼리는 SELECT 후 개별 item PK 구해서 하나씩 삭제하는 방식
 	Long deleteByQuestionId(Long questionId);
+	
+	// 응답 범주 일괄 삭제
+	Long deleteByIdIn(List<Long> itemIds);
 }

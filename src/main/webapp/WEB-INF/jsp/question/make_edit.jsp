@@ -54,7 +54,7 @@
 		<div class="notice">현재 작성 중인 문항은 추가하지 않으면 사라집니다.</div>
 		</c:if>
 		<c:if test="${link eq 'edit'}">
-		<button type="button" class="point-button" onclick="">수정하기</button>
+		<button type="button" class="point-button" onclick="editQuestion();">수정하기</button>
 		</c:if>
 	</li>
 	<li>

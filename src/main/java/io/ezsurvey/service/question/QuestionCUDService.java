@@ -69,6 +69,20 @@ public class QuestionCUDService {
 		return questionRepository.save(serviceDTO.toEntity()).getId();
 	}
 	
+	// 문항 수정
+	public void update(QuestionServiceDTO serviceDTO, List<ItemServiceDTO> itemServiceDTOs) {
+		// 사용자가 변수명을 입력하지 않은 경우, content로 자동 설정; content는 HTML 태그 포함 가능하므로 Jsoup으로 태그를 제외한 내용만 추출
+		if(StringUtils.isBlank(serviceDTO.getVarlabel())) {
+			serviceDTO.setVarlabel(StringUtils.abbreviate(Jsoup.parse(serviceDTO.getContent()).text(), 256));
+		}
+		
+		Question question = questionRepository.getById(serviceDTO.getQuestionId());
+		question.update(serviceDTO.getVarlabel(), serviceDTO.getContent()
+				, serviceDTO.getArticle(), serviceDTO.getPicture());
+		
+		itemCUDService.update(itemServiceDTOs, serviceDTO.getQuestionId());
+	}
+	
 	// 설문조사 단위로 문항 복제
 	public void copyAllBySurvey(Long originalSurveyId, Survey cloneSurvey) {
 		// 원본 설문조사에 포함된 부모 문항 목록 가져오기

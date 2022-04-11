@@ -13,6 +13,7 @@ import io.ezsurvey.dto.question.ItemServiceDTO;
 import io.ezsurvey.entity.question.Item;
 import io.ezsurvey.entity.question.Question;
 import io.ezsurvey.repository.question.ItemRepository;
+import io.ezsurvey.repository.question.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor // 생성자 방식 의존성 주입
@@ -22,11 +23,36 @@ public class ItemCUDService {
 	@PersistenceContext
 	private EntityManager entityManager;
 	
+	private final QuestionRepository questionRepository;
 	private final ItemRepository itemRepository;
 	
 	// 응답 범주 추가
 	public List<Item> insert(List<ItemServiceDTO> serviceDTOs) {
 		return serviceDTOs.stream().map(item -> itemRepository.save(item.toEntity())).collect(Collectors.toList());
+	}
+	
+	// 응답 범주 수정
+	public void update(List<ItemServiceDTO> serviceDTOs, Long questionId) {
+		List<Long> originalIds = itemRepository.findIdByQuestionId(questionId);
+		List<Long> newIds = serviceDTOs.stream().map(item -> item.getItemId()).collect(Collectors.toList());
+		
+		// 삭제
+		itemRepository.deleteByIdIn(originalIds.stream()
+				.filter(originalId -> !newIds.contains(originalId))
+				.collect(Collectors.toList()));
+		
+		// 수정
+		serviceDTOs.stream().filter(item -> originalIds.contains(item.getItemId()))
+		.forEach(item -> {
+			itemRepository.getById(item.getItemId()).update(item.getValue(), item.getVallabel());
+		});
+		
+		// 추가
+		Question question = questionRepository.getById(questionId);
+		serviceDTOs.stream().filter(item -> !originalIds.contains(item.getItemId()))
+		.forEach(item -> {
+			itemRepository.save(item.updateQuestion(question).toEntity());
+		});
 	}
 	
 	// 문항 단위로 응답 범주 복제
