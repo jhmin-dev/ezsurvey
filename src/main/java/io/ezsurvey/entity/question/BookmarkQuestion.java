@@ -13,8 +13,13 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import io.ezsurvey.entity.user.User;
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // JPA에서 Entity 관리시 필요
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"member_id", "question_id"}))
 @Entity
 public class BookmarkQuestion {
