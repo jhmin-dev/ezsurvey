@@ -69,6 +69,15 @@
 	</li>
 </ul>
 </article>
+<div class="modal">
+	<div class="modal-content grid plain">
+		<div>
+			<i class="bi bi-check"></i>
+			<span></span>
+		</div>
+		<button type="submit" class="close-button">확인</button>
+	</div>
+</div>
 <script type="text/javascript" src="/summernote-0.8.18-dist/summernote-lite.min.js"></script>
 <script type="text/javascript" src="/summernote-0.8.18-dist/summernote-ko-KR.min.js"></script>
 <script type="text/javascript" src="/js/UIUtil.js"></script>

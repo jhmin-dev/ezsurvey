@@ -94,6 +94,7 @@ function getQuestionToEdit() {
 
 // 문항을 수정하는 함수
 function editQuestion() {
+	const project_url = location.pathname.slice(0,location.pathname.indexOf('/edit/question'));
 	const formData = getFormData();
 
 	$.ajax({
@@ -124,8 +125,13 @@ function editQuestion() {
 				postResult.classList.remove('display-none'); // 결과 메시지 노출
 			}
 			else if(param.result=='success') { // 문항 수정에 성공한 경우
-				alert('성공적으로 문항을 수정했습니다.');
 				postResult.classList.add('display-none'); // 결과 메시지 숨김
+				modal.querySelector('span').textContent = '성공적으로 문항을 수정했습니다';
+				resizeModal();
+				openModal();
+				document.addEventListener('click', function(e) {
+					closeModal(e, project_url + '/index');
+				});
 			}
 			else { // 비정상적 응답인 경우
 				postResult.classList.add('display-none'); // 결과 메시지 숨김
@@ -147,8 +153,12 @@ function deleteQuestion() {
 		url:'/ajax' + question_url,
 		success:function(param) {
 			if(param.result=='success') {
-				alert('문항이 삭제되었습니다!');
-				location.replace(project_url + '/index');
+				modal.querySelector('span').textContent = '성공적으로 문항을 삭제했습니다';
+				resizeModal();
+				openModal();
+				document.addEventListener('click', function(e) {
+					closeModal(e, project_url + '/index');
+				});
 			}
 			else {
 				postResultDiv.className = 'failure'; // 배경색 변경
