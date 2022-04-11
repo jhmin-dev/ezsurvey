@@ -12,7 +12,7 @@
 			<i class="bi bi-bell-fill"></i>
 			<span>준비 중인 기능입니다.</span>
 		</div>
-		<button type="submit">확인</button>
+		<button type="submit" class="close-button">확인</button>
 	</div>
 </div>
 </article>

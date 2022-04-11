@@ -48,17 +48,17 @@ function openModal() {
 	
 	modal.classList.add('show'); // 모달 열기
 	
-	const modalButton = modal.querySelector('[type=submit]');
-	if(modalButton) modalButton.focus(); // 확인 버튼에 포커스; 엔터 키로 모달 닫힘
+	const modalButton = modal.querySelector('.close-button');
+	if(modalButton) modalButton.focus(); // 닫기 버튼에 포커스; 엔터 키로 모달 닫힘
 }
 
 // 모달 닫는 함수
 function closeModal(e, url) {
 	if(!modal) return;
 	
-	const modalButton = modal.querySelector('[type=submit]');
+	const modalButton = modal.querySelector('.close-button');
 	const trigger = modalButton ? modalButton : modal
-	if(e.target === trigger) { // 확인 버튼이 있으면 버튼 클릭시에만, 없으면 배경 클릭시에
+	if(e.target === trigger) { // 닫기 버튼이 있으면 버튼 클릭시에만, 없으면 배경 클릭시에
 		modal.classList.remove('show'); // 모달 닫기
 		if(url) location.href = url // 인자로 주소 전달시 해당 주소로 이동
 	}
@@ -79,3 +79,33 @@ window.addEventListener('load', function() {
 window.addEventListener('resize', function() {
 	if(modal) resizeModal();
 });
+
+// ProgressBar
+function callProgressBarCircle(selector, duration, infinite) {
+	if(!document.querySelector(selector)) return;
+	
+	const circle = new ProgressBar.Circle(selector, {
+	    color: 'var(--point-muted)',
+	    strokeWidth: 4,
+	    trailColor: 'var(--point-transparent)',
+	    trailWidth: 2
+	});
+	
+	animateProgressBar(circle, duration);
+	
+	if(infinite) {
+		setInterval(function() {
+			animateProgressBar(circle, duration);
+		}, duration);
+	}
+	
+	return circle;
+}
+
+function animateProgressBar(progressbar, duration){
+	progressbar.set(0);
+	progressbar.animate(1, { // Number from 0.0 to 1.0
+		duration: duration || 1000,
+		easing: 'easeInOut'
+	});
+}

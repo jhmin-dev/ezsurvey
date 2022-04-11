@@ -93,6 +93,18 @@
 	<li class="no-padding"><hr></li>
 </ul>
 </article>
+<div class="modal">
+	<div class="modal-content grid plain">
+		<div>
+			<div id="progressbar"></div>
+			<i class="bi bi-check display-none"></i>
+			<span>설문조사를 복제하는 중입니다</span>
+		</div>
+		<button type="submit" class="close-button display-none">확인</button>
+	</div>
+</div>
+<script type="text/javascript" src="/js/progressbar.min.js"></script>
+<script type="text/javascript" src="/js/UIUtil.js"></script>
 <script type="text/javascript" src="/js/StringUtil.js"></script>
 <script type="text/javascript" src="/js/ui/detail.js"></script>
 <script type="text/javascript" src="/js/ui/bookmark.js"></script>

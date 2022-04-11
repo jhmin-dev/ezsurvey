@@ -183,7 +183,7 @@ main i.bi.button:hover {
 	position: absolute; 
 	top: 0; 
 	left: 0;
-	width: 100%; 
+	width: 100%;
 	min-height: 100vh;
 	display: none; 
 	background-color: rgba(0, 0, 0, 0.4);
@@ -492,4 +492,9 @@ main>.title {
 	color: var(--dark-gray);
 	font-size: 1.5rem;
 	font-weight: 700;
+}
+#progressbar {
+	margin: 10px auto;
+	width: 100px;
+	height: 100px;
 }
