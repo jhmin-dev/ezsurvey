@@ -19,18 +19,7 @@
 <tiles:insertAttribute name="header"/>
 <!-- header 끝 -->
 <!-- body 시작 -->
-<script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript">
-$.ajaxSetup({
-	type:'POST',
-	dataType:'JSON',
-	timeout:10000
-}); // ajax 공통 옵션
-$(document).ajaxError(function() {
-	alert('서버 오류가 발생했습니다!');
-}); // ajax global event handler
-</script>
 <tiles:insertAttribute name="banner"/>
 <aside class="left"></aside>
 <tiles:insertAttribute name="body"/>

@@ -25,6 +25,9 @@ $.ajaxSetup({
 	timeout:10000
 }); // ajax 공통 옵션
 $(document).ajaxError(function() {
+	if(document.querySelector('modal')) { // 모달이 있으면 닫기
+		document.querySelector('modal').classList.remove('show');	
+	}
 	alert('서버 오류가 발생했습니다!');
 }); // ajax global event handler
 </script>

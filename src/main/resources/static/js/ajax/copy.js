@@ -47,9 +47,6 @@ function copySurvey() {
 			modal.querySelector('button').classList.remove('display-none');
 		},
 		error:function() {
-			// 모달 닫기
-			modal.classList.remove('show');
-			
 			// 진행 바 제거
 			circle.destroy();
 		}

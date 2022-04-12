@@ -447,9 +447,11 @@ nav.hamburger-menu ul li a {
 }
 
 /* 하단 바 */
-footer .copyright {
+footer>div {
+	width: max-content;
 	margin: 0 auto;
-	max-width: 1200px;
+}
+footer .copyright {
 	font-size: 1.25rem;
 	text-align: center;
 }
@@ -457,6 +459,12 @@ footer .copyright .font-monospace {
 	font-size: 1.5rem;
 	font-style: italic;
 	font-weight: bold;
+}
+footer .external {
+	margin-top: 30px;
+}
+footer .external i.bi {
+	font-size: 1.5rem;
 }
 
 /* 본문: 제목 */
