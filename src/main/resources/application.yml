@@ -30,6 +30,7 @@ spring:
     group:
       dev: common, oauth, devdb
       prod: common, oauth, proddb
+      local: common, oauth, localdb
 ---
 # 현재 활성화할 프로필 그룹을 지정
 spring:
