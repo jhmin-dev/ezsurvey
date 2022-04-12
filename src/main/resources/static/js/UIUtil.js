@@ -64,6 +64,19 @@ function closeModal(e, url) {
 	}
 }
 
+// 모달 닫는 함수: 사용성 개선
+function closeModalByButton(href, url) {
+	if(!modal) return;
+	
+	modal.classList.remove('show'); // 모달 닫기
+	if(href===true && url) {
+		location.href = url // 인자로 주소 전달시 해당 주소로 이동
+	}
+	else if(href===false && url==='reload') {
+		location.reload(); // 인자로 reload 전달시 현재 화면 새로고침(로그인 상태가 변경된 경우)
+	}
+}
+
 // 모달 배경 크기 자동 조절하는 함수
 function resizeModal() {
 	if(!modal) return;

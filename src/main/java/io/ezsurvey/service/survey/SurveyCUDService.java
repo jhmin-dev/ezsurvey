@@ -9,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.ezsurvey.dto.survey.SurveyCopyDTO;
 import io.ezsurvey.dto.survey.SurveyServiceDTO;
 import io.ezsurvey.entity.survey.Status;
 import io.ezsurvey.entity.survey.Survey;
@@ -31,6 +30,8 @@ public class SurveyCUDService {
 	private final QuestionCUDService questionCUDService;
 	private final SurveyRepository surveyRepository;
 	private final UserRepository userRepository;
+	
+	private static final String COPY_PREFIX = "(복제됨) ";
 	
 	public Long insert(SurveyServiceDTO serviceDTO, Long userId) {
 		serviceDTO.setUser(userRepository.getById(userId));
@@ -59,7 +60,7 @@ public class SurveyCUDService {
 		surveyRepository.getById(surveyId).setVisibilityToDeleted();
 	}
 	
-	public Long copy(SurveyCopyDTO copyDTO, Long originalId) {
+	public Long copy(Long originalId, Long userId) {
 		/*  
 		 * surveyRepository의 getById()는 실제 Entity가 아닌 Entity의 참조(=프록시 객체)를 반환
 		 * detach() 후 프록시 객체에 copy() 메서드 사용시 LazyInitializationException: could not initialize proxy – no Session 발생
@@ -71,7 +72,7 @@ public class SurveyCUDService {
 		entityManager.detach(clone);
 		
 		// 현재 Entity의 값 변경; copy()는 내부적으로 PK를 null로 변경하여 이후 persist()시 새 PK 할당받을 수 있게 함
-		clone.copy(userRepository.getById(copyDTO.getUserId()), copyDTO.getTitle(), copyDTO.getContent());
+		clone.copy(userRepository.getById(userId), StringUtils.abbreviate(COPY_PREFIX + clone.getTitle(), 128));
 		
 		// 현재 Entity를 영속화(새 PK 할당 및 DB에 삽입)
 		entityManager.persist(clone);

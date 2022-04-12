@@ -7,13 +7,13 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.ezsurvey.dto.survey.SurveyCopyDTO;
 import io.ezsurvey.dto.user.SessionUser;
 import io.ezsurvey.service.survey.BookmarkSurveyCUDService;
 import io.ezsurvey.service.survey.BookmarkSurveyReadService;
@@ -30,8 +30,6 @@ public class SurveyCUDAjaxController {
 	private final BookmarkSurveyReadService bookmarkSurveyReadService;
 	private final SurveyCUDService surveyCUDService;
 	private final SurveyReadService surveyReadService;
-	
-	private static final String COPY_PREFIX = "(복제됨) "; // 문구 수정시 SurveyCopyDTO의 @Size max값도 변경해야 함
 	
 	@PostMapping("/ajax/delete/project/{surveyId}")
 	public Map<String, String> delete(@PathVariable(name = "surveyId") Long surveyId, HttpSession session) {
@@ -101,8 +99,7 @@ public class SurveyCUDAjaxController {
 	}
 	
 	@PostMapping("/ajax/copy/project/{surveyId}")
-	public Map<String, Object> copy(@PathVariable(name = "surveyId") Long surveyId
-			, @Valid @RequestBody SurveyCopyDTO copyDTO, BindingResult bindingResult, HttpSession session) {
+	public Map<String, Object> copy(@PathVariable(name = "surveyId") Long surveyId, HttpSession session) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		SessionUser sessionUser = (SessionUser)session.getAttribute("user");
@@ -110,15 +107,8 @@ public class SurveyCUDAjaxController {
 		if(sessionUser==null) {
 			map.put("result", "logout");
 		}
-		else if(bindingResult.hasErrors()) {
-			map.put("result", "hasErrors");
-		}
 		else {
-			copyDTO.setUserId(sessionUser.getUserId());
-			copyDTO.setTitle(COPY_PREFIX + copyDTO.getTitle());
-			log.info("copyDTO: {}", copyDTO);
-			
-			Long cloneId = surveyCUDService.copy(copyDTO, surveyId);
+			Long cloneId = surveyCUDService.copy(surveyId, sessionUser.getUserId());
 			
 			map.put("result", "success");
 			map.put("cloneId", cloneId);
