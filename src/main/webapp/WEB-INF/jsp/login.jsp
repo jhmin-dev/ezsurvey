@@ -23,10 +23,6 @@
 		<div><span class="word">${p.name}</span><span class="post"></span> 로그인하기</div>
 	</div>	
 	</c:forEach>
-	<div class="notice">
-		<i class="bi bi-exclamation-triangle-fill"></i>
-		<span>네이버 로그인은 현재 개발자 계정으로만 이용 가능합니다.</span>
-	</div>
 </article>
 <script type="text/javascript" src="/js/StringUtil.js"></script>
 <script type="text/javascript" src="/js/ui/login.js"></script>
